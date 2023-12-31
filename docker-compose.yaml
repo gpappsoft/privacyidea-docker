@@ -27,7 +27,7 @@ services:
     restart: always
 
   privacyidea:
-    image: privacyidea:${PI_VERSION}
+    image: gpappsoft/privacyidea-docker:${PI_VERSION}
     environment:
       PI_BOOTSTRAP: ${PI_BOOTSTRAP:-false}
       PI_UPDATE: ${PI_UPDATE:-false}

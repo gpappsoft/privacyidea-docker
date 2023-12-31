@@ -8,7 +8,8 @@ __pycache__/
 
 # vscode
 .vscode/
-
+ssl/pi.key
+ssl/pi.pem
 # certificates
 ssl/pi.*
 

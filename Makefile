@@ -1,5 +1,5 @@
 PI_VERSION := 3.9.1
-IMAGE_NAME := privacyidea:${PI_VERSION}
+IMAGE_NAME := privacyidea-docker:${PI_VERSION}
 
 BUILDER := docker build
 CONTAINER_ENGINE := docker

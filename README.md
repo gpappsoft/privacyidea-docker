@@ -1,8 +1,10 @@
+[![Docker](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml)
+
 # privacyIDEA-docker
 
 Simply deploy and run privacyIDEA instance(s) in a container environment. 
 
-### Overview 
+## Overview 
 [privacyIDEA](https://github.com/privacyidea/privacyidea) is an open solution for strong two-factor authentication like OTP tokens, SMS, smartphones or SSH keys. 
 
 This project is a complete build environment under linux to run privacyIDEA in a container environment. It uses the official [python](https://pypi.org/project/privacyIDEA/) image and the official [privacyIDEA-Project](https://pypi.org/project/privacyIDEA/)  from PyPi. The image uses [gunicorn](https://gunicorn.org/) to run the app. 
@@ -43,6 +45,18 @@ If you prefer another approach or would like to test another solution, take a lo
 |*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without passphrase. *.pfx is not supported|
 |*templates*| contains files used for different services (e.g. niginx, radius ...)|
 
+### Images
+Sample images from this project can be found here: 
+| registry | repository |
+|----------|------------|
+| [docker.io](https://hub.docker.com/r/gpappsoft/privacyidea-docker)|```docker pull gpappsoft/privacyidea-docker:latest```
+| [ghcr.io](https://github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea-docker)| ```docker pull ghcr.io/gpappsoft/privacyidea-docker:latest```|
+
+> [!Note] 
+> ```latest``` tagged image is maybe a pre- or development-release. Please use a  release number (like ```3.9.1```) 
+
+
+
 ### Prerequisites
 
 - Installed container runtime engine (e.g. docker / podman).
@@ -50,20 +64,40 @@ If you prefer another approach or would like to test another solution, take a lo
 - The repository is tested with [Docker](https://docker.com) version 24.0.7 running under Debian 12 and Ubuntu 22.04.3 LTS running Docker version 24.0.5
 - Images can be run with [Podman](https://podman.io). It may also run with [podman-compose](https://github.com/containers/podman-compose). 
 
-### Quickstart
-To build an run a simple privacyIDEA container (standalone with sqlite):
+## Quickstart
+
+#### Quick & Dirty
+
+```
+docker pull docker.io/gpappsoft/privacyidea-docker:3.9.1
+docker run -d --name privacyidea-docker\
+            -e PI_REGISTRY_CLASS=null\
+            -e PI_BOOTSTRAP=true\
+            -e PI_PEPPER=superSecret\
+            -e PI_SECRET=superSecret\
+			-v pi-pilog:/var/log/privacyidea:rw,Z\
+			-v pi-piconfig:/etc/privacyidea:rw,Z\
+			-p 8080:8080\
+			gpappsoft/privacyidea-docker:3.9.1
+```
+WebUI: http://localhost:8080\
+user/password: admin / admin
+
+#### Preferred way
+
+To build an run a simple local privacyIDEA container (standalone with sqlite):
 
 ```
 git clone https://github.com/gpappsoft/privacyidea-docker.git
 cd privacyidea-docker
 make cert secret build run
+....
 ```
 
 Answer the following question with y:
 ```
 Warning! Overwrite ALL SECRETS  in ./secrets directory: Are you sure? [y/N] y
 ```
-
 
 ##### Accessing the Web-UI:
 Use https://localhost:8080
@@ -72,10 +106,8 @@ Default admin username: **admin**
 
 Default admin password is stored in *./secrets/pi_admin_pass*
 
----
 
->
-### Building and running 
+## Building and running image
 
 You can use ```Makefile``` targets to build different image versions of privacyIDEA
 #### Build a specific privacyIDEA version
@@ -106,7 +138,7 @@ make distclean
 ```
 &#9432; This will wipe the whole container including the volumes!
 
-#### Overview targets
+### Overview targets
 
 | target | description | example
 ---------|-------------|---------
@@ -121,9 +153,7 @@ make distclean
 > [!Important] 
 > This is a simple standalone container which is not production ready. For a more like 'production ready' instance please refer to the next section.
 
----
-
-### Compose a privacyIDEA stack
+## Compose a privacyIDEA stack
 
 By using docker compose you can easy deploy a customized privacyIDEA instance including Nginx as reverse-proxy and MariaDB as a database backend.
 
@@ -174,10 +204,12 @@ graph TD;
 > [!Note]
 > The RADIUS container is not included in this repository at the moment. The freeradius container image including the [privacyIDEA RADIUS-plugin](https://github.com/privacyidea/FreeRADIUS) will be released soon.
 
-##### Examples:
+### Examples:
+
 Run a stack with project name **prod** and environment variables files from *examples/application-prod.env*
 
 ```
+  $ make cert secret  #run only once
   $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod up
 ```
 
@@ -204,9 +236,9 @@ Have fun!
 >- Compose takes some time because of healthchecks.
 
 
-### Environment Variables
+## Environment Variables
 
-#### privacyIDEA
+### privacyIDEA
 | Variable | Default | Description
 |-----|---------|-------------
 ```ENVIRONMENT``` | examples/application-prod.env | Used to set the correct environment file (env_file) in the docker compose which are used by the container. Use relative filename here.
@@ -222,7 +254,7 @@ Have fun!
 ```PI_PEPPER``` |superSecret | Used for ```PI_PEPPER``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
 ```SECRET_KEY``` | superSecret | Used for ```SECRET_KEY``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
 
-#### DB connection parameters
+### DB connection parameters
 | Variable | Description
 |-----|-------------
 ```DB_HOST```| Database host
@@ -233,12 +265,13 @@ Have fun!
 ```DB_EXTRA_PARAM```| Extra parameter (e.g. ```"?charset=utf8"```)
 
 
-#### Reverse proxy parameters
+### Reverse proxy parameters
 | Variable | Default | Description
 |-----|---------|-------------
 ```PROXY_PORT```| 8443 | Exposed HTTPS port
 ```PROXY_SERVERNAME```| localhost | Set reverse proxy servername. Shoudl be th common name from the certificate.
-#### Secrets used by docker compose located in *./secrets/*
+
+### Secrets used by docker compose located in *./secrets/*
 | Filename | Default | Description
 |-----|---------|-------------
 | *db_password*| superSecret | The database password. 
@@ -254,10 +287,6 @@ The current concept of using secrets with files in the *docker-compose.yaml* is 
 Different stacks using always the same secrets. This should not be used in production environments. This behaviour will be changed soon...
 
 ## Roadmap
-
-#### Versions
-
-There is no ```latest``` tag for the image. Please follow the release cycle from the privacyIDEA project. Stable versions are normally have an additional minor number (like ```3.9.1```)
 
 #### Customization and scripts
 
