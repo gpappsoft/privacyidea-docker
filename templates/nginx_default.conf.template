@@ -1,0 +1,47 @@
+http {
+  include mime.types;
+  # fallback in case we can't determine a type
+  default_type application/octet-stream;
+  access_log /var/log/nginx/access.log combined;
+  sendfile on;
+
+  upstream app_server {
+    # fail_timeout=0 means we always retry an upstream even if it failed
+    # to return a good HTTP response
+    server privacyidea:$APP_PORT fail_timeout=0;
+  }
+
+  server {
+    listen 443 ssl http2;
+    client_max_body_size 4G;
+
+    # set the correct host(s) for your site
+    server_name $SERVERNAME;
+    ssl_certificate /etc/nginx/ssl/pi.pem; 
+    ssl_certificate_key  /etc/nginx/ssl/pi.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    keepalive_timeout 5;
+
+    # path for static files
+    root /etc/privacyidea/customization;
+
+    location / {
+      # checks for static file, if not found proxy to app
+      try_files $uri @proxy_to_app;
+    }
+
+    location @proxy_to_app {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header Host $http_host;
+      # we don't want nginx trying to do something clever with
+      # redirects, we set the Host: header above already.
+      proxy_redirect off;
+      proxy_buffering off;
+      proxy_pass http://app_server;
+    }
+
+  }
+}

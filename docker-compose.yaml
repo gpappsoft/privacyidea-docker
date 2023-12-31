@@ -1,0 +1,101 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb:latest
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: 1
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_MYSQL_LOCALHOST_USER: true
+    secrets:
+      - db_password
+    expose:
+      - ${DB_PORT}
+    volumes:
+      - mysql:/var/lib/mysql:rw,Z
+    networks:
+      - privacyidea
+    healthcheck:
+        test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+        start_period: 20s
+        start_interval: 20s
+        interval: 20s
+        timeout: 5s
+        retries: 3
+    restart: always
+
+  privacyidea:
+    image: privacyidea:${PI_VERSION}
+    environment:
+      PI_BOOTSTRAP: ${PI_BOOTSTRAP:-false}
+      PI_UPDATE: ${PI_UPDATE:-false}
+      PI_ADMIN: admin
+      DB_PASSWORD: /run/secrets/db_password
+      PI_PASSWORD: /run/secrets/pi_admin_pass
+      PI_SECRET: /run/secrets/pi_secret
+      PI_PEPPER: /run/secrets/pi_pepper
+    env_file:
+      - ${ENVIRONMENT}
+    secrets:
+      - db_password
+      - pi_admin_pass
+      - pi_secret
+      - pi_pepper
+    expose:
+      - ${PI_PORT}
+    volumes:
+      - pilog:/var/log/privacyidea:rw,Z
+      - piconfig:/etc/privacyidea:rw,Z
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - privacyidea
+    healthcheck:
+        test: [ "CMD", "/opt/privacyidea/healthcheck.py" ]
+        start_period: 20s
+        start_interval: 10s
+        interval: 20s
+        timeout: 5s
+        retries: 3
+    restart: always
+
+  reverse_proxy:
+    image: nginx:stable-alpine
+    environment:
+      - APP_PORT=${PI_PORT}
+      - SERVERNAME=${PROXY_SERVERNAME:-localhost}
+    ports:
+      - "${PROXY_PORT}:443"
+    volumes:
+      - ./templates/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl/pi.key:/etc/nginx/ssl/pi.key:ro
+      - ./ssl/pi.pem:/etc/nginx/ssl/pi.pem:ro
+      - ./templates/nginx_default.conf.template:/etc/nginx/templates/default.conf.template:ro
+    depends_on:
+      privacyidea:
+        condition: service_healthy
+    networks:
+      - privacyidea
+    restart: always
+
+secrets:
+  db_password:
+    file: secrets/db_password
+  pi_secret:
+    file: secrets/pi_secret
+  pi_pepper:
+    file: secrets/pi_pepper
+  pi_admin_pass:
+     file: secrets/pi_admin_pass
+
+volumes:
+  pilog: {}
+  piconfig: {}
+  mysql: {}
+ 
+networks:
+  privacyidea: {}
+
