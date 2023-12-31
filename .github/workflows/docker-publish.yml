@@ -10,7 +10,7 @@ on:
     types: [prereleased,released]
 env:
   # Use docker.io for Docker Hub if empty
-  # REGISTRY: ghcr.io
+  REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
@@ -65,7 +65,7 @@ jobs:
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
         with:
           images: |
-            gpappsoft/privacyidea-docker
+            docker.io/gpappsoft/privacyidea-docker
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       # Build and push Docker image with Buildx (don't push on PR)
