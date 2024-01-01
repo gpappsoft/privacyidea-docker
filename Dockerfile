@@ -6,6 +6,12 @@ ARG PI_VERSION=3.9.1
 ARG PI_PORT=8080
 ARG UID=998
 
+RUN set -eux; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
+    gcc \
+    heimdal-dev
+
 RUN mkdir /opt/privacyidea && \
     mkdir /etc/privacyidea && \
     mkdir /var/log/privacyidea
@@ -24,7 +30,7 @@ RUN python -m venv /opt/privacyidea
 ENV PATH="/opt/privacyidea/:/opt/privacyidea/bin:$PATH"
 RUN pip install --upgrade --force-reinstall pip 
 RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_VERSION}/requirements.txt && \
-    pip install psycopg2-binary && \
+    pip install psycopg2-binary gssapi && \
     pip install privacyidea==${PI_VERSION} && \
     pip install gunicorn
 
@@ -36,6 +42,15 @@ COPY --chown=privacyidea:privacyidea templates/pi_healthcheck.py /opt/privacyide
 RUN chmod 640 /etc/privacyidea/pi.cfg  
 RUN chmod 755 /opt/privacyidea/entrypoint.sh
 RUN chmod 755 /opt/privacyidea/healthcheck.py
+
+USER root
+
+RUN set -eux; \
+    apt-get remove -y gcc; \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+	rm -rf /var/lib/apt/lists/*; 
+
+USER privacyidea
 
 ADD --chown=privacyidea:privacyidea --chmod=755 https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_VERSION}/deploy/privacyidea/NetKnights.pem /etc/privacyidea/
 

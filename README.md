@@ -147,6 +147,7 @@ make distclean
 | ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional with prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate and **overwrite** secrets in *./secrets* | ```make secret```|
 | ```cert``` | |Generate a self-signed certificate for reverse proxy container in *./ssl*. and **overwrite** the existing one | ```make secret```|
+| ```stack``` |```TAG```| runs a whole stack with environment file *examples/application-prod.env*  | ```make stack TAG=prod```|
 | ```clean``` |```TAG```| Remove container and network without removing the named volumes. Optional change prefix tag of the conatiner name. Defaults to *pi* | ```make clean TAG=prod```|
 | ```distclean``` |```TAG```| Remove container, network **and remove the named volumes**. Optional change prefix tag of the container name. Defaults to *pi* | ```make distclean TAG=prod```|
 
@@ -225,7 +226,7 @@ docker compose -p prod down
 You can start the stack in the background with console detached using **-d** parameter.
 
 ```
-  $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod -d up
+  $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod up -d
 ```
 
 Now you can deploy additional container like OpenLDAP for user realms or Owncloud as a client to test 2fa authentication. 
@@ -290,7 +291,7 @@ Different stacks using always the **same** secrets.
 
 ## Known Bugs
 
-- gssapi is missing - Kerberos authentication is not available
+- not yet 
 
 ## Frequently Asked Questions
 
