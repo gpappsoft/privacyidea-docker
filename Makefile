@@ -9,6 +9,7 @@ SECRET := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
 DB_PASSWORD := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 PI_ADMIN_PASS := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9$!%' | fold -w 16| head -n1)
 REGISTRY := localhost:5000
+PORT := 8080
 TAG := pi
 
 build:
@@ -49,9 +50,9 @@ run:
 			-e PI_LOGLEVEL=DEBUG \
 			-v ${TAG}-pilog:/var/log/privacyidea:rw,Z \
 			-v ${TAG}-piconfig:/etc/privacyidea:rw,Z \
-			-p 8080:8080 \
+			-p ${PORT}:${PORT} \
 			${IMAGE_NAME}
-	@echo Access to privacyIDEA Web-UI: https://localhost:8080
+	@echo Access to privacyIDEA Web-UI: https://localhost:${PORT}
 	@echo Username/Password: admin / admin
 
 clean:

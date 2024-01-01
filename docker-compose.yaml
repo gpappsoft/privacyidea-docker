@@ -19,15 +19,15 @@ services:
       - privacyidea
     healthcheck:
         test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
-        start_period: 20s
-        start_interval: 20s
-        interval: 20s
+        start_period: 12s
+        start_interval: 12s
+        interval: 12s
         timeout: 5s
         retries: 3
     restart: always
 
   privacyidea:
-    image: gpappsoft/privacyidea-docker:${PI_VERSION}
+    image: privacyidea-docker:${PI_VERSION}
     environment:
       PI_BOOTSTRAP: ${PI_BOOTSTRAP:-false}
       PI_UPDATE: ${PI_UPDATE:-false}
@@ -55,9 +55,9 @@ services:
       - privacyidea
     healthcheck:
         test: [ "CMD", "/opt/privacyidea/healthcheck.py" ]
-        start_period: 20s
+        start_period: 12s
         start_interval: 10s
-        interval: 20s
+        interval: 12s
         timeout: 5s
         retries: 3
     restart: always
