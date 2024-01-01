@@ -14,7 +14,7 @@ This project is a complete build environment under linux to build and run privac
 - Build and run the container image simple and fast.
 - Deploy different versions and/or stages (e.g. production, staging, devel ...) with the same or different configuration on the same host.
 - Deploy easy a "full-stack" (e.g. privacyIDEA, radius, database and reverse proxy).
-- Keep the container image simple and slim ( image is ~374 MB ).
+- Keep the container image simple and slim.
 - Build images with no changes on the original privacyIDEA code and as less as possible additional scripts inside the image to run the container. 
 
 **What this project is not:**
