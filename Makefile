@@ -37,6 +37,9 @@ make_secrets:
 	@echo -n "PI admin password: "
 	@echo $(PI_ADMIN_PASS) | tee secrets/pi_admin_pass
 	
+stack:
+	@PI_BOOTSTRAP="true" \
+	${CONTAINER_ENGINE} compose --env-file=examples/application-prod.env -p ${TAG} up -d
 
 run:
 	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
