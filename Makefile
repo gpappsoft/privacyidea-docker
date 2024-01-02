@@ -55,7 +55,7 @@ run:
 			-v ${TAG}-piconfig:/etc/privacyidea:rw,Z \
 			-p ${PORT}:${PORT} \
 			${IMAGE_NAME}
-	@echo Access to privacyIDEA Web-UI: https://localhost:${PORT}
+	@echo Access to privacyIDEA Web-UI: http://localhost:${PORT}
 	@echo Username/Password: admin / admin
 
 clean:
