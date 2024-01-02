@@ -45,6 +45,7 @@ run:
 	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
 			-e PI_PASSWORD=admin \
 			-e PI_ADMIN=admin \
+			-e DB_PASSWORD=none \
 			-e PI_PEPPER=superSecret \
 			-e PI_SECRET=superSecret \
 			-e PI_PORT=8080 \
