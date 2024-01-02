@@ -58,9 +58,9 @@ Sample images from this project can be found here:
 ### Prerequisites
 
 - Installed container runtime engine (e.g. docker / podman).
-- Installed [BuildKit](https://docs.docker.com/build/buildkit/) with buildx and [Compose V2](https://docs.docker.com/compose/install/linux/) (docker-compose-v2) component
+- Installed [BuildKit](https://docs.docker.com/build/buildkit/) , [buildx](https://github.com/docker/buildx) and [Compose V2](https://docs.docker.com/compose/install/linux/) (docker-compose-v2) components
 - The repository is tested with [Docker](https://docker.com) version 24.0.7 running under Debian 12 and Ubuntu 22.04.3 LTS running Docker version 24.0.5
-- Images can be run with [Podman](https://podman.io). It may also run with [podman-compose](https://github.com/containers/podman-compose). 
+- Images can be run with [Podman](https://podman.io). ~It may also run with [podman-compose](https://github.com/containers/podman-compose)~. 
 
 ## Quickstart
 
