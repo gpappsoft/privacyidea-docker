@@ -11,27 +11,27 @@ This project is a complete build environment under linux to build and run privac
 
 **The main goals of this project are to:**
 - Give an idea how to run privacyIDEA in a container.
-- Build and run the container image simple and fast.
+- Build and run the container image, simple and fast.
 - Deploy different versions and/or stages (e.g. production, staging, devel ...) with the same or different configuration on the same host.
-- Deploy easy a "full-stack" (e.g. privacyIDEA, radius, database and reverse proxy).
-- Keep the container image simple and slim.
-- Build images with no changes on the original privacyIDEA code and as less as possible additional scripts inside the image to run the container. 
+- Easy deploy a "full-stack" (e.g. privacyIDEA, radius, database and reverse proxy) with docker compose.
+- Keep the container's image simple and slim.
+- Build images with no changes to the original privacyIDEA code and few additional scripts as possible inside the image to run the container. 
 
 **What this project is not:**
-- A fully tested and "production ready" installation of privacyIDEA for *your* container environment.
+- A fully tested and "production-ready" installation of privacyIDEA for *your* container environment.
 - A possible way to ignore the [privacyIDEA Documentation](https://privacyidea.readthedocs.io/en/latest/)
-- A guide how to use docker
+- A guide on how to use docker
 - The "one and only" or "best" method to run privacyIDEA in a container.
 - Finished ;)
 
 > [!Note] 
 > The image does **not include** a reverse proxy or a database backend. Running the default image as a standalone container uses gunicorn and a sqlite database. This is not suitable for a production environment.
 >
-> A more 'real world' scenario, which is often used is described in the [Compose a privacyIDEA stack](#compose-a-privacyidea-stack) section.
+> A more 'real-world' scenario, which is often used, is described in the [Compose a privacyIDEA stack](#compose-a-privacyidea-stack) section.
 >
 > Also check the [Security considerations](#security-considerations) before running the image or stack in a production environment.
 
-While decoupling the privacyIDEA image from dependencies like Nginx, Apache or a database vendors, it is possible to run privacyIDEA with your favorite components.
+While decoupling the privacyIDEA image from dependencies like Nginx, Apache or database vendors, it is possible to run privacyIDEA with your favorite components.
 
 If you prefer another approach or would like to test another solution, take a look at the [Khalibre / privacyidea-docker](https://github.com/Khalibre/privacyidea-docker) project. This project might be a more suitable solution for your needs.
 
@@ -39,28 +39,29 @@ If you prefer another approach or would like to test another solution, take a lo
 
 | Directory | Description |
 |-----------|-------------|
-| *conf* | contains *pi.cfg* file which is included into the image build process.|
-| *secrets* | contains the secrets for docker compose - this project tries to avoid using env-vars for sensitive data (e.g. passwords)|
+| *conf* | contains *pi.cfg* and *logging.cfg* files which is included in the image build process.|
+| *secrets* | contains the secrets for docker compose - this project tries to avoid using env-vars for sensitive data (passwords)|
+| *scripts* | contains custom scripts for the script-handler. Will be mounted into the container when compose a stack. Scripts must be executable (chmod +x)|
 | *examples* | contains different example-environment files for a whole stack via docker compose|
-|*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without passphrase. \*.pfx is not supported. Name must be *pi.pem* and *pi.key* |
-|*templates*| contains files used for different services (e.g. nginx, radius ...)|
+|*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without a passphrase. \*.pfx is not supported. Name must be *pi.pem* and *pi.key* |
+|*templates*| contains files used for different services (nginx, radius ...)|
 
 ### Images
 Sample images from this project can be found here: 
 | registry | repository |
 |----------|------------|
-| [docker.io](https://hub.docker.com/r/gpappsoft/privacyidea-docker)|```docker pull gpappsoft/privacyidea-docker:latest```
+| [docker.io](https://hub.docker.com/r/gpappsoft/privacyidea-docker)|```docker pull docker.io/gpappsoft/privacyidea-docker:latest```
 | [ghcr.io](https://github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea-docker)| ```docker pull ghcr.io/gpappsoft/privacyidea-docker:latest```|
 
 > [!Note] 
 > ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.9.1```) 
 
-### Prerequisites
+### Prerequisites and requirements
 
-- Installed container runtime engine (e.g. docker / podman).
-- Installed [BuildKit](https://docs.docker.com/build/buildkit/) , [buildx](https://github.com/docker/buildx) and [Compose V2](https://docs.docker.com/compose/install/linux/) (docker-compose-v2) components
-- The repository is tested with [Docker](https://docker.com) version 24.0.7 running under Debian 12 and Ubuntu 22.04.3 LTS running Docker version 24.0.5
-- Images can be run with [Podman](https://podman.io). ~It may also run with [podman-compose](https://github.com/containers/podman-compose)~. 
+- Installed a container runtime engine (docker / podman).
+- Installed [BuildKit](https://docs.docker.com/build/buildkit/), [buildx](https://github.com/docker/buildx) and [Compose V2](https://docs.docker.com/compose/install/linux/) (docker-compose-v2) components
+- The repository is tested with versions listed in [COMPAT.md](COMPAT.md)
+- [Podman](https://podman.io) is partially supported. **Please refer to [PODMAN.md](PODMAN.md) for more details.**
 
 ## Quickstart
 
@@ -84,7 +85,7 @@ user/password: **admin** / **admin**
 
 #### Preferred way
 
-To build an run a simple local privacyIDEA container (can run standalone with sqlite):
+To build and run a simple local privacyIDEA container (which can run standalone with sqlite):
 
 ```
 git clone https://github.com/gpappsoft/privacyidea-docker.git
@@ -93,7 +94,7 @@ make cert secret build run
 ....
 ```
 
-Answer the following question with y:
+Answer the following question with a ```y```:
 ```
 Warning! Overwrite ALL SECRETS  in ./secrets directory: Are you sure? [y/N] y
 ```
@@ -108,7 +109,7 @@ Default admin password is stored in *./secrets/pi_admin_pass*
 
 ## Build images
 
-You can use ```Makefile``` targets to build different images with different privacyIDEA versions.
+You can use *Makefile* targets to build different images with different privacyIDEA versions.
 
 #### Build a specific privacyIDEA version
 ```
@@ -131,7 +132,7 @@ make push REGISTRY=localhost:5000
 ```
 make clean
 ```
-You can start the container with the same database (sqlite) and configuration, use ```make run``` again without bootstrapping the instance.
+You can start the container with the same database (sqlite) and configuration and use ```make run``` again without bootstrapping the instance.
 #### Remove the container including volumes:
 ```
 make distclean
@@ -142,21 +143,21 @@ make distclean
 
 | target | optional ARGS | description | example
 ---------|----------|---|---------
-| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional specify the version and image name| ```make build PI_VERSION=3.9.1```|
-| ```push``` | ```REGISTRY```|Tag and push image to registry. Optional with registry uri. Defaults to *localhost:5000*| ```make push REGISTRY=github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea```|
-| ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional with prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
+| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version and image name| ```make build PI_VERSION=3.9.1```|
+| ```push``` | ```REGISTRY```|Tag and push the image to the registry. Optional: specify the registry URI. Defaults to *localhost:5000*| ```make push REGISTRY=github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea```|
+| ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional: specify the prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate and **overwrite** secrets in *./secrets* | ```make secret```|
-| ```cert``` | |Generate a self-signed certificate for reverse proxy container in *./ssl*. and **overwrite** the existing one | ```make secret```|
-| ```stack``` |```TAG```| runs a whole stack with environment file *examples/application-prod.env*  | ```make stack TAG=prod```|
-| ```clean``` |```TAG```| Remove container and network without removing the named volumes. Optional change prefix tag of the conatiner name. Defaults to *pi* | ```make clean TAG=prod```|
-| ```distclean``` |```TAG```| Remove container, network **and remove the named volumes**. Optional change prefix tag of the container name. Defaults to *pi* | ```make distclean TAG=prod```|
+| ```cert``` | |Generate a self-signed certificate for the reverse proxy container in *./ssl*. and **overwrite** the existing one | ```make secret```|
+| ```stack``` |```TAG```| Run a whole stack with the environment file *examples/application-prod.env*  | ```make stack TAG=prod```|
+| ```clean``` |```TAG```| Remove the container and network without removing the named volumes. Optional: change prefix tag of the container name. Defaults to *pi* | ```make clean TAG=prod```|
+| ```distclean``` |```TAG```| Remove the container, network **and named volumes**. Optional: change prefix tag of the container name. Defaults to *pi* | ```make distclean TAG=prod```|
 
 > [!Important] 
-> Using the image as a standalone container is not production ready. For a more like 'production ready' instance please refer to the next section.
+> Using the image as a standalone container is not production ready. For a more like 'production ready' instance, please refer to the next section.
 
 ## Compose a privacyIDEA stack
 
-By using docker compose you can easy deploy a customized privacyIDEA instance including Nginx as reverse-proxy and MariaDB as a database backend.
+By using docker compose you can easily deploy a customized privacyIDEA instance, including Nginx as a reverse-proxy and MariaDB as a database backend.
 
 With the use of different environment files for different full-stacks,  you can deploy and run multiple stacks at the same time on different ports. 
 
@@ -206,38 +207,50 @@ graph TD;
 Find example .env files in the *examples* directory.
 
 > [!Note]
-> The RADIUS container is not included in this repository at the moment. The freeradius container image including the [privacyIDEA RADIUS-plugin](https://github.com/privacyidea/FreeRADIUS) will be released soon.
+> The RADIUS container is not included in this repository at the moment. The freeradius container image, including the [privacyIDEA RADIUS-plugin](https://github.com/privacyidea/FreeRADIUS), will be released soon.
 
+---
 ### Examples:
+To use this example, you have to run a local registry[^2] and already pushed an image into it with ```make push``` command.
 
-Run a stack with project name *prod* and environment variables files from *examples/application-prod.env*
+Run a stack with project the name *prod* and environment variables files from *examples/application-prod.env*
 
 ```
-  $ make cert secret  #run only once
+  $ make cert secret  #run only once to generate certificate and secrets
   $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod up
 ```
+Alternative you can run the ```make```target:
 
-Shutdown stack with project name *prod* and **remove** all resources (e.g. container,networks ect.) expect the volumes.
+```
+make cert secret stack
+```
+
+Shutdown the stack with the project name *prod* and **remove** all resources (container,networks, etc.) except the volumes.
 
 ```
 docker compose -p prod down 
 ```
 
-You can start the stack in the background with console detached using **-d** parameter.
+You can start the stack in the background with console detached using the **-d** parameter.
 
 ```
   $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod up -d
 ```
 
-Now you can deploy additional container like OpenLDAP for user realms or Owncloud as a client to test 2fa authentication. 
+Full example including build with  ```make```targets:
+```
+make cert secret build push stack PI_VERSION=3.9.1 TAG=pidev
+```
+---
+Now you can deploy additional containers like OpenLDAP for user realms or Owncloud as a client to test 2FA authentication. 
 
 Have fun!
 
 > [!IMPORTANT] 
->- Volumes will not be deleted. You have to take care by yourself.
->- Currently same secrets from *./secrets/* are used for every stack. Future releases will change this behaviour.
->- Delete */etc/privacyidea/BOOTSTRAP* file **inside* the privacyIDEA container, if you want to bootstrap again. This will not delete an existing database!
->- Compose takes some additional time (~1 minute) because of healthchecks.
+>- Volumes will not be deleted. 
+>- Currently same secrets from *./secrets/* are used for every stack. Future releases will change this behavior.
+>- Delete the */etc/privacyidea/BOOTSTRAP* file **inside* the privacyIDEA container if you want to bootstrap again. This will not delete an existing database!
+>- Compose takes some additional time (~1 minute) because of health-checks.
 
 
 ## Environment Variables
@@ -245,16 +258,16 @@ Have fun!
 ### privacyIDEA
 | Variable | Default | Description
 |-----|---------|-------------
-```ENVIRONMENT``` | examples/application-prod.env | Used to set the correct environment file (env_file) in the docker compose which are used by the container. Use relative filename here.
+```ENVIRONMENT``` | examples/application-prod.env | Used to set the correct environment file (env_file) in the docker compose, which is used by the container. Use a relative filename here.
 ```PI_VERSION```|3.9.1| Set the used image version
-```PI_BOOTSTRAP``` | false | Set to ```true``` to create database tables on the first start of the container. If you need to re-run then you have to delete */etc/privacyidea/BOOTSTRAP* file inside the container. 
+```PI_BOOTSTRAP``` | false | Set to ```true``` to create database tables on the first start of the container. If you need to re-run, then you have to delete the */etc/privacyidea/BOOTSTRAP* file inside the container. 
 ```PI_UPDATE```| false | Set to ```true``` to run the database schema upgrade script in case of a new privacyIDEA version. 
-```PI_PASSWORD```|admin| don't use this for productive environments. Use secrets with docker compose / docker swarm instead. See [Security considerations](#security-considerations) for more information.
+```PI_PASSWORD```|admin| Don't use this in productive environments. Use secrets with docker compose / docker swarm instead. See [Security considerations](#security-considerations) for more information.
 ```PI_ADMIN```|admin| login name of the initial administrator
 ```PI_PORT```|8080| Port used by gunicorn. Don't use this directly in productive environments. Use a reverse proxy..
-```PI_LOGLEVEL```|INFO| Log level in uppercase (e.g. DEBUG, INFO, WARNING ect.). ```docker log``` is always ```INFO``` Level because of security. See *conf/logging.cfg* for more details
-```SUPERUSER_REALM```|"admin,helpdesk"| Admin realms which can be used for policies in privacyIDEA. privacyIDEA documentation for more information.
-```PI_SQLALCHEMY_ENGINE_OPTIONS```| False | Set pool_pre_ping option. Set to ```True``` for DB cluster (like Galera).
+```PI_LOGLEVEL```|INFO| Log level in uppercase (DEBUG, INFO, WARNING, ect.). ```docker log``` is always ```INFO``` level because of security. See *conf/logging.cfg* for more details
+```SUPERUSER_REALM```|"admin,helpdesk"| Admin realms, which can be used for policies in privacyIDEA. Comma separated list. See the privacyIDEA documentation for more information.
+```PI_SQLALCHEMY_ENGINE_OPTIONS```| False | Set pool_pre_ping option. Set to ```True``` for DB clusters (like Galera).
 ```PI_PEPPER``` |superSecret | Used for ```PI_PEPPER``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
 ```SECRET_KEY``` | superSecret | Used for ```SECRET_KEY``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
 
@@ -272,7 +285,7 @@ Have fun!
 | Variable | Default | Description
 |-----|---------|-------------
 ```PROXY_PORT```| 8443 | Exposed HTTPS port
-```PROXY_SERVERNAME```| localhost | Set reverse-proxy servername. Should be the common name from the certificate.
+```PROXY_SERVERNAME```| localhost | Set the reverse-proxy server name. Should be the common name used in the certificate.
 
 ### Secrets used by docker compose located in *secrets/*
 | Filename | Default | Description
@@ -285,19 +298,25 @@ Have fun!
 ## Security considerations
 
 #### Secrets 
-The current concept of using secrets with files in the *docker-compose.yaml* is a first approach to reduce the risk of using secrets with environment variables. This may change in future versions.
+The current concept of using secrets with files in *docker-compose.yaml* is a first approach to reducing the risk of using secrets with environment variables. This may change in future versions.
 
-Different stacks using always the **same** secrets. 
+Different stacks always use the **same** secrets. 
 
 ## Known Bugs
 
-- not yet 
+- unkown
 
 ## Frequently Asked Questions
 
-#### How can i rotate the audit log?
+#### Why are not all pi.cfg parameters available as environment variables?
+- I only included the most essential and often-used parameters. You can add more variables to the *conf/pi.conf* file and build your own image.
 
-- Simply use a cron job on the host system with docker excec and the pi-manage command: 
+#### Why not include the scripts for the script-handler in the image?
+- The image should only contain a bare privacyIDEA without custom data. You can add them to the *Dockerfile* file and build your own image.
+
+#### How can I rotate the audit log?
+
+- Simply use a cron job on the host system with docker exec and the pi-manage command: 
 ```
 docker exec -it pi-privacyidea-1 pi-manage audit rotate_audit --age 90
 ```
@@ -310,10 +329,37 @@ docker logs pi-privacyidea-1
 ```
 docker exec -it pi-privacyidea-1 cat /var/log/privacyidea/privacyidea.log
 ```
+#### How can I update the container to a new privacyIDEA version?
+- Build a new image, make a push and pull. Re-create the container with ```PI_UPDATE=true```. This will run the schema update script to update the database.
 
-#### How can i create a backup of my data?
+#### Can I import a privacyIDEA database dump into the database container from the stack?
+- Yes, by providing the sql dump to the db container. Please refer to the *"Initializing the database contents"* section from the official [MariaDB docker documentation](https://hub.docker.com/_/mariadb).
 
-- The pi-manage backup command is not working. You have to dump the database manually. For the example stack use the db container: 
+#### Help! ```make build``` does not work, how can i fix it?
+
+- Check the [Prerequisites and requirements](#prerequisites-and-requirements). Often there is a missing plugin (buildx, compose) - install the plugins and try again:
+```
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+mkdir -p $DOCKER_CONFIG/cli-plugins
+curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+curl -SL https://github.com/docker/buildx/releases/download/v0.12.0/buildx-v0.12.0.linux-amd64 -o $DOCKER_CONFIG/cli-plugins/docker-buildx
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-{buildx,compose}
+```
+
+#### Help! Stack is not starting because of an error like ```permission denied```. How can I fix it?
+
+Check selinux and change the permissions like:
+```
+chcon -R -t container_file_t PATHTOHOSTDIR
+```
+```PATHTOHOSTDIR``` should point to the privacyidea-docker folder.
+
+#### Help! ```Error response from daemon: invalid mount config for type "bind": bind source path does not exist: ...```, how can I fix it?
+
+Check if the required certificates (*pi.key* / *pi.pem*) exists in ssl/
+#### How can I create a backup of my data?
+
+- The pi-manage backup command is not working. You have to dump the database manually. For the example stack, use the db container: 
 
 ```
 docker exec -it pi-db-1 mariadb-dump -u pi -psuperSecret pi
@@ -324,7 +370,7 @@ docker exec -it pi-db-1 mariadb-dump -u pi -psuperSecret pi
 
 #### Customization and scripts
 
-Suppport for [customization](https://privacyidea.readthedocs.io/en/latest/faq/customization.html) and [scripts](https://privacyidea.readthedocs.io/en/latest/eventhandler/scripthandler.html) comming soon.
+Support for [customization](https://privacyidea.readthedocs.io/en/latest/faq/customization.html) comming soon.
 
 #### Radius
 
@@ -334,4 +380,4 @@ Any feedback are welcome!
 
 # Disclaimer
 
-This project is my private project doing in my free time. This project is not a project from the NetKnights company. The project uses the open source version of privacyIDEA. There are no official support from NetKnights for this project available.
+This project is my private project doing in my free time. This project is not from the NetKnights company. The project uses the open-source version of privacyIDEA. There is no official support from NetKnights for this project.
