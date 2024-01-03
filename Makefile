@@ -13,7 +13,7 @@ PORT := 8080
 TAG := pi
 
 build:
-	${BUILDER} . --no-cache -t ${IMAGE_NAME} --build-arg PI_VERSION=${PI_VERSION}
+	${BUILDER} --no-cache -t ${IMAGE_NAME} --build-arg PI_VERSION=${PI_VERSION} .
 
 push:
 	${CONTAINER_ENGINE} tag ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}
@@ -21,21 +21,24 @@ push:
 
 
 cert:
-	@openssl req -x509 -newkey rsa:4096 -keyout ssl/pi.key -out ssl/pi.pem -sha256 -days 3650 -nodes -subj "/C=DE/ST=SomeState/L=SomeCity/O=privacyIDEA/OU=reverseproxy/CN=localhost"
+	@openssl req -x509 -newkey rsa:4096 -keyout ssl/pi.key -out ssl/pi.pem -sha256 -days 3650 -nodes -subj "/C=DE/ST=SomeState/L=SomeCity/O=privacyIDEA/OU=reverseproxy/CN=localhost" 2> /dev/null
+	@echo Certificate generation done...
 
 secret:
 	@echo -n "Warnign! Overwrite ALL SECRETS  in ./secrets directory: Are you sure? [y/N] " && read ans && if [ $${ans:-'N'} = 'y' ]; then make make_secrets; fi
 
 make_secrets:
 	@echo Generate new secrets...
-	@echo -n "SECRET_KEY: "
+	@echo ---------------------------
+	@echo -n "SECRET_KEY: \t\t"
 	@echo $(SECRET) | tee secrets/pi_secret
-	@echo -n "PI_PEPPER: "
+	@echo -n "PI_PEPPER: \t\t"
 	@echo $(PEPPER) | tee secrets/pi_pepper
-	@echo -n "PI database password: "
+	@echo -n "PI database password: \t"
 	@echo $(DB_PASSWORD) | tee secrets/db_password
-	@echo -n "PI admin password: "
+	@echo -n "PI admin password: \t"
 	@echo $(PI_ADMIN_PASS) | tee secrets/pi_admin_pass
+	@echo ---------------------------
 	
 stack:
 	@PI_BOOTSTRAP="true" \
