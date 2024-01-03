@@ -56,7 +56,7 @@ services:
       - piconfig:/etc/privacyidea:rw,Z
       - type: bind
         source: scripts/
-        target: /etc/privacyidea/
+        target: /etc/privacyidea/scripts/
         read_only: true
     depends_on:
       db:
