@@ -75,8 +75,8 @@ services:
   reverse_proxy:
     image: nginx:stable-alpine
     environment:
-      - APP_PORT=${PI_PORT}
-      - SERVERNAME=${PROXY_SERVERNAME:-localhost}
+      APP_PORT: ${PI_PORT}
+      SERVERNAME: ${PROXY_SERVERNAME:-localhost}
     ports:
       - "${PROXY_PORT}:443"
     volumes:
@@ -102,6 +102,55 @@ services:
     networks:
       - privacyidea
     restart: always
+
+  freeradius:
+    image: gpappsoft/privacyidea-freeradius:latest
+    environment:
+      RADIUS_PI_HOST: reverse_proxy
+    ports:
+      - "${RADIUS_PORT:-1812}:1812/tcp"
+      - "${RADIUS_PORT:-1812}:1812/udp"
+      - "${RADIUS_PORT_INC:-1813}:1813/udp"
+    command:
+      # uncomment the two lines below to debug radius
+      #- freeradius
+      #- -X
+    volumes:
+      - type: bind
+        source: ./templates/clients.conf
+        target: /etc/raddb/clients.conf
+        read_only: true
+    depends_on:
+      privacyidea:
+        condition: service_healthy
+    networks:
+      - privacyidea
+    restart: always
+    profiles:
+      - fullstack
+      - radius
+
+  openldap:
+    image: openfrontier/openldap-server:latest
+    environment:
+      SLAPD_DOMAIN: example.org
+      SLAPD_ADDITIONAL_MODULES: memberof
+      SLAPD_ADDITIONAL_SCHEMAS: misc
+      SLAPD_PASSWORD: openldap
+      SLAPD_FORCE_RECONFIGURE: true
+    expose:
+      - 389
+    networks:
+      - privacyidea
+    volumes:
+      - type: bind
+        source: ./templates/sample.ldif
+        target: /etc/ldap.dist/prepopulate/sample.ldif
+        read_only: true
+    restart: always
+    profiles:
+      - fullstack
+      - openldap
 
 secrets:
   db_password:
