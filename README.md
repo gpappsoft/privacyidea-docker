@@ -124,10 +124,7 @@ Push image to local registry on port 5000[^2]
 ```
 make push REGISTRY=localhost:5000
 ``` 
-[^1]: If you push to external registries, you may have to login first.
-[^2]: You can run your own local registry with:
-   ``` docker  run -d -p 5000:5000 --name registry registry:2.7 ```
-   
+
 #### Remove the container:
 ```
 make clean
@@ -357,6 +354,16 @@ chcon -R -t container_file_t PATHTOHOSTDIR
 #### Help! ```Error response from daemon: invalid mount config for type "bind": bind source path does not exist: ...```, how can I fix it?
 
 Check if the required certificates (*pi.key* / *pi.pem*) exists in ssl/
+
+#### Help! ```make push```does not work with my local registry, how can I fix it?
+
+- Maybe you try to use ssl: Use the insecure option in your */etc/containers/registries.conf*: 
+   ```
+   [[registry]]
+   prefix="localhost"
+   location="localhost:5000"
+   insecure=true
+   ```
 #### How can I create a backup of my data?
 
 - The pi-manage backup command is not working. You have to dump the database manually. For the example stack, use the db container: 
@@ -381,3 +388,9 @@ Any feedback are welcome!
 # Disclaimer
 
 This project is my private project doing in my free time. This project is not from the NetKnights company. The project uses the open-source version of privacyIDEA. There is no official support from NetKnights for this project.
+
+[^1]: If you push to external registries, you may have to login first.
+[^2]: You can run your own local registry with:\
+   ``` docker  run -d -p 5000:5000 --name registry registry:2.7 ``` 
+   
+   
