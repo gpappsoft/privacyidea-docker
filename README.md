@@ -71,6 +71,7 @@ Sample images from this project can be found here:
 docker pull docker.io/gpappsoft/privacyidea-docker:3.9.1
 docker run -d --name privacyidea-docker\
             -e PI_REGISTRY_CLASS=null\
+            -e DB_PASSWORD=null\
             -e PI_BOOTSTRAP=true\
             -e PI_PEPPER=superSecret\
             -e PI_SECRET=superSecret\
