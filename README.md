@@ -35,7 +35,15 @@ While decoupling the privacyIDEA image from dependencies like Nginx, Apache or d
 
 If you prefer another approach or would like to test another solution, take a look at the [Khalibre / privacyidea-docker](https://github.com/Khalibre/privacyidea-docker) project. This project might be a more suitable solution for your needs.
 
-### Repository 
+### tl;dr 
+Clone repository and start a full privacyIDEA stack: 
+```
+git clone https://github.com/gpappsoft/privacyidea-docker.git
+cd privacyidea-docker
+make cert secret stack PROFILE=fullstack TAG=prod
+```
+
+## Repository 
 
 | Directory | Description |
 |-----------|-------------|
@@ -46,7 +54,7 @@ If you prefer another approach or would like to test another solution, take a lo
 |*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without a passphrase. \*.pfx is not supported. Name must be *pi.pem* and *pi.key* |
 |*templates*| contains files used for different services (nginx, radius ...)|
 
-### Images
+## Images
 Sample images from this project can be found here: 
 | registry | repository |
 |----------|------------|
@@ -56,14 +64,16 @@ Sample images from this project can be found here:
 > [!Note] 
 > ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.9.1```) 
 
+
+
+## Quickstart
+
 ### Prerequisites and requirements
 
 - Installed a container runtime engine (docker / podman).
 - Installed [BuildKit](https://docs.docker.com/build/buildkit/), [buildx](https://github.com/docker/buildx) and [Compose V2](https://docs.docker.com/compose/install/linux/) (docker-compose-v2) components
 - The repository is tested with versions listed in [COMPAT.md](COMPAT.md)
 - [Podman](https://podman.io) is partially supported. **Please refer to [PODMAN.md](PODMAN.md) for more details.**
-
-## Quickstart
 
 #### Quick & Dirty
 
@@ -137,16 +147,16 @@ make distclean
 ```
 &#9432; This will wipe the whole container including the volumes!
 
-### Overview targets
+## Overview ```make``` targets
 
 | target | optional ARGS | description | example
 ---------|----------|---|---------
 | ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version and image name| ```make build PI_VERSION=3.9.1```|
-| ```push``` | ```REGISTRY```|Tag and push the image to the registry. Optional: specify the registry URI. Defaults to *localhost:5000*| ```make push REGISTRY=github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea```|
+| ```push``` | ```REGISTRY```|Tag and push the image to the registry. Optional: specify the registry URI. Defaults to *localhost:5000*| ```make push REGISTRY=docker.io/gpappsoft/privacyidea-docker```|
 | ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional: specify the prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate and **overwrite** secrets in *./secrets* | ```make secret```|
 | ```cert``` | |Generate a self-signed certificate for the reverse proxy container in *./ssl*. and **overwrite** the existing one | ```make secret```|
-| ```stack``` |```TAG```| Run a whole stack with the environment file *examples/application-prod.env*  | ```make stack TAG=prod```|
+| ```stack``` |```TAG``` ```PROFILE```| Run a whole stack with the environment file *examples/application-*```TAG```*.env*. Default is *prod*. Possible ```PROFILE``` values: ``` stack,fullstack,ldap,radius``` | ```make stack```, ```make stack TAG=dev PROFILE=fullstack``` , ```make stack TAG=prod PROFILE=stack,radius```|
 | ```clean``` |```TAG```| Remove the container and network without removing the named volumes. Optional: change prefix tag of the container name. Defaults to *pi* | ```make clean TAG=prod```|
 | ```distclean``` |```TAG```| Remove the container, network **and named volumes**. Optional: change prefix tag of the container name. Defaults to *pi* | ```make distclean TAG=prod```|
 
@@ -162,54 +172,72 @@ With the use of different environment files for different full-stacks,  you can 
 ```mermaid
 graph TD;
   a2("--env-file=examples/application-dev.env");
-  w3(https://localhost:8444);
-  w4(RADIUS  1813);
-  subgraph s3 [stack 2];
+  w4(https://localhost:8444);
+  w5(RADIUS  2812);
+  w6(LDAP 2389);
+  subgraph s3 [ ];
        r2(RADIUS);
-       n4(NGINX);
-       n5(privacyIDEA);
-       n6(MariaDB);
+       n5(NGINX);
+       n6(LDAP);
+       n7(privacyIDEA);
+       n8(MariaDB);
+  st2[stack 2];
   end;
+  
   a1("--env-file=examples/application-prod.env");
   w1(https://localhost:8443);
   w2(RADIUS 1812);
-  subgraph s1 [stack 1];
+  w3(LDAP 1389);
+  subgraph s1 [ ];
        r1(RADIUS);
        n1(NGINX);
-       n2(privacyIDEA);
-       n3(MariaDB);
+       n2(LDAP);
+       n3(privacyIDEA);
+       n4(MariaDB);
+  st1[Stack 1];
   end;
-
+  
   a1~~~w1;
   a1~~~w2;
-  a2~~~w3;
+  a1~~~w3;
+
   a2~~~w4;
+  a2~~~w5;
+  a2~~~w6;
 
-  w3<-->n4<-- reverse proxy -->n5(privacyIDEA\nwith gunicorn on port 8080)<-->n6
-  w4<-->r2<-- privacyIDEA Radius -->n5(privacyIDEA\nwith gunicorn on port 8080)       
+  w1<-- API / WebUI -->n1<-- reverse proxy -->n3(privacyIDEA)<-->n4
+  w2<-- radius auth -->r1<-- privacyIDEA Radius -->n3
+  w3<-- for clients -->n2<-- resolver -->n3
 
-  w1<-->n1<-- reverse proxy -->n2(privacyIDEA\nwith gunicorn on port 8080)<-->n3
-  w2<-->r1<-- privacyIDEA Radius -->n2(privacyIDEA\nwith gunicorn on port 8080)
-  
+  w4<-- API / WebUI -->n5<-- reverse proxy -->n7(privacyIDEA)<-->n8
+  w5<-- radius auth -->r2<-- privacyIDEA Radius -->n7
+  w6<-- for clients -->n6<-- resolver -->n7
+
   classDef plain font-size:12px,fill:#ddd,stroke:#fff,stroke-width:4px,color:#000;
-  classDef heading font-size:12px,fill:#9db668,stroke:#fff,stroke-width:4px,color:#fff;
+  classDef heading font-size:12px,fill:#9db668,stroke:#fff,stroke-width:1px,color:#fff;
   classDef title font-size:16px,color:#000,background-color:#9db668,stroke:#ffff;
-  classDef docker fill:#265a88,stroke:#fff,stroke-width:4px,color:#fff;
+  classDef docker fill:#265a88,stroke:#fff,stroke-width:2px,color:#fff;
+  classDef second fill:#dba614,stroke:#fff,stroke-width:2px,color:#fff;
+  classDef tags fill:#dba614,stroke:#fff,stroke-width:2px,color:#fff;
   classDef cluster fill:#fff,stroke:#888,stroke-width:2px,color:#265a88;
-  class w1,w2,w3,w4 plain;
-  class n1,n2,n3,n4,n5,n6,r1,r2,t1 docker;
+  class w1,w2,w3,w4,w5,w6 plain;
+  class r1,n2,r2,n6 second;
+  class n1,n3,n4,n5,n6,n7,n8,r2,t1 docker;
   class s1,s2,s3,s4 title;
-  class a1,a2 heading;
+  class a1,a2,st1,st2 heading;
 ```
 
 Find example .env files in the *examples* directory.
 
 > [!Note]
-> The RADIUS container is not included in this repository at the moment. The freeradius container image, including the [privacyIDEA RADIUS-plugin](https://github.com/privacyidea/FreeRADIUS), will be released soon.
+> The optional RADIUS and LDAP container is only available with ```PROFILE=fullstack|ldap|radius```. See examples below.
+- The radius container uses the image from [privacyidea-freeradius](https://github.com/gpappsoft/privacyidea-freeradius).
+- The openldap uses the [osicia/docker-openldap](https://github.com/osixia/docker-openldap) image.
 
 ---
 ### Examples:
-To use this example, you have to run a local registry[^2] and already pushed an image into it with ```make push``` command.
+> [!Note]
+> The *docker-compose.yaml*, used in this example, always use images from external registries. Change docker-compose.yaml to use your own images.
 
 Run a stack with project the name *prod* and environment variables files from *examples/application-prod.env*
 
@@ -217,11 +245,20 @@ Run a stack with project the name *prod* and environment variables files from *e
   $ make cert secret  #run only once to generate certificate and secrets
   $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod up
 ```
-Alternative you can run the ```make```target:
+Or simple run a ```make```target.
 
+This example will start a stack including **privacyIDEA**, **reverse_proxy** and **mariadb** container:
 ```
 make cert secret stack
 ```
+
+This example will start a full stack including **privacyIDEA**, **reverse_proxy**, **mariadb**, **ldap** and **radius**. Project tag is *prod*
+
+```
+make cert secret stack PROFILE=fullstack TAG=prod
+```
+> [!Note]
+> The ldap have sample users. The resolvers and realm are already configured in privacyIDEA when stack is ready.
 
 Shutdown the stack with the project name *prod* and **remove** all resources (container,networks, etc.) except the volumes.
 
@@ -279,11 +316,22 @@ Have fun!
 ```DB_API```| Database driver (e.g. ```mysql+pymysql```)
 ```DB_EXTRA_PARAM```| Extra parameter (e.g. ```"?charset=utf8"```). Will be appended to the SQLAlchemy URI (see pi.cfg)
 
-### Reverse proxy parameters
+### Reverse proxy parameters (for compose/stack)
 | Variable | Default | Description
 |-----|---------|-------------
 ```PROXY_PORT```| 8443 | Exposed HTTPS port
 ```PROXY_SERVERNAME```| localhost | Set the reverse-proxy server name. Should be the common name used in the certificate.
+
+### RADIUS parameters (for compose/fullstack)
+| Variable | Default | Description
+|-----|---------|-------------
+```RADIUS_PORT```| 1812 | Exposed (external) radius port tcp/udp
+```RADIUS_PORT```| 1813 | Additional exposed (external) radius port udp
+
+### LDAP parameters (for compose/fullstack)
+| Variable | Default | Description
+|-----|---------|-------------
+```LDAP_PORT```| 1389 | Exposed (external) ldap port
 
 ### Secrets used by docker compose located in *secrets/*
 | Filename | Default | Description
@@ -292,6 +340,10 @@ Have fun!
 | *pi_admin_pass*| admin | The password for the initial admin
 | *pi_pepper*| superSecret | The PI_PEPPER secret for pi.cfg
 | *pi_secret*| superSecret | The SECRET_KEY secret for pi.cfg
+
+### Other values (for compose/fullstack)
+
+Openldap admin user: ```cn=admin,dc=example,dc=org``` with password ```openldap```
 
 ## Security considerations
 
