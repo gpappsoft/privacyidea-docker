@@ -34,15 +34,6 @@ This project is a complete build environment under linux to build and run privac
 While decoupling the privacyIDEA image from dependencies like Nginx, Apache or database vendors, it is possible to run privacyIDEA with your favorite components.
 
 If you prefer another approach or would like to test another solution, take a look at the [Khalibre / privacyidea-docker](https://github.com/Khalibre/privacyidea-docker) project. This project might be a more suitable solution for your needs.
-
-### tl;dr 
-Clone repository and start a full privacyIDEA stack: 
-```
-git clone https://github.com/gpappsoft/privacyidea-docker.git
-cd privacyidea-docker
-make cert secret stack PROFILE=fullstack TAG=prod
-```
-
 ## Repository 
 
 | Directory | Description |
