@@ -35,7 +35,15 @@ While decoupling the privacyIDEA image from dependencies like Nginx, Apache or d
 
 If you prefer another approach or would like to test another solution, take a look at the [Khalibre / privacyidea-docker](https://github.com/Khalibre/privacyidea-docker) project. This project might be a more suitable solution for your needs.
 
-### Repository 
+### tl;dr 
+Clone repository and start a full privacyIDEA stack: 
+```
+git clone https://github.com/gpappsoft/privacyidea-docker.git
+cd privacyidea-docker
+make cert secret stack PROFILE=fullstack TAG=prod
+```
+
+## Repository 
 
 | Directory | Description |
 |-----------|-------------|
@@ -46,7 +54,7 @@ If you prefer another approach or would like to test another solution, take a lo
 |*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without a passphrase. \*.pfx is not supported. Name must be *pi.pem* and *pi.key* |
 |*templates*| contains files used for different services (nginx, radius ...)|
 
-### Images
+## Images
 Sample images from this project can be found here: 
 | registry | repository |
 |----------|------------|
@@ -56,14 +64,16 @@ Sample images from this project can be found here:
 > [!Note] 
 > ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.9.1```) 
 
+
+
+## Quickstart
+
 ### Prerequisites and requirements
 
 - Installed a container runtime engine (docker / podman).
 - Installed [BuildKit](https://docs.docker.com/build/buildkit/), [buildx](https://github.com/docker/buildx) and [Compose V2](https://docs.docker.com/compose/install/linux/) (docker-compose-v2) components
 - The repository is tested with versions listed in [COMPAT.md](COMPAT.md)
 - [Podman](https://podman.io) is partially supported. **Please refer to [PODMAN.md](PODMAN.md) for more details.**
-
-## Quickstart
 
 #### Quick & Dirty
 
@@ -137,7 +147,7 @@ make distclean
 ```
 &#9432; This will wipe the whole container including the volumes!
 
-### Overview targets
+## Overview ```make``` targets
 
 | target | optional ARGS | description | example
 ---------|----------|---|---------
@@ -306,11 +316,22 @@ Have fun!
 ```DB_API```| Database driver (e.g. ```mysql+pymysql```)
 ```DB_EXTRA_PARAM```| Extra parameter (e.g. ```"?charset=utf8"```). Will be appended to the SQLAlchemy URI (see pi.cfg)
 
-### Reverse proxy parameters
+### Reverse proxy parameters (for compose/stack)
 | Variable | Default | Description
 |-----|---------|-------------
 ```PROXY_PORT```| 8443 | Exposed HTTPS port
 ```PROXY_SERVERNAME```| localhost | Set the reverse-proxy server name. Should be the common name used in the certificate.
+
+### RADIUS parameters (for compose/fullstack)
+| Variable | Default | Description
+|-----|---------|-------------
+```RADIUS_PORT```| 1812 | Exposed (external) radius port tcp/udp
+```RADIUS_PORT```| 1813 | Additional exposed (external) radius port udp
+
+### LDAP parameters (for compose/fullstack)
+| Variable | Default | Description
+|-----|---------|-------------
+```LDAP_PORT```| 1389 | Exposed (external) ldap port
 
 ### Secrets used by docker compose located in *secrets/*
 | Filename | Default | Description
@@ -319,6 +340,10 @@ Have fun!
 | *pi_admin_pass*| admin | The password for the initial admin
 | *pi_pepper*| superSecret | The PI_PEPPER secret for pi.cfg
 | *pi_secret*| superSecret | The SECRET_KEY secret for pi.cfg
+
+### Other values (for compose/fullstack)
+
+Openldap admin user: ```cn=admin,dc=example,dc=org``` with password ```openldap```
 
 ## Security considerations
 

@@ -46,7 +46,7 @@ stack:
 	${CONTAINER_ENGINE} compose --env-file=examples/application-${TAG}.env -p ${TAG} --profile=${PROFILE} up -d
 	@${CONTAINER_ENGINE} exec -d ${TAG}-privacyidea-1 /bin/bash -c -i "pi-manage config importer -i /etc/privacyidea/resolver.json &>/dev/null" &>/dev/null
 	@echo 
-	@echo Access to privacyIDEA Web-UI: http://localhost:${PORT}
+	@echo Access to privacyIDEA Web-UI: http://localhost:8443
 	@echo -n "Username/Password: admin / "
 	@cat secrets/pi_admin_pass
     

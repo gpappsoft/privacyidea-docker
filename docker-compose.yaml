@@ -159,7 +159,7 @@ services:
       LDAP_ORGANISATION: "Example Inc."
       LDAP_DOMAIN: "example.org"
       LDAP_BASE_DN: "dc=example,dc=org"
-      LDAP_ADMIN_PASSWORD_FILE: /run/secrets/db_password
+      LDAP_ADMIN_PASSWORD_FILE: "openldap"
       LDAP_CONFIG_PASSWORD: "config"
       LDAP_READONLY_USER: "false"
       LDAP_SEED_INTERNAL_LDIF_PATH: /ldif
@@ -176,8 +176,6 @@ services:
         target: /ldif/sample.ldif
         read_only: true
     restart: always
-    secrets:
-      - db_password
     profiles:
       - fullstack
       - ldap
