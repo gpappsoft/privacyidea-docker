@@ -25,9 +25,14 @@ services:
         timeout: 5s
         retries: 3
     restart: always
+    profiles:
+      - fullstack
+      - stack
+      - radius
+      - openldap
 
   privacyidea:
-    image: privacyidea-docker:${PI_VERSION}
+    image: gpappsoft/privacyidea-docker:${PI_VERSION}
     deploy:
       restart_policy:
         condition: on-failure
@@ -58,6 +63,10 @@ services:
         source: scripts/
         target: /etc/privacyidea/scripts/
         read_only: true
+      - type: bind
+        source: templates/resolver.json
+        target: /etc/privacyidea/resolver.json
+        read_only: true
     depends_on:
       db:
         condition: service_healthy
@@ -71,6 +80,11 @@ services:
         timeout: 5s
         retries: 3
     restart: always
+    profiles:
+      - fullstack
+      - stack
+      - radius
+      - openldap
 
   reverse_proxy:
     image: nginx:stable-alpine
@@ -102,6 +116,11 @@ services:
     networks:
       - privacyidea
     restart: always
+    profiles:
+      - fullstack
+      - stack
+      - radius
+      - openldap
 
   freeradius:
     image: gpappsoft/privacyidea-freeradius:latest
@@ -131,27 +150,38 @@ services:
       - radius
 
   openldap:
-    image: openfrontier/openldap-server:latest
+    image: osixia/openldap:latest
     environment:
-      SLAPD_DOMAIN: example.org
-      SLAPD_ADDITIONAL_MODULES: memberof
-      SLAPD_ADDITIONAL_SCHEMAS: misc
-      SLAPD_PASSWORD: openldap
-      SLAPD_FORCE_RECONFIGURE: true
-    expose:
-      - 389
+      KEEP_EXISTING_CONFIG: "false"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+      LDAP_SSL_HELPER_PREFIX: "ldap"
+      LDAP_LOG_LEVEL: "0"
+      LDAP_ORGANISATION: "Example Inc."
+      LDAP_DOMAIN: "example.org"
+      LDAP_BASE_DN: "dc=example,dc=org"
+      LDAP_ADMIN_PASSWORD_FILE: /run/secrets/db_password
+      LDAP_CONFIG_PASSWORD: "config"
+      LDAP_READONLY_USER: "false"
+      LDAP_SEED_INTERNAL_LDIF_PATH: /ldif
+      LDAP_RFC2307BIS_SCHEMA: "true"
+    tty: true
+    stdin_open: true
+    ports:
+      - "${LDAP_PORT}:389"
     networks:
       - privacyidea
     volumes:
       - type: bind
         source: ./templates/sample.ldif
-        target: /etc/ldap.dist/prepopulate/sample.ldif
+        target: /ldif/sample.ldif
         read_only: true
     restart: always
+    secrets:
+      - db_password
     profiles:
       - fullstack
-      - openldap
-
+      - ldap
+    
 secrets:
   db_password:
     file: secrets/db_password

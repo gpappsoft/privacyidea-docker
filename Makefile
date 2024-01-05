@@ -10,7 +10,8 @@ DB_PASSWORD := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head
 PI_ADMIN_PASS := $(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9$!%' | fold -w 16| head -n1)
 REGISTRY := localhost:5000
 PORT := 8080
-TAG := pi
+TAG := prod
+PROFILE := stack
 
 build:
 	${BUILDER} --no-cache -t ${IMAGE_NAME} --build-arg PI_VERSION=${PI_VERSION} .
@@ -42,8 +43,14 @@ make_secrets:
 	
 stack:
 	@PI_BOOTSTRAP="true" \
-	${CONTAINER_ENGINE} compose --env-file=examples/application-prod.env -p ${TAG} up -d
-
+	${CONTAINER_ENGINE} compose --env-file=examples/application-${TAG}.env -p ${TAG} --profile=${PROFILE} up -d
+	@${CONTAINER_ENGINE} exec -d ${TAG}-privacyidea-1 /bin/bash -c -i "pi-manage config importer -i /etc/privacyidea/resolver.json &>/dev/null" &>/dev/null
+	@echo 
+	@echo Access to privacyIDEA Web-UI: http://localhost:${PORT}
+	@echo -n "Username/Password: admin / "
+	@cat secrets/pi_admin_pass
+    
+	
 run:
 	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
 			-e PI_PASSWORD=admin \
