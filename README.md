@@ -233,8 +233,8 @@ Find example .env files in the *examples* directory.
 
 > [!Note]
 > The optional RADIUS and LDAP container is only available with ```PROFILE=fullstack|ldap|radius```. See examples below.
-- The radius container uses the image from [privacyidea-freeradius](https://github.com/gpappsoft/privacyidea-freeradius).
-- The openldap uses the [osicia/docker-openldap](https://github.com/osixia/docker-openldap) image.
+- The radius container use the image from [privacyidea-freeradius](https://github.com/gpappsoft/privacyidea-freeradius).
+- The openldap use the [osicia/docker-openldap](https://github.com/osixia/docker-openldap) image.
 
 ---
 ### Examples:
