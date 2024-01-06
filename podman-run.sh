@@ -8,7 +8,7 @@ done
 
 if [ "$1" == "fullstack" ]
 then
-    FULLSTACK="-p 1812:1812/tcp -p 1812:1812/udp -p 1813:1813/udp -p 1389:1389"
+    FULLSTACK="-p 1812:1812/tcp -p 1812:1812/udp -p 1813:1813/udp -p 1389:389"
  
     podman pod create -p 8443:443 $FULLSTACK pi
  
