@@ -52,7 +52,7 @@ make cert secret stack PROFILE=fullstack TAG=prod
 | *conf* | contains *pi.cfg* and *logging.cfg* files which is included in the image build process.|
 | *secrets* | contains the secrets for docker compose - this project tries to avoid using env-vars for sensitive data (passwords)|
 | *scripts* | contains custom scripts for the script-handler. Will be mounted into the container when compose a stack. Scripts must be executable (chmod +x)|
-| *examples* | contains different example-environment files for a whole stack via docker compose|
+| *environment* | contains different example-environment files for a whole stack via docker compose|
 |*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without a passphrase. \*.pfx is not supported. Name must be *pi.pem* and *pi.key* |
 |*templates*| contains files used for different services (nginx, radius ...)|
 
@@ -85,8 +85,8 @@ docker run -d --name privacyidea-docker\
             -e PI_REGISTRY_CLASS=null\
             -e DB_PASSWORD=null\
             -e PI_BOOTSTRAP=true\
-            -e PI_PEPPER=superSecret\
-            -e PI_SECRET=superSecret\
+            -e PI_PEPPER=null\
+            -e PI_SECRET=null\
 			-v pi-pilog:/var/log/privacyidea:rw,Z\
 			-v pi-piconfig:/etc/privacyidea:rw,Z\
 			-p 8080:8080\
@@ -158,7 +158,7 @@ make distclean
 | ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional: specify the prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate and **overwrite** secrets in *./secrets* | ```make secret```|
 | ```cert``` | |Generate a self-signed certificate for the reverse proxy container in *./ssl*. and **overwrite** the existing one | ```make secret```|
-| ```stack``` |```TAG``` ```PROFILE```| Run a whole stack with the environment file *examples/application-*```TAG```*.env*. Default is *prod*. Possible ```PROFILE``` values: ``` stack,fullstack,ldap,radius``` | ```make stack```, ```make stack TAG=dev PROFILE=fullstack``` , ```make stack TAG=prod PROFILE=stack,radius```|
+| ```stack``` |```TAG``` ```PROFILE```| Run a whole stack with the environment file *environment/application-*```TAG```*.env*. Default is *prod*. Possible ```PROFILE``` values: ``` stack,fullstack,ldap,radius``` | ```make stack```, ```make stack TAG=dev PROFILE=fullstack``` , ```make stack TAG=prod PROFILE=stack,radius```|
 | ```clean``` |```TAG```| Remove the container and network without removing the named volumes. Optional: change prefix tag of the container name. Defaults to *pi* | ```make clean TAG=prod```|
 | ```distclean``` |```TAG```| Remove the container, network **and named volumes**. Optional: change prefix tag of the container name. Defaults to *pi* | ```make distclean TAG=prod```|
 
@@ -173,7 +173,7 @@ With the use of different environment files for different full-stacks,  you can 
 
 ```mermaid
 graph TD;
-  a2("--env-file=examples/application-dev.env");
+  a2("--env-file=environment/application-dev.env");
   w4(https://localhost:8444);
   w5(RADIUS  2812);
   w6(LDAP 2389);
@@ -186,7 +186,7 @@ graph TD;
   st2[stack 2];
   end;
   
-  a1("--env-file=examples/application-prod.env");
+  a1("--env-file=environment/application-prod.env");
   w1(https://localhost:8443);
   w2(RADIUS 1812);
   w3(LDAP 1389);
@@ -229,7 +229,7 @@ graph TD;
   class a1,a2,st1,st2 heading;
 ```
 
-Find example .env files in the *examples* directory.
+Find example .env files in the *environment* directory.
 
 > [!Note]
 > The optional RADIUS and LDAP container is only available with ```PROFILE=fullstack|ldap|radius```. See examples below.
@@ -241,11 +241,11 @@ Find example .env files in the *examples* directory.
 > [!Note]
 > The *docker-compose.yaml*, used in this example, always use images from external registries. Change docker-compose.yaml to use your own images.
 
-Run a stack with project the name *prod* and environment variables files from *examples/application-prod.env*
+Run a stack with project the name *prod* and environment variables files from *environment/application-prod.env*
 
 ```
   $ make cert secret  #run only once to generate certificate and secrets
-  $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod up
+  $ PI_BOOTSTRAP=true docker compose --env-file=environment/application-prod.env -p prod up
 ```
 Or simple run a ```make```target.
 
@@ -271,7 +271,7 @@ docker compose -p prod down
 You can start the stack in the background with console detached using the **-d** parameter.
 
 ```
-  $ PI_BOOTSTRAP=true docker compose --env-file=examples/application-prod.env -p prod up -d
+  $ PI_BOOTSTRAP=true docker compose --env-file=environment/application-prod.env -p prod up -d
 ```
 
 Full example including build with  ```make```targets:
@@ -295,7 +295,7 @@ Have fun!
 ### privacyIDEA
 | Variable | Default | Description
 |-----|---------|-------------
-```ENVIRONMENT``` | examples/application-prod.env | Used to set the correct environment file (env_file) in the docker compose, which is used by the container. Use a relative filename here.
+```ENVIRONMENT``` | environment/application-prod.env | Used to set the correct environment file (env_file) in the docker compose, which is used by the container. Use a relative filename here.
 ```PI_VERSION```|3.9.1| Set the used image version
 ```PI_BOOTSTRAP``` | false | Set to ```true``` to create database tables on the first start of the container. If you need to re-run, then you have to delete the */etc/privacyidea/BOOTSTRAP* file inside the container. 
 ```PI_UPDATE```| false | Set to ```true``` to run the database schema upgrade script in case of a new privacyIDEA version. 
@@ -305,8 +305,8 @@ Have fun!
 ```PI_LOGLEVEL```|INFO| Log level in uppercase (DEBUG, INFO, WARNING, ect.). ```docker log``` is always ```INFO``` level because of security. See *conf/logging.cfg* for more details
 ```SUPERUSER_REALM```|"admin,helpdesk"| Admin realms, which can be used for policies in privacyIDEA. Comma separated list. See the privacyIDEA documentation for more information.
 ```PI_SQLALCHEMY_ENGINE_OPTIONS```| False | Set pool_pre_ping option. Set to ```True``` for DB clusters (like Galera).
-```PI_PEPPER``` |superSecret | Used for ```PI_PEPPER``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
-```SECRET_KEY``` | superSecret | Used for ```SECRET_KEY``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
+```PI_PEPPER``` | /run/secrets/pi_pepper | Used for ```PI_PEPPER``` in pi.cfg. The filename, including the path, to the file **inside** the container, with the secret. Use `make secrets` to generate new secret file. See [Security considerations](#security-considerations) for more information.
+```SECRET_KEY``` | /run/secrets/pi_secret | Used for ```SECRET_KEY``` in pi.cfg. The filename, including the path, to the file **inside** the container, with the secret. Use `make secrets` to generate new secret file. See [Security considerations](#security-considerations) for more information.
 
 ### DB connection parameters
 | Variable | Description
@@ -315,6 +315,7 @@ Have fun!
 ```DB_PORT```| Database port
 ```DB_NAME```| Database name
 ```DB_USER```| Database user
+```DB_PASSWORD```| The filename, including the path, to the file **inside** the container, with the database password.
 ```DB_API```| Database driver (e.g. ```mysql+pymysql```)
 ```DB_EXTRA_PARAM```| Extra parameter (e.g. ```"?charset=utf8"```). Will be appended to the SQLAlchemy URI (see pi.cfg)
 

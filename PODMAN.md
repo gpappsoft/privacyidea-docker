@@ -36,4 +36,4 @@ make run CONTAINER_ENGINE=podman
 ## Running a full stack with Podman 
 
 There is no full stack provided by this project at the moment. \
-Maybe in the future I will provide a short HOWTO here and a k8s yaml file for kube play. Also the same for a helm chart.  :thinking: 
+Maybe in the future I will provide a short HOWTO here and a k8s yaml file for kube play. Helm chart in progress...

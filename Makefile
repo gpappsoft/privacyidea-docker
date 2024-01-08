@@ -43,7 +43,7 @@ make_secrets:
 	
 stack:
 	@PI_BOOTSTRAP="true" \
-	${CONTAINER_ENGINE} compose --env-file=examples/application-${TAG}.env -p ${TAG} --profile=${PROFILE} up -d
+	${CONTAINER_ENGINE} compose --env-file=environment/application-${TAG}.env -p ${TAG} --profile=${PROFILE} up -d
 	@${CONTAINER_ENGINE} exec -d ${TAG}-privacyidea-1 /bin/bash -c -i "pi-manage config importer -i /etc/privacyidea/resolver.json &>/dev/null" &>/dev/null
 	@echo 
 	@echo Access to privacyIDEA Web-UI: https://localhost:8443
