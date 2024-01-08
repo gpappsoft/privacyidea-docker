@@ -41,7 +41,7 @@ Clone repository and start a full privacyIDEA stack:
 ```
 git clone https://github.com/gpappsoft/privacyidea-docker.git
 cd privacyidea-docker
-make cert secret stack PROFILE=fullstack TAG=prod
+make cert secret fullstack
 ```
 
 

@@ -44,12 +44,21 @@ make_secrets:
 stack:
 	@PI_BOOTSTRAP="true" \
 	${CONTAINER_ENGINE} compose --env-file=environment/application-${TAG}.env -p ${TAG} --profile=${PROFILE} up -d
+	@echo 
+	@echo Access to privacyIDEA Web-UI: https://localhost:8443
+	@echo -n "Username/Password: admin / "
+	@cat secrets/pi_admin_pass
+
+fullstack:
+	@PI_BOOTSTRAP="true" \
+	${CONTAINER_ENGINE} compose --env-file=environment/application-${TAG}.env -p ${TAG} --profile=fullstack up -d
 	@${CONTAINER_ENGINE} exec -d ${TAG}-privacyidea-1 /bin/bash -c -i "pi-manage config importer -i /etc/privacyidea/resolver.json &>/dev/null" &>/dev/null
 	@echo 
 	@echo Access to privacyIDEA Web-UI: https://localhost:8443
 	@echo -n "Username/Password: admin / "
 	@cat secrets/pi_admin_pass
-    
+
+
 	
 run:
 	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
