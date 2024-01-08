@@ -85,8 +85,8 @@ docker run -d --name privacyidea-docker\
             -e PI_REGISTRY_CLASS=null\
             -e DB_PASSWORD=null\
             -e PI_BOOTSTRAP=true\
-            -e PI_PEPPER=superSecret\
-            -e PI_SECRET=superSecret\
+            -e PI_PEPPER=null\
+            -e PI_SECRET=null\
 			-v pi-pilog:/var/log/privacyidea:rw,Z\
 			-v pi-piconfig:/etc/privacyidea:rw,Z\
 			-p 8080:8080\
@@ -305,8 +305,8 @@ Have fun!
 ```PI_LOGLEVEL```|INFO| Log level in uppercase (DEBUG, INFO, WARNING, ect.). ```docker log``` is always ```INFO``` level because of security. See *conf/logging.cfg* for more details
 ```SUPERUSER_REALM```|"admin,helpdesk"| Admin realms, which can be used for policies in privacyIDEA. Comma separated list. See the privacyIDEA documentation for more information.
 ```PI_SQLALCHEMY_ENGINE_OPTIONS```| False | Set pool_pre_ping option. Set to ```True``` for DB clusters (like Galera).
-```PI_PEPPER``` |superSecret | Used for ```PI_PEPPER``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
-```SECRET_KEY``` | superSecret | Used for ```SECRET_KEY``` in pi.cfg. Use `make secrets` to generate new secrets. See [Security considerations](#security-considerations) for more information.
+```PI_PEPPER``` | /run/secrets/pi_pepper | Used for ```PI_PEPPER``` in pi.cfg. The filename, including the path, to the file **inside** the container, with the secret. Use `make secrets` to generate new secret file. See [Security considerations](#security-considerations) for more information.
+```SECRET_KEY``` | /run/secrets/pi_secret | Used for ```SECRET_KEY``` in pi.cfg. The filename, including the path, to the file **inside** the container, with the secret. Use `make secrets` to generate new secret file. See [Security considerations](#security-considerations) for more information.
 
 ### DB connection parameters
 | Variable | Description
@@ -315,6 +315,7 @@ Have fun!
 ```DB_PORT```| Database port
 ```DB_NAME```| Database name
 ```DB_USER```| Database user
+```DB_PASSWORD```| The filename, including the path, to the file **inside** the container, with the database password.
 ```DB_API```| Database driver (e.g. ```mysql+pymysql```)
 ```DB_EXTRA_PARAM```| Extra parameter (e.g. ```"?charset=utf8"```). Will be appended to the SQLAlchemy URI (see pi.cfg)
 
