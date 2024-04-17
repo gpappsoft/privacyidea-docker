@@ -1,4 +1,4 @@
-PI_VERSION := 3.9.2
+PI_VERSION := 3.9.3
 IMAGE_NAME := privacyidea-docker:${PI_VERSION}
 
 BUILDER := docker build
