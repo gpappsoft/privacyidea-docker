@@ -64,7 +64,7 @@ Sample images from this project can be found here:
 | [ghcr.io](https://github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea-docker)| ```docker pull ghcr.io/gpappsoft/privacyidea-docker:latest```|
 
 > [!Note] 
-> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.9.3```) 
+> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.10```) 
 
 
 
@@ -80,7 +80,7 @@ Sample images from this project can be found here:
 #### Quick & Dirty
 
 ```
-docker pull docker.io/gpappsoft/privacyidea-docker:3.9.3
+docker pull docker.io/gpappsoft/privacyidea-docker:3.10
 docker run -d --name privacyidea-docker\
             -e PI_REGISTRY_CLASS=null\
             -e DB_PASSWORD=null\
@@ -90,7 +90,7 @@ docker run -d --name privacyidea-docker\
 			-v pi-pilog:/var/log/privacyidea:rw,Z\
 			-v pi-piconfig:/etc/privacyidea:rw,Z\
 			-p 8080:8080\
-			gpappsoft/privacyidea-docker:3.9.3
+			gpappsoft/privacyidea-docker:3.10
 ```
 Web-UI: http://localhost:8080
 
@@ -153,7 +153,7 @@ make distclean
 
 | target | optional ARGS | description | example
 ---------|----------|---|---------
-| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version and image name| ```make build PI_VERSION=3.9.3```|
+| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version and image name| ```make build PI_VERSION=3.10```|
 | ```push``` | ```REGISTRY```|Tag and push the image to the registry. Optional: specify the registry URI. Defaults to *localhost:5000*| ```make push REGISTRY=docker.io/gpappsoft/privacyidea-docker```|
 | ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional: specify the prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate and **overwrite** secrets in *./secrets* | ```make secret```|
@@ -276,7 +276,7 @@ You can start the stack in the background with console detached using the **-d**
 
 Full example including build with  ```make```targets:
 ```
-make cert secret build push stack PI_VERSION=3.9.3 TAG=pidev
+make cert secret build push stack PI_VERSION=3.10 TAG=pidev
 ```
 ---
 Now you can deploy additional containers like OpenLDAP for user realms or Owncloud as a client to test 2FA authentication. 
@@ -296,7 +296,7 @@ Have fun!
 | Variable | Default | Description
 |-----|---------|-------------
 ```ENVIRONMENT``` | environment/application-prod.env | Used to set the correct environment file (env_file) in the docker compose, which is used by the container. Use a relative filename here.
-```PI_VERSION```|3.9.3| Set the used image version
+```PI_VERSION```|3.10| Set the used image version
 ```PI_BOOTSTRAP``` | false | Set to ```true``` to create database tables on the first start of the container. If you need to re-run, then you have to delete the */etc/privacyidea/BOOTSTRAP* file inside the container. 
 ```PI_UPDATE```| false | Set to ```true``` to run the database schema upgrade script in case of a new privacyIDEA version. 
 ```PI_PASSWORD```|admin| Don't use this in productive environments. Use secrets with docker compose / docker swarm instead. See [Security considerations](#security-considerations) for more information.
