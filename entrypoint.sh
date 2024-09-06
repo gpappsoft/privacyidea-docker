@@ -10,8 +10,7 @@ PI_LOGLEVEL="${PI_LOGLEVEL:-INFO}"
 # temporary solution to set loglevel in logging.cnf 
 sed  -i -e "s/^\(\s\{4\}level:\s\).*\(##PI_LOGLEVEL##\)$/\1$PI_LOGLEVEL \2/g" /etc/privacyidea/logging.cfg 
 
-# check if already bootstrapped
-[ -f /etc/privacyidea/BOOTSTRAP ] && PI_BOOTSTRAP=false
+
 
 # bootstrap system
 if [ "${PI_BOOTSTRAP}" == "true" ] 
@@ -22,7 +21,6 @@ then
 	pi-manage setup create_tables || exit 1
 	pi-manage db stamp head -d /opt/privacyidea/lib/privacyidea/migrations/
 	pi-manage admin add --password ${PI_PASSWORD:-admin} ${PI_ADMIN:-admin}
-	echo "Remove file to bootstrap instance again." >> /etc/privacyidea/BOOTSTRAP
 fi
 
 # run DB schema update if env PI_UPDATE is true
