@@ -60,9 +60,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-           PI_VERSION=${{ github.ref_name }}
-           PI_VERSION_BUILD=${{ secrets.PI_VERSION_BUILD }}
+          build-args: PI_VERSION=${{ github.ref_name }}
           
     
       - name: Sign the published Docker image

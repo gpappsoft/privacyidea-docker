@@ -26,7 +26,7 @@ ENV PATH="/opt/privacyidea/:/opt/privacyidea/bin:$PATH"
 RUN pip install --upgrade --force-reinstall pip 
 RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_VERSION}/requirements.txt && \
     pip install psycopg2-binary && \
-    pip install privacyidea==${PI_VERSION_BUILD} && \
+    pip install privacyidea==${PI_VERSION} && \
     pip install gunicorn
 
 COPY --chown=privacyidea:privacyidea conf/pi.cfg /etc/privacyidea/
