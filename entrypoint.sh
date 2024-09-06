@@ -19,7 +19,6 @@ then
 	source bin/activate
 	pi-manage setup create_enckey
 	pi-manage setup create_audit_keys
-	pi-manage setup create_pgp_keys
 	pi-manage setup create_tables || exit 1
 	pi-manage db stamp head -d /opt/privacyidea/lib/privacyidea/migrations/
 	pi-manage admin add --password ${PI_PASSWORD:-admin} ${PI_ADMIN:-admin}
