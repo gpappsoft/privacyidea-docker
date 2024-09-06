@@ -21,7 +21,7 @@ then
 	pi-manage create_audit_keys
 	pi-manage createdb || exit 1
 	pi-manage db stamp head -d /opt/privacyidea/lib/privacyidea/migrations/
-	pi-manage admin add ${PI_ADMIN:-admin} -p ${PI_PASSWORD:-admin}
+	pi-manage admin add --password ${PI_PASSWORD:-admin} ${PI_ADMIN:-admin}
 	echo "Remove file to bootstrap instance again." >> /etc/privacyidea/BOOTSTRAP
 fi
 

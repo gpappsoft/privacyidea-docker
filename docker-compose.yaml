@@ -15,13 +15,6 @@ services:
       - mysql:/var/lib/mysql:rw,Z
     networks:
       - privacyidea
-    healthcheck:
-        test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
-        start_period: 8s
-        start_interval: 12s
-        interval: 12s
-        timeout: 5s
-        retries: 3
     restart: always
     profiles:
       - fullstack
@@ -30,7 +23,7 @@ services:
       - openldap
 
   privacyidea:
-    image: gpappsoft/privacyidea-docker:${PI_VERSION}
+    image: privacyidea-docker:${PI_VERSION}
     deploy:
       restart_policy:
         condition: on-failure
@@ -65,9 +58,6 @@ services:
         source: templates/resolver.json
         target: /etc/privacyidea/resolver.json
         read_only: true
-    depends_on:
-      db:
-        condition: service_healthy
     networks:
       - privacyidea
     healthcheck:
@@ -108,9 +98,6 @@ services:
         source: ./templates/nginx_default.conf.template
         target: /etc/nginx/templates/default.conf.template
         read_only: true
-    depends_on:
-      privacyidea:
-        condition: service_healthy
     networks:
       - privacyidea
     restart: always
@@ -137,9 +124,6 @@ services:
         source: ./templates/clients.conf
         target: /etc/raddb/clients.conf
         read_only: true
-    depends_on:
-      privacyidea:
-        condition: service_healthy
     networks:
       - privacyidea
     restart: always

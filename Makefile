@@ -15,7 +15,7 @@ TAG := prod
 PROFILE := stack
 
 build:
-	${BUILDER} --no-cache -t ${IMAGE_NAME} --build-arg PI_VERSION=${PI_VERSION_BUILD} .
+	${BUILDER} --no-cache -t ${IMAGE_NAME} --build-arg PI_VERSION_BUILD=${PI_VERSION_BUILD} --build-arg PI_VERSION=${PI_VERSION} .
 
 push:
 	${CONTAINER_ENGINE} tag ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}
