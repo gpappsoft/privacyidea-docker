@@ -2,7 +2,7 @@ FROM python:3.9-slim
 LABEL maintainer="Marco Moenig <marco@moenig.it>"
 
 USER root
-ARG PI_VERSION=3.10
+ARG PI_VERSION=3.10.0.1
 ARG PI_PORT=8080
 ARG UID=998
 
