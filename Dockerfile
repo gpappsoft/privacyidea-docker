@@ -42,7 +42,7 @@ USER root
 
 USER privacyidea
 
-ADD --chown=privacyidea:privacyidea --chmod=755 https://raw.githubusercontent.com/privacyidea/privacyidea/3.10/deploy/privacyidea/NetKnights.pem /etc/privacyidea/
+ADD --chown=privacyidea:privacyidea --chmod=755 https://raw.githubusercontent.com/privacyidea/privacyidea/v3.10/deploy/privacyidea/NetKnights.pem /etc/privacyidea/
 
 EXPOSE ${PI_PORT}
 
