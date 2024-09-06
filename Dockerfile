@@ -25,7 +25,7 @@ RUN python -m venv /opt/privacyidea
 ENV PATH="/opt/privacyidea/:/opt/privacyidea/bin:$PATH"
 RUN pip install --upgrade --force-reinstall pip 
 RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v3.10/requirements.txt && \
-    pip install psycopg2-binary && \
+    pip install psycopg2-binary && \ 
     pip install privacyidea==${PI_VERSION} && \
     pip install gunicorn
 
@@ -42,7 +42,7 @@ USER root
 
 USER privacyidea
 
-ADD --chown=privacyidea:privacyidea --chmod=755 https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_VERSION}/deploy/privacyidea/NetKnights.pem /etc/privacyidea/
+ADD --chown=privacyidea:privacyidea --chmod=755 https://raw.githubusercontent.com/privacyidea/privacyidea/3.10/deploy/privacyidea/NetKnights.pem /etc/privacyidea/
 
 EXPOSE ${PI_PORT}
 
