@@ -62,7 +62,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
            PI_VERSION=${{ github.ref_name }}
-           PI_VERSION_BUILD=${{ secret.PI_VERSION_BUILD }}
+           PI_VERSION_BUILD=${{ secrets.PI_VERSION_BUILD }}
           
     
       - name: Sign the published Docker image
