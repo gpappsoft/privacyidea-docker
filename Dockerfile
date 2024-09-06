@@ -2,7 +2,7 @@ FROM python:3.9-slim
 LABEL maintainer="Marco Moenig <marco@moenig.it>"
 
 USER root
-ARG PI_VERSION=3.10.0.1
+ARG PI_VERSION_BUILD=3.10.0.1
 ARG PI_PORT=8080
 ARG UID=998
 
@@ -31,7 +31,7 @@ ENV PATH="/opt/privacyidea/:/opt/privacyidea/bin:$PATH"
 RUN pip install --upgrade --force-reinstall pip 
 RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_VERSION}/requirements.txt && \
     pip install psycopg2-binary gssapi && \
-    pip install privacyidea==${PI_VERSION} && \
+    pip install privacyidea==${PI_VERSION_BUILD} && \
     pip install gunicorn
 
 COPY --chown=privacyidea:privacyidea conf/pi.cfg /etc/privacyidea/
