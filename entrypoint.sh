@@ -17,9 +17,10 @@ sed  -i -e "s/^\(\s\{4\}level:\s\).*\(##PI_LOGLEVEL##\)$/\1$PI_LOGLEVEL \2/g" /e
 if [ "${PI_BOOTSTRAP}" == "true" ] 
 then
 	source bin/activate
-	pi-manage create_enckey
-	pi-manage create_audit_keys
-	pi-manage createdb || exit 1
+	pi-manage setup create_enckey
+	pi-manage setup create_audit_keys
+	pi-manage setup create_pgp_keys
+	pi-manage setup create_tables || exit 1
 	pi-manage db stamp head -d /opt/privacyidea/lib/privacyidea/migrations/
 	pi-manage admin add --password ${PI_PASSWORD:-admin} ${PI_ADMIN:-admin}
 	echo "Remove file to bootstrap instance again." >> /etc/privacyidea/BOOTSTRAP
