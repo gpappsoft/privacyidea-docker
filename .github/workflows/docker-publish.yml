@@ -61,8 +61,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            PI_VERSION=${{ github.ref_name }}
-            PI_VERSION_BUILD=${{ env.PI_VERSION_BUILD }}
+            "PI_VERSION=${{ github.ref_name }}"
+            "PI_VERSION_BUILD=${{ env.PI_VERSION_BUILD }}"
     
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
