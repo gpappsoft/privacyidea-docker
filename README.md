@@ -4,6 +4,10 @@
 
 Simply deploy and run a privacyIDEA instance in a container environment. 
 
+> [!Important]
+> #### The base-image will changed from ``python-slim`` to [Wolfi OS](https://github.com/wolfi-dev) soon. 
+> You can check and test the new approach in the dev-distroless branch. The current main branch will be moved and archived. Further information comming soon.
+
 ## Overview 
 [privacyIDEA](https://github.com/privacyidea/privacyidea) is an open solution for strong two-factor authentication like OTP tokens, SMS, smartphones or SSH keys. 
 
