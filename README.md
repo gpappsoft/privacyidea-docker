@@ -21,8 +21,6 @@ This project is a complete build environment under linux to build and run privac
 - A fully tested and "production-ready" installation of privacyIDEA for *your* container environment.
 - A possible way to ignore the [privacyIDEA Documentation](https://privacyidea.readthedocs.io/en/latest/)
 - A guide on how to use docker
-- The "one and only" or "best" method to run privacyIDEA in a container.
-- Finished ;)
 
 > [!Note] 
 > The image does **not include** a reverse proxy or a database backend. Running the default image as a standalone container uses gunicorn and a sqlite database. This is not suitable for a production environment.
@@ -37,7 +35,7 @@ If you prefer another approach or would like to test another solution, take a lo
 
 
 ### tl;dr 
-Clone repository and start a full privacyIDEA stack: 
+Clone the repository and start a full privacyIDEA stack: 
 ```
 git clone https://github.com/gpappsoft/privacyidea-docker.git
 cd privacyidea-docker
@@ -53,7 +51,7 @@ make cert secret fullstack
 | *secrets* | contains the secrets for docker compose - this project tries to avoid using env-vars for sensitive data (passwords)|
 | *scripts* | contains custom scripts for the script-handler. Will be mounted into the container when compose a stack. Scripts must be executable (chmod +x)|
 | *environment* | contains different example-environment files for a whole stack via docker compose|
-|*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without a passphrase. \*.pfx is not supported. Name must be *pi.pem* and *pi.key* |
+|*ssl* | contains ssl certificates for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without a passphrase. \*.pfx is not supported. Name must be ***pi.pem*** and ***pi.key*** |
 |*templates*| contains files used for different services (nginx, radius ...)|
 
 ## Images
@@ -84,11 +82,8 @@ docker pull docker.io/gpappsoft/privacyidea-docker:3.10
 docker run -d --name privacyidea-docker\
             -e PI_REGISTRY_CLASS=null\
             -e DB_PASSWORD=null\
-            -e PI_BOOTSTRAP=true\
             -e PI_PEPPER=null\
             -e PI_SECRET=null\
-			-v pi-pilog:/var/log/privacyidea:rw,Z\
-			-v pi-piconfig:/etc/privacyidea:rw,Z\
 			-p 8080:8080\
 			gpappsoft/privacyidea-docker:3.10
 ```
@@ -126,7 +121,7 @@ You can use *Makefile* targets to build different images with different privacyI
 
 #### Build a specific privacyIDEA version
 ```
-make build PI_VERSION=3.8.1
+make build PI_VERSION=3.10
 ```
 
 #### Push to a registry
@@ -245,7 +240,7 @@ Run a stack with project the name *prod* and environment variables files from *e
 
 ```
   $ make cert secret  #run only once to generate certificate and secrets
-  $ PI_BOOTSTRAP=true docker compose --env-file=environment/application-prod.env -p prod up
+  $ docker compose --env-file=environment/application-prod.env -p prod up
 ```
 Or simple run a ```make```target.
 
@@ -271,7 +266,7 @@ docker compose -p prod down
 You can start the stack in the background with console detached using the **-d** parameter.
 
 ```
-  $ PI_BOOTSTRAP=true docker compose --env-file=environment/application-prod.env -p prod up -d
+  $ docker compose --env-file=environment/application-prod.env -p prod up -d
 ```
 
 Full example including build with  ```make```targets:
@@ -297,12 +292,11 @@ Have fun!
 |-----|---------|-------------
 ```ENVIRONMENT``` | environment/application-prod.env | Used to set the correct environment file (env_file) in the docker compose, which is used by the container. Use a relative filename here.
 ```PI_VERSION```|3.10| Set the used image version
-```PI_BOOTSTRAP``` | false | Set to ```true``` to create database tables on the first start of the container. If you need to re-run, then you have to delete the */etc/privacyidea/BOOTSTRAP* file inside the container. 
-```PI_UPDATE```| false | Set to ```true``` to run the database schema upgrade script in case of a new privacyIDEA version. 
-```PI_PASSWORD```|admin| Don't use this in productive environments. Use secrets with docker compose / docker swarm instead. See [Security considerations](#security-considerations) for more information.
 ```PI_ADMIN```|admin| login name of the initial administrator
+```PI_PASSWORD```|admin| Password for the admin user. See [Security considerations](#security-considerations) for more information.
 ```PI_PORT```|8080| Port used by gunicorn. Don't use this directly in productive environments. Use a reverse proxy..
-```PI_LOGLEVEL```|INFO| Log level in uppercase (DEBUG, INFO, WARNING, ect.). ```docker log``` is always ```INFO``` level because of security. See *conf/logging.cfg* for more details
+```PI_LOGLEVEL```|INFO| Log level in uppercase (DEBUG, INFO, WARNING, ect.). 
+```PI_ENCKEY```|| The enckey file for DB-encryption (base64). See [privacy documentation](https://privacyidea.readthedocs.io/en/latest/faq/crypto-considerations.html?highlight=enckey)
 ```SUPERUSER_REALM```|"admin,helpdesk"| Admin realms, which can be used for policies in privacyIDEA. Comma separated list. See the privacyIDEA documentation for more information.
 ```PI_SQLALCHEMY_ENGINE_OPTIONS```| False | Set pool_pre_ping option. Set to ```True``` for DB clusters (like Galera).
 ```PI_PEPPER``` | /run/secrets/pi_pepper | Used for ```PI_PEPPER``` in pi.cfg. The filename, including the path, to the file **inside** the container, with the secret. Use `make secrets` to generate new secret file. See [Security considerations](#security-considerations) for more information.
@@ -315,7 +309,7 @@ Have fun!
 ```DB_PORT```| Database port
 ```DB_NAME```| Database name
 ```DB_USER```| Database user
-```DB_PASSWORD```| The filename, including the path, to the file **inside** the container, with the database password.
+```DB_PASSWORD```| The database password.
 ```DB_API```| Database driver (e.g. ```mysql+pymysql```)
 ```DB_EXTRA_PARAM```| Extra parameter (e.g. ```"?charset=utf8"```). Will be appended to the SQLAlchemy URI (see pi.cfg)
 
@@ -352,13 +346,7 @@ Have fun!
 ## Security considerations
 
 #### Secrets 
-The current concept of using secrets with files in *docker-compose.yaml* is a first approach to reducing the risk of using secrets with environment variables. This may change in future versions.
-
-Different stacks always use the **same** secrets. 
-
-## Known Bugs
-
-- unkown
+The current concept of using secrets with environment variables is not recommended in a docker-swarm/k8s environment. You should use  [secrets](https://docs.docker.com/engine/swarm/secrets/) in such a environment.
 
 ## Frequently Asked Questions
 
@@ -376,13 +364,11 @@ docker exec -it pi-privacyidea-1 pi-manage audit rotate_audit --age 90
 ```
 #### How can i access the logs?
 
-- Use docker log or use the logfile:  
+- Use docker log:  
 ```
 docker logs pi-privacyidea-1 
 ```
-```
-docker exec -it pi-privacyidea-1 cat /var/log/privacyidea/privacyidea.log
-```
+
 #### How can I update the container to a new privacyIDEA version?
 - Build a new image, make a push and pull. Re-create the container with ```PI_UPDATE=true```. This will run the schema update script to update the database.
 
@@ -423,24 +409,22 @@ Check if the required certificates (*pi.key* / *pi.pem*) exists in ssl/
    ```
 #### How can I create a backup of my data?
 
-- The pi-manage backup command is not working. You have to dump the database manually. For the example stack, use the db container: 
+- Dump your database manually and save environment files (enckey ect.). For the example stack, use the db container: 
 
 ```
 docker exec -it pi-db-1 mariadb-dump -u pi -psuperSecret pi
 ```
-- enckey/config, certificates and logs stored in the named volumes *_piconfig *_pilog
 
 ## Roadmap
 
 #### Customization and scripts
 
-Support for [customization](https://privacyidea.readthedocs.io/en/latest/faq/customization.html) comming soon.
+Will follow soon
 
 #### Radius
 
-A first release of a Freeradius image with the privacyIDEA-RADIUS plugin is in progress.
+See my other project [docker-freeradius](https://github.com/gpappsoft/privacyidea-freeradius)
 
-Any feedback are welcome! 
 
 # Disclaimer
 
