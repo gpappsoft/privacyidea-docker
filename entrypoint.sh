@@ -1,36 +1,34 @@
-#!/bin/bash
+#!/bin/sh
 
-# set default if missing
 PI_BOOTSTRAP="${PI_BOOTSTRAP:-false}"
 PI_UPDATE="${PI_UPDATE:-false}"
 PI_PASSWORD=$(cat /run/secrets/pi_admin_pass)
 PI_PORT="${PI_PORT:-8080}"
 PI_LOGLEVEL="${PI_LOGLEVEL:-INFO}"
+echo "$PI_ENCKEY" | base64 -d > /privacyidea/etc/enckey
 
-# temporary solution to set loglevel in logging.cnf 
-sed  -i -e "s/^\(\s\{4\}level:\s\).*\(##PI_LOGLEVEL##\)$/\1$PI_LOGLEVEL \2/g" /etc/privacyidea/logging.cfg 
-
-
-
-# bootstrap system
-if [ "${PI_BOOTSTRAP}" == "true" ] 
+# bootstrap system 
+if [ ! -f /privacyidea/conf/enckey ] || [ -z $PI_ENCKEY ]
 then
-	source bin/activate
-	pi-manage setup create_enckey
-	pi-manage setup create_audit_keys
+	source activate
 	pi-manage setup create_enckey
 	pi-manage setup create_tables || exit 1
-	pi-manage db stamp head -d /opt/privacyidea/lib/privacyidea/migrations/
+	pi-manage db stamp head -d /privacyidea/lib/privacyidea/migrations/
 	pi-manage admin add --password ${PI_PASSWORD:-admin} ${PI_ADMIN:-admin}
 fi
 
-# run DB schema update if env PI_UPDATE is true
-if [ "${PI_UPDATE}" == "true" ]
-then
-    echo "### RUNNING DB-SCHEMA UPDATE ###"
-	source bin/activate
-	privacyidea-schema-upgrade /opt/privacyidea/lib/privacyidea/migrations/
+if [ ! -f /privacyidea/etc/private.pem ]
+then 
+	pi-manage setup create_audit_keys
 fi
 
-# Run the server using gunicorn WSGI HTTP server
-exec /opt/privacyidea/bin/gunicorn "privacyidea.app:create_app(config_name='production')" -w 4 -b 0.0.0.0:${PI_PORT}
+# run DB schema update if requested
+if [ "$1" == "UPDATE" ]
+then
+    echo "### RUNNING DB-SCHEMA UPDATE ###"
+	source activate
+	privacyidea-schema-upgrade /privacyidea/lib/privacyidea/migrations/
+fi
+
+# Run the app using gunicorn WSGI HTTP server
+exec python -m gunicorn -w 4 -n pi_gunicorn -b 0.0.0.0:${PI_PORT} "privacyidea.app:create_app(config_name='production')"

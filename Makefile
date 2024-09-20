@@ -62,20 +62,18 @@ fullstack:
 
 	
 run:
-	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
+	@${CONTAINER_ENGINE} run -d --rm --name ${TAG}-privacyidea \
 			-e PI_PASSWORD=admin \
 			-e PI_ADMIN=admin \
 			-e DB_PASSWORD=none \
 			-e PI_PEPPER=superSecret \
 			-e PI_SECRET=superSecret \
 			-e PI_PORT=8080 \
-			-e PI_BOOTSTRAP=true \
 			-e PI_REGISTRY_CLASS=null \
-			-e PI_LOGLEVEL=DEBUG \
-			-v ${TAG}-pilog:/var/log/privacyidea:rw,Z \
-			-v ${TAG}-piconfig:/etc/privacyidea:rw,Z \
+			-e PI_LOGLEVEL=INFO \
 			-p ${PORT}:${PORT} \
-			${IMAGE_NAME}
+			${IMAGE_NAME} \
+			BOOTSTRAP \
 	@echo Access to privacyIDEA Web-UI: http://localhost:${PORT}
 	@echo Username/Password: admin / admin
 

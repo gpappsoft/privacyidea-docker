@@ -23,7 +23,7 @@ services:
       - openldap
 
   privacyidea:
-    image: gpappsoft/privacyidea-docker:${PI_VERSION}
+    image: privacyidea-docker:${PI_VERSION}
     deploy:
       restart_policy:
         condition: on-failure
@@ -48,20 +48,18 @@ services:
     expose:
       - ${PI_PORT}
     volumes:
-      - pilog:/var/log/privacyidea:rw,Z
-      - piconfig:/etc/privacyidea:rw,Z
       - type: bind
         source: scripts/
-        target: /etc/privacyidea/scripts/
+        target: /privacyidea/scripts/
         read_only: true
       - type: bind
         source: templates/resolver.json
-        target: /etc/privacyidea/resolver.json
+        target: /privacyidea/etc/resolver.json
         read_only: true
     networks:
       - privacyidea
     healthcheck:
-        test: [ "CMD", "/opt/privacyidea/healthcheck.py" ]
+        test: [ "CMD", "/app/bin/healthcheck.py" ]
         start_period: 10s
         start_interval: 10s
         interval: 12s
