@@ -22,9 +22,10 @@ then
 	pi-manage setup create_audit_keys
 fi
 
-if [ -f /privacyidea/etc/resolver.json ]
-then
+# if [ -f /privacyidea/etc/resolver.json ]
+# then
 
+# fi
 # run DB schema update if requested
 if [ "$1" == "UPDATE" ]
 then
