@@ -4,6 +4,10 @@
 
 Simply deploy and run a privacyIDEA instance in a container environment. 
 
+> [!Important]
+> #### The base-image changed from ``python-slim`` to [Wolfi OS](https://github.com/wolfi-dev). 
+> The old approach is still available in the ```python-slim``` Branch.
+
 ## Overview 
 [privacyIDEA](https://github.com/privacyidea/privacyidea) is an open solution for strong two-factor authentication like OTP tokens, SMS, smartphones or SSH keys. 
 
@@ -53,6 +57,8 @@ make cert fullstack
 | *scripts* | contains custom scripts for the privacyIDEA script-handler. The directory will be mounted into the container when composing a [stack](#compose-a-privacyidea-stack). Scripts must be executable (chmod +x)|
 |*templates*| contains files used for different services (nginx, radius ...) and also contains the ssl certificate for the reverse-proxy. Replace it with your own certificate and key file. Use PEM-Format without a passphrase. \*.pfx is not supported. Name must be ***pi.pem*** and ***pi.key***. ||
 
+
+
 ## Images
 Sample images from this project can be found here: 
 | registry | repository |
@@ -80,6 +86,7 @@ Sample images from this project can be found here:
 docker pull docker.io/gpappsoft/privacyidea-docker:latest
 			-p 8080:8080 \
 			gpappsoft/privacyidea-docker:latest
+
 ```
 Web-UI: http://localhost:8080
 
