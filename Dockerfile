@@ -39,6 +39,8 @@ ENV PRIVACYIDEA_CONFIGFILE="/privacyidea/etc/pi.cfg"
 LABEL maintainer="Marco Moenig <marco@moenig.it>"
 
 WORKDIR /privacyidea
+VOLUME /privacyidea/etc/persistent
+
 RUN apk add python-${version} && \
         chown -R nonroot.nonroot /privacyidea/
 

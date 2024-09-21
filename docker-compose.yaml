@@ -5,10 +5,8 @@ services:
       MARIADB_RANDOM_ROOT_PASSWORD: 1
       MARIADB_DATABASE: ${DB_NAME}
       MARIADB_USER: ${DB_USER}
-      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_PASSWORD: ${DB_PASSWORD}
       MARIADB_MYSQL_LOCALHOST_USER: true
-    secrets:
-      - db_password
     expose:
       - ${DB_PORT}
     volumes:
@@ -30,21 +28,8 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    environment:
-      PI_BOOTSTRAP: ${PI_BOOTSTRAP:-false}
-      PI_UPDATE: ${PI_UPDATE:-false}
-      PI_ADMIN: admin
-      DB_PASSWORD: /run/secrets/db_password
-      PI_PASSWORD: /run/secrets/pi_admin_pass
-      PI_SECRET: /run/secrets/pi_secret
-      PI_PEPPER: /run/secrets/pi_pepper
     env_file:
       - ${ENVIRONMENT}
-    secrets:
-      - db_password
-      - pi_admin_pass
-      - pi_secret
-      - pi_pepper
     expose:
       - ${PI_PORT}
     volumes:
@@ -54,12 +39,12 @@ services:
         read_only: true
       - type: bind
         source: templates/resolver.json
-        target: /privacyidea/etc/resolver.json
+        target: /privacyidea/etc/persistent/resolver.json
         read_only: true
     networks:
       - privacyidea
     healthcheck:
-        test: [ "CMD", "/app/bin/healthcheck.py" ]
+        test: [ "CMD", "/privacyidea/bin/healthcheck.py" ]
         start_period: 10s
         start_interval: 10s
         interval: 12s
@@ -85,11 +70,11 @@ services:
         target: /etc/nginx/nginx.conf
         read_only: true
       - type: bind
-        source: ./ssl/pi.key
+        source: ./templates/pi.key
         target: /etc/nginx/ssl/pi.key
         read_only: true
       - type: bind
-        source: ./ssl/pi.pem
+        source: ./templates/pi.pem
         target: /etc/nginx/ssl/pi.pem
         read_only: true
       - type: bind
@@ -160,21 +145,8 @@ services:
       - fullstack
       - ldap
     
-secrets:
-  db_password:
-    file: secrets/db_password
-  pi_secret:
-    file: secrets/pi_secret
-  pi_pepper:
-    file: secrets/pi_pepper
-  pi_admin_pass:
-     file: secrets/pi_admin_pass
-
 volumes:
-  pilog: {}
-  piconfig: {}
   mysql: {}
  
 networks:
   privacyidea: {}
-
