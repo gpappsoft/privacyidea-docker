@@ -8,7 +8,7 @@ PI_LOGLEVEL="${PI_LOGLEVEL:-INFO}"
 if [ ! -s /privacyidea/etc/enckey ]
 then
 	echo "### Create enckey ###"
-	if [ $PI_ENCKEY ]
+	if [ $PI_ENCKEY ] && [ ! -f /privacyidea/etc/persistent/enckey ]
 	then
 	    echo "### Use PI_ENCKEY ###"
 		echo "$PI_ENCKEY" | base64 -d > /privacyidea/etc/persistent/enckey
@@ -45,6 +45,7 @@ if [ -f /privacyidea/etc/persistent/resolver.json ]
 then
 	source activate
 	pi-manage config import -i /privacyidea/etc/persistent/resolver.json
+	mv /privacyidea/etc/persistent/resolver.json /privacyidea/etc/persistent/resolver.json_deployed
 fi
 
 # run DB schema update if requested

@@ -21,7 +21,7 @@ services:
       - openldap
 
   privacyidea:
-    image: privacyidea-docker:${PI_VERSION}
+    image: gpappsoft/privacyidea-docker:${PI_VERSION}
     deploy:
       restart_policy:
         condition: on-failure
@@ -33,6 +33,7 @@ services:
     expose:
       - ${PI_PORT}
     volumes:
+      - pidata:/privacyidea/etc/persistent:rw,Z
       - type: bind
         source: scripts/
         target: /privacyidea/scripts/
@@ -147,6 +148,7 @@ services:
     
 volumes:
   mysql: {}
+  pidata: {}
  
 networks:
   privacyidea: {}
