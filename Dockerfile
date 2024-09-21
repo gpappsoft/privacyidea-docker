@@ -25,7 +25,7 @@ ADD https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS
 
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
-COPY  templates/pi_healthcheck.py /privacyidea/bin/healthcheck.py
+COPY  templates/healthcheck.py /privacyidea/bin/healthcheck.py
 COPY  entrypoint.sh /privacyidea/bin/entrypoint.sh
 
 ### final stage
