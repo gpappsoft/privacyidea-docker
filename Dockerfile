@@ -25,8 +25,8 @@ ADD https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS
 
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
-COPY  templates/healthcheck.py /privacyidea/bin/healthcheck.py
-COPY  entrypoint.sh /privacyidea/bin/entrypoint.sh
+COPY  templates/healthcheck.py /privacyidea/venv/bin/healthcheck.py
+COPY  entrypoint.sh /privacyidea/venv/bin/entrypoint.sh
 
 ### final stage
 ###
@@ -34,7 +34,7 @@ FROM cgr.dev/chainguard/wolfi-base
 
 ARG version=3.12
 ENV PYTHONUNBUFFERED=1
-ENV PATH="/privacyidea/bin:$PATH"
+ENV PATH="/privacyidea/venv/bin:/privacyidea/bin:$PATH"
 ENV PRIVACYIDEA_CONFIGFILE="/privacyidea/etc/pi.cfg"
 LABEL maintainer="Marco Moenig <marco@moenig.it>"
 
@@ -44,7 +44,6 @@ VOLUME /privacyidea/etc/persistent
 RUN apk add python-${version} && \
         chown -R nonroot.nonroot /privacyidea/
 
-COPY --from=builder /privacyidea/venv /privacyidea        
 COPY --from=builder /privacyidea/ /privacyidea        
 
 EXPOSE ${PORT}

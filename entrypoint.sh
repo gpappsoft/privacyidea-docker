@@ -4,6 +4,8 @@ PI_UPDATE="${PI_UPDATE:-false}"
 PI_PORT="${PI_PORT:-8080}"
 PI_LOGLEVEL="${PI_LOGLEVEL:-INFO}"
 
+source activate
+
 # create enckey
 if [ ! -s /privacyidea/etc/enckey ]
 then
@@ -15,7 +17,6 @@ then
 		chmod 400 /privacyidea/etc/persistent/enckey
 	else
 		echo "### Use pi-manage ###"
-		source activate
 		pi-manage setup create_enckey
 	fi
 fi
@@ -24,7 +25,6 @@ fi
 if [ -f /privacyidea/etc/persistent/enckey ] && [ ! -f /privacyidea/etc/persistent/dbcreated ]
 then
 	echo "### Creating database tables ###"
-	source activate
 	pi-manage setup create_tables || exit 1
 	touch /privacyidea/etc/persistent/dbcreate
 	echo "### Stamp database ###"
@@ -43,7 +43,6 @@ fi
 # import resolver.json if exists
 if [ -f /privacyidea/etc/persistent/resolver.json ]
 then
-	source activate
 	pi-manage config import -i /privacyidea/etc/persistent/resolver.json
 	mv /privacyidea/etc/persistent/resolver.json /privacyidea/etc/persistent/resolver.json_deployed
 fi
@@ -52,7 +51,6 @@ fi
 if [ "$1" == "PIUPDATE" ]
 then
     echo "### RUNNING DB-SCHEMA UPDATE ###"
-	source activate
 	privacyidea-schema-upgrade /privacyidea/lib/privacyidea/migrations/
 fi
 
