@@ -46,7 +46,7 @@ jobs:
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
+        uses: docker/metadata-action@v5
         with:
           images: |
             docker.io/gpappsoft/privacyidea-docker
@@ -57,6 +57,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          sbom: true
+          provenance: mode=max
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
