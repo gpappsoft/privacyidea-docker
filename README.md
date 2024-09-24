@@ -1,4 +1,4 @@
-[![Docker](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml) [![DockerPulls](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
+[![Docker](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml) ![DockerPulls](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
 
 
 # privacyIDEA-docker
