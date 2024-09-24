@@ -1,5 +1,7 @@
 [![Docker](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml)
 
+[](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
+
 # privacyIDEA-docker
 
 Simply deploy and run a privacyIDEA instance in a container environment. 
