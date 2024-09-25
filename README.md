@@ -26,7 +26,7 @@ This project is a complete build environment under linux to build and run privac
 - A fully tested and "production-ready" installation of privacyIDEA for *your* container environment.
 - A possible way to ignore the [privacyIDEA Documentation](https://privacyidea.readthedocs.io/en/latest/)
 - A guide on how to use docker
-- A guid how to configure and use privacyIDEA 
+- A guide how to configure and use privacyIDEA 
 
 > [!Important] 
 > The image does **not include** a reverse proxy or a database backend. Running the default image as a standalone container uses gunicorn and a sqlite database. Using sqlite is not suitable for a production environment.
@@ -337,12 +337,12 @@ Have fun!
 ## Security considerations
 
 #### Secrets 
-The current concept of using secrets with environment variables is not recommended in a docker-swarm/k8s/cloud environment. You should use  [secrets](https://docs.docker.com/engine/swarm/secrets/) in such an environment.
+The current concept of using secrets with environment variables is not recommended in a docker-swarm/k8s/cloud environment. You should use  [secrets](https://docs.docker.com/engine/swarm/secrets/) in such an environment. You can modify and re-write the pi.cfg to read secret files inside the container/pod via python. 
 
 ## Frequently Asked Questions
 
 #### Why are not all pi.cfg parameters available as environment variables?
-- I only included the most essential and often-used parameters. You can add more variables to the *conf/pi.conf* file and build your own image.
+- There is only the most essential and often-used parameters included. You can add more variables to the *conf/pi.conf* file and build your own image.
 
 #### How can I rotate the audit log?
 
