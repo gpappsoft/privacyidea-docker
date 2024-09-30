@@ -15,7 +15,6 @@ Simply deploy and run a privacyIDEA instance in a container environment.
 This project is a complete build environment under linux to build and run privacyIDEA in a container environment. It uses the [Wolfi OS](https://github.com/wolfi-dev) image and the official [privacyIDEA-Project](https://pypi.org/project/privacyIDEA/)  from PyPi. The image uses [gunicorn](https://gunicorn.org/) from PyPi to run the app. 
 
 **The main goals of this project are to:**
-- Give an idea how to run privacyIDEA in a container.
 - Build and run the container image, simple and fast.
 - Deploy different versions and/or stages (e.g. production, staging, devel ...) with the same or different configuration on the same host.
 - Easy deploy a "full-stack" (e.g. privacyIDEA, radius, database and reverse proxy) with docker compose.
@@ -23,7 +22,6 @@ This project is a complete build environment under linux to build and run privac
 - To build images with no changes to the original privacyIDEA code and as less as possible additional scripts as possible inside the image to run the container. 
 
 **What this project is not:**
-- A fully tested and "production-ready" installation of privacyIDEA for *your* container environment.
 - A possible way to ignore the [privacyIDEA Documentation](https://privacyidea.readthedocs.io/en/latest/)
 - A guide on how to use docker
 - A guide how to configure and use privacyIDEA 

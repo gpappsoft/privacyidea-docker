@@ -37,6 +37,8 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH="/privacyidea/venv/bin:/privacyidea/bin:$PATH"
 ENV PRIVACYIDEA_CONFIGFILE="/privacyidea/etc/pi.cfg"
 LABEL maintainer="Marco Moenig <marco@moenig.it>"
+LABEL org.opencontainers.image.source=https://github.com/gpappsoft/privacyidea-docker.git
+LABEL org.opencontainers.image.url=https://github.com/gpappsoft/privacyidea-docker.git
 
 WORKDIR /privacyidea
 VOLUME /privacyidea/etc/persistent
