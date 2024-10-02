@@ -46,6 +46,7 @@ cd privacyidea-docker
 make cert fullstack
 ```
 
+**Starting the container for the first time could take a few seconds. Please reload the page after 20-30 seconds, if you get a 502 error from the reverse proxy.**
 
 ## Repository 
 
