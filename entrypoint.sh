@@ -7,7 +7,7 @@ PI_LOGLEVEL="${PI_LOGLEVEL:-INFO}"
 source activate
 
 # create enckey
-if [ ! -s /privacyidea/etc/enckey ]
+if [ ! -s /privacyidea/etc/persistent/enckey ]
 then
 	echo "### Create enckey ###"
 	if [ $PI_ENCKEY ] && [ ! -f /privacyidea/etc/persistent/enckey ]
@@ -26,7 +26,7 @@ if [ -f /privacyidea/etc/persistent/enckey ] && [ ! -f /privacyidea/etc/persiste
 then
 	echo "### Creating database tables ###"
 	pi-manage setup create_tables || exit 1
-	touch /privacyidea/etc/persistent/dbcreate
+	touch /privacyidea/etc/persistent/dbcreated
 	echo "### Stamp database ###"
 	pi-manage db stamp head -d /privacyidea/lib/privacyidea/migrations/
 	echo "### Create initial admin user ###"
@@ -48,7 +48,7 @@ then
 fi
 
 # run DB schema update if requested
-if [ "$1" == "PIUPDATE" ]
+if [ "$1" == "PI_UPDATE" ]
 then
     echo "### RUNNING DB-SCHEMA UPDATE ###"
 	privacyidea-schema-upgrade /privacyidea/lib/privacyidea/migrations/
