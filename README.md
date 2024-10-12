@@ -45,6 +45,7 @@ git clone https://github.com/gpappsoft/privacyidea-docker.git
 cd privacyidea-docker
 make cert fullstack
 ```
+Username / password: admin / admin
 
 **Starting the container for the first time could take a few seconds. Please reload the page after 20-30 seconds, if you get a 502 error from the reverse proxy.**
 
