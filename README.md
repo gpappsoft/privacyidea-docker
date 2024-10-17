@@ -68,7 +68,7 @@ Sample images from this project can be found here:
 | [ghcr.io](https://github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea-docker)| ```docker pull ghcr.io/gpappsoft/privacyidea-docker:latest```|
 
 > [!Note] 
-> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.10.0.1```) 
+> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.10.1```) 
 
 
 
@@ -118,7 +118,7 @@ You can use *Makefile* targets to build different images with different privacyI
 
 #### Build a specific privacyIDEA version
 ```
-make build PI_VERSION=3.10.0.1
+make build PI_VERSION=3.10.1
 ```
 
 #### Push to a registry

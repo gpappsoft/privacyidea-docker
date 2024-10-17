@@ -21,12 +21,11 @@ services:
       - openldap
 
   privacyidea:
-    image: gpappsoft/privacyidea-docker:${PI_VERSION}
+    image: privacyidea-docker:${PI_VERSION}
     deploy:
       restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
+        condition: unless-stopped
+        delay: 3s
         window: 60s
     env_file:
       - ${ENVIRONMENT}
@@ -49,8 +48,8 @@ services:
         start_period: 10s
         start_interval: 10s
         interval: 12s
-        timeout: 5s
-        retries: 3
+        timeout: 10s
+        retries: 6
     restart: always
     profiles:
       - fullstack
