@@ -35,9 +35,6 @@ This project is a complete build environment under linux to build and run privac
 
 **While decoupling the privacyIDEA image from dependencies like Nginx, Apache or database vendors ect., it is possible to run privacyIDEA with your favorite components.**
 
-If you prefer another approach or would like to test another solution, take a look at the [Khalibre / privacyidea-docker](https://github.com/kheeklab/privacyidea-docker) project. This project might be a more suitable solution for your needs.
-
-
 ### tl;dr 
 Clone repository and start a full privacyIDEA stack: 
 ```
@@ -70,8 +67,6 @@ Sample images from this project can be found here:
 > [!Note] 
 > ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.10.1```) 
 
-
-
 ## Quickstart
 
 ### Prerequisites and requirements
@@ -85,9 +80,14 @@ Sample images from this project can be found here:
 
 ```
 docker pull docker.io/gpappsoft/privacyidea-docker:latest
-			-p 8080:8080 \
-			gpappsoft/privacyidea-docker:latest
-
+docker run -d --name privacyidea-docker\
+            -e PI_ADMIN=admin\
+            -e PI_ADMIN_PASS=admin\
+            -e PI_PEPPER=changeMe\
+            -e PI_SECRET=changeMe\
+   	    -v pidata:/privacyidea/etc/persistent:rw,Z\
+  	    -p 8080:8080\
+	    gpappsoft/privacyidea-docker:latest
 ```
 Web-UI: http://localhost:8080
 
@@ -247,7 +247,7 @@ This example will start a stack including **privacyIDEA**, **reverse_proxy** and
 make cert stack
 ```
 
-This example will start a full stack including **privacyIDEA**, **reverse_proxy**, **mariadb**, **ldap** and **radius** including sample data with users,realms and policies for rolemodel. Project tag is *prod*
+This example will start a full stack including **privacyIDEA**, **reverse_proxy**, **mariadb**, **ldap** and **radius** including sample data with users,realms. Project tag is *prod*
 
 ```
 make cert fullstack 
@@ -404,13 +404,13 @@ docker exec -it pi-db-1 mariadb-dump -u pi -psuperSecret pi
 
 ## Roadmap
 
-#### Customization and scripts
+#### Customization
 
 Will follow soon
 
 #### Radius
 
-See my other project [docker-freeradius](https://github.com/gpappsoft/privacyidea-freeradius)
+See [docker-freeradius](https://github.com/gpappsoft/privacyidea-freeradius)
 
 
 # Disclaimer
