@@ -44,8 +44,6 @@ make cert fullstack
 ```
 Username / password: admin / admin
 
-**Starting the container for the first time could take a few seconds. Please reload the page after 20-30 seconds, if you get a 502 error from the reverse proxy.**
-
 ## Repository 
 
 | Directory | Description |
@@ -65,7 +63,7 @@ Sample images from this project can be found here:
 | [ghcr.io](https://github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea-docker)| ```docker pull ghcr.io/gpappsoft/privacyidea-docker:latest```|
 
 > [!Note] 
-> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.10.1```) 
+> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.11```) 
 
 ## Quickstart
 
@@ -118,7 +116,7 @@ You can use *Makefile* targets to build different images with different privacyI
 
 #### Build a specific privacyIDEA version
 ```
-make build PI_VERSION=3.10.1
+make build PI_VERSION=3.11
 ```
 
 #### Push to a registry
@@ -145,7 +143,7 @@ make distclean
 
 | target | optional ARGS | description | example
 ---------|----------|---|---------
-| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version and image name| ```make build PI_VERSION=3.10```|
+| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version and image name| ```make build PI_VERSION=3.11```|
 | ```push``` | ```REGISTRY```|Tag and push the image to the registry. Optional: specify the registry URI. Defaults to *localhost:5000*| ```make push REGISTRY=docker.io/gpappsoft/privacyidea-docker```|
 | ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional: specify the prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate secrets to use in an environment file | ```make secret```|
@@ -269,7 +267,7 @@ You can start the stack in the background with console detached using the **-d**
 
 Full example including build with  ```make```targets:
 ```
-make cert build push stack PI_VERSION=3.10 TAG=pidev
+make cert build push stack PI_VERSION=3.11 TAG=pidev
 ```
 ---
 Now you can deploy additional containers like OpenLDAP for user realms or Owncloud as a client to test 2FA authentication. 

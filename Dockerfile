@@ -3,8 +3,8 @@
 FROM cgr.dev/chainguard/wolfi-base AS builder
 
 ARG PYVERSION=3.12
-ARG PI=3.10.1
-ARG PI_REQUIREMENTS=3.10.1
+ARG PI=3.11
+ARG PI_REQUIREMENTS=3.11
 ARG GUNICORN==23.0.0
 ARG PSYCOPG2==2.9.9
 ENV LANG=C.UTF-8
@@ -25,7 +25,6 @@ ADD https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS
 
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
-COPY  templates/healthcheck.py /privacyidea/venv/bin/healthcheck.py
 COPY  entrypoint.sh /privacyidea/venv/bin/entrypoint.sh
 
 ### final stage

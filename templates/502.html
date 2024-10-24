@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <style>
+            body {
+              font-family: 'Courier New', monospace;
+            }
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 17px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #6E8A00;
+  display: grid;
+  animation: l22-0 2s infinite linear;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  margin: 15%;
+  border-radius: 50%;
+  background: inherit;
+  transform: rotate(0deg) translate(150%);
+  animation: l22 1s infinite;
+}
+.loader:after {
+  animation-delay: -.5s
+}
+@keyframes l22-0 {
+  100% {transform: rotate(1turn)}
+}
+@keyframes l22 {
+  100% {transform: rotate(1turn) translate(150%)}
+}
+            </style>
+    </head>
+    <body bgcolor="#00131a" text="#6E8A00">
+<div align="center">
+    <img src="https://www.privacyidea.org/wp-content/uploads/2016/06/full-logo-dark-background-version-2.jpg" width="400px" alt="logo">
+<div class="loader" align="center"></div>
+    <br>Please wait until container is started.
+
+</div>
+<script lang="script">setTimeout(function(){
+    window.location.reload(1);
+ }, 5000);</script>
+</body>
+</html>

@@ -8,7 +8,7 @@ http {
   upstream app_server {
     # fail_timeout=0 means we always retry an upstream even if it failed
     # to return a good HTTP response
-    server privacyidea:$APP_PORT fail_timeout=0;
+    server privacyidea:$APP_PORT fail_timeout=2;
   }
 
   server {
@@ -27,9 +27,20 @@ http {
     # path for static files
     root /etc/privacyidea/customization;
 
+    location = /502.html {
+    }
+    location @notready {
+       rewrite ^(.*)$ /notready.html break;
+    }
+
+    error_page 503 @notread;
+    error_page 502 =503 /502.html;
+
     location / {
       # checks for static file, if not found proxy to app
+      
       try_files $uri @proxy_to_app;
+
     }
 
     location @proxy_to_app {
