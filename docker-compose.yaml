@@ -21,7 +21,7 @@ services:
       - openldap
 
   privacyidea:
-    image: gpappsoft/privacyidea-docker:${PI_VERSION}
+    image: privacyidea-docker:${PI_VERSION}
     deploy:
       restart_policy:
         condition: unless-stopped

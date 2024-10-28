@@ -1,8 +1,11 @@
 name: Docker
 
 on:
-  release:
-    types: [prereleased,released]
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
@@ -64,7 +67,9 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: PI_VERSION=${{ github.ref_name }}
+          build-args: |
+            - PI_VERSION=${{ github.ref_name }} 
+            - PI_VERSION_BUILD=${{ github.ref_name }}
           
     
       - name: Sign the published Docker image

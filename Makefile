@@ -1,5 +1,5 @@
-PI_VERSION := 3.11
-PI_VERSION_BUILD := 3.11
+PI_VERSION := 3.10.1
+PI_VERSION_BUILD := 3.10.1
 IMAGE_NAME := privacyidea-docker:${PI_VERSION}
 
 BUILDER := docker build
@@ -18,7 +18,7 @@ TAG := prod
 PROFILE := stack
 
 build:
-	${BUILDER} --no-cache -t ${IMAGE_NAME} --build-arg PI_VERSION_BUILD=${PI_VERSION_BUILD} --build-arg PI_VERSION=${PI_VERSION} .
+	${BUILDER} --no-cache -t ${IMAGE_NAME}  --build-arg PI_VERSION_BUILD=${PI_VERSION_BUILD} --build-arg PI_VERSION=${PI_VERSION} .
 
 push:
 	${CONTAINER_ENGINE} tag ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}
