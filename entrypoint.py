@@ -36,36 +36,21 @@ if not os.path.exists('/privacyidea/etc/persistent/private.pem'):
 # Bootstrap database
 if os.path.exists('/privacyidea/etc/persistent/enckey') and not os.path.exists('/privacyidea/etc/persistent/dbcreated'):
     print("### Creating database tables ###")
-
     with app.app_context():
         create_tables()
-
+    
     open('/privacyidea/etc/persistent/dbcreated', 'w').close()
-    print("### Create initial admin user ###")
-    with app.app_context():
-        create_db_admin(app, os.environ.get('PI_ADMIN', 'admin'), os.environ.get('PI_ADMIN_PASS', 'admin'))
 
-
-# # # Import resolver.json if exists
-# if os.path.exists('/privacyidea/etc/persistent/resolver.json'):
-#     with app.app_context():
-#         with open('/privacyidea/etc/persistent/resolver.json', 'r') as f:
-#           resolver_config = f.read()
-#           save_resolver(resolver_config)
-#     os.rename('/privacyidea/etc/persistent/resolver.json', '/privacyidea/etc/persistent/resolver.json_deployed')
-
-# # Run DB schema update if requested
-# if PI_UPDATE == True:
-#     print("### RUNNING DB-SCHEMA UPDATE ###")
-#     with app.app_context():
-#         upgrade()
+print("### Create initial admin user ###")
+with app.app_context():
+  create_db_admin(app, os.environ.get('PI_ADMIN', 'admin'), os.environ.get('PI_ADMIN_PASS', 'admin'))
 
 # Run the app using gunicorn WSGI HTTP server
-cmd = [ 'python',
-    '-m', 'gunicorn',
-    '-w', '1',
-    '-b', "$PI_ADDRESS:$PI_PORT",
-    'privacyidea.app:create_app(config_name="production")'
+cmd = [ "python",
+    "-m", "gunicorn",
+    "-w", "1",
+    "-b", os.environ['PI_ADDRESS']+":"+os.environ['PI_PORT'],
+    "privacyidea.app:create_app(config_name='production',config_file='/privacyidea/etc/pi.cfg')"
 ]
 
 os.execvp('python', cmd)
