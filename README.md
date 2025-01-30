@@ -5,10 +5,6 @@
 
 Simply deploy and run a privacyIDEA instance in a container environment. 
 
-> [!Important]
-> #### The base-image changed from ``python-slim`` to [Wolfi OS](https://github.com/wolfi-dev). 
-> The old approach is still available in the ```python-slim``` Branch.
-
 ## Overview 
 [privacyIDEA](https://github.com/privacyidea/privacyidea) is an open solution for strong two-factor authentication like OTP tokens, SMS, smartphones or SSH keys. 
 
@@ -144,7 +140,6 @@ make distclean
 | target | optional ARGS | description | example
 ---------|----------|---|---------
 | ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version, requirements version and image name| ```make build PI_VERSION=3.11 PI_VERSION_BUILD=3.11```|
-| ```bigbuild ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image including gssapi and pykcs for Kerberos and HSM. Optional: specify the version, requirements version and image name| ```make build PI_VERSION=3.11 PI_VERSION_BUILD=3.11```|
 | ```push``` | ```REGISTRY```|Tag and push the image to the registry. Optional: specify the registry URI. Defaults to *localhost:5000*| ```make push REGISTRY=docker.io/gpappsoft/privacyidea-docker```|
 | ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional: specify the prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate secrets to use in an environment file | ```make secret```|
