@@ -4,7 +4,7 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-    - '[0-9]+.' # Push events to matching tags
+    - '[0-9]*' # Push events to matching tags
 
 env:
   # Use docker.io for Docker Hub if empty
