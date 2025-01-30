@@ -22,6 +22,16 @@ This project is a complete build environment under linux to build and run privac
 - A guide on how to use docker
 - A guide how to configure and use privacyIDEA 
 
+### tl;dr 
+Clone repository and start a full privacyIDEA stack: 
+```
+git clone https://github.com/gpappsoft/privacyidea-docker.git
+cd privacyidea-docker
+make cert fullstack
+```
+Username / password: admin / admin
+
+
 > [!Important] 
 > The image does **not include** a reverse proxy or a database backend. Running the default image as a standalone container uses gunicorn and a sqlite database. Using sqlite is not suitable for a production environment.
 >
@@ -31,14 +41,10 @@ This project is a complete build environment under linux to build and run privac
 
 **While decoupling the privacyIDEA image from dependencies like Nginx, Apache or database vendors ect., it is possible to run privacyIDEA with your favorite components.**
 
-### tl;dr 
-Clone repository and start a full privacyIDEA stack: 
-```
-git clone https://github.com/gpappsoft/privacyidea-docker.git
-cd privacyidea-docker
-make cert fullstack
-```
-Username / password: admin / admin
+## Easy install (ubuntu)
+See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-ansible) project.
+
+
 
 ## Repository 
 
