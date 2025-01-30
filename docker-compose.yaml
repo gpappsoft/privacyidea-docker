@@ -81,6 +81,10 @@ services:
         source: ./templates/nginx_default.conf.template
         target: /etc/nginx/templates/default.conf.template
         read_only: true
+      - type: bind
+        source: ./templates/502.html
+        target: /etc/privacyidea/customization/502.html
+        read_only: true
     networks:
       - privacyidea
     restart: always
