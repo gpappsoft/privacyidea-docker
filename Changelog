@@ -1,16 +1,4 @@
-Version 3.10.2, 2025-01-30
+Version 3.11dev2, 2025-02-05
 
-  Enhancements:
-  * Removed bash scripting including shaky logic
-  * NGINX Template including landing site if container is not ready yet
-  * More values for pi.cfg
-  * Removed unecessary binds
-  * New persistent logic, file location inside container (app, configuration,...)
-
-Changed:
-  * Using entrypoint.py instead of bash script
-  * Using privacyIDEA application context calls for entrypoint.py (create_db...)
-
-  Fixes:
-  * Fix some minor problems
+  Release for testing
   

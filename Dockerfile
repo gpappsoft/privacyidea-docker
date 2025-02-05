@@ -5,8 +5,8 @@
 FROM cgr.dev/chainguard/wolfi-base AS builder
 
 ARG PYVERSION=3.12
-ARG PI_VERSION=3.10.2
-ARG PI_REQUIREMENTS=3.10.2
+ARG PI_VERSION=3.11dev2
+ARG PI_REQUIREMENTS=3.11dev2
 ARG GUNICORN==23.0.0
 ARG PSYCOPG2==2.9.10
 ARG PYKCS11==1.5.14
@@ -23,14 +23,15 @@ RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev && \
 
 USER nonroot
 RUN python -m venv /privacyidea/venv
-RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements.txt 
-RUN pip install psycopg2-binary==${PSYCOPG2} privacyidea==${PI_VERSION} gunicorn==${GUNICORN}  
+RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
+RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} 
+RUN pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple privacyIDEA==${PI_VERSION}
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-kerberos.txt 
 # Workaroud for https://github.com/privacyidea/privacyidea/issues/4127
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-hsm.txt 
 #RUN pip install pykcs11==${PYKCS11}
 
-ADD https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/deploy/privacyidea/NetKnights.pem /privacyidea/etc/persistent/
+ADD https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/deploy/privacyidea/NetKnights.pem /privacyidea/etc/persistent/
 
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
