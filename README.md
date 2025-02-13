@@ -1,5 +1,6 @@
-[![Docker](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml) ![DockerPulls](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
-
+![GitHub Latest Release)](https://img.shields.io/github/v/release/gpappsoft/privacyidea-docker?logo=github)
+![Docker)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)
+![DockerPulls)](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
 
 # privacyIDEA-docker
 
