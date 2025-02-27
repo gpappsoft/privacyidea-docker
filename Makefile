@@ -55,6 +55,7 @@ resolver:
 	${CONTAINER_ENGINE} cp templates/resolver.json prod-privacyidea-1:/privacyidea/etc/resolver.json
 	${CONTAINER_ENGINE} exec -ti prod-privacyidea-1 /privacyidea/venv/bin/pi-manage config import -i /privacyidea/etc/resolver.json
 	@echo resolvers and realm created
+	
 run:
 	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
 			-e PI_PASSWORD=admin \
