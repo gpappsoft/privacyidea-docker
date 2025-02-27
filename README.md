@@ -67,7 +67,7 @@ Sample images from this project can be found here:
 | [ghcr.io](https://github.com/gpappsoft/privacyidea-docker/pkgs/container/privacyidea-docker)| ```docker pull ghcr.io/gpappsoft/privacyidea-docker:latest```|
 
 > [!Note] 
-> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.11dev3```) 
+> ```latest``` tagged image is maybe a pre- or development-release. Please use always a release number (like ```3.11```) 
 
 ## Quickstart
 
@@ -120,7 +120,7 @@ You can use *Makefile* targets to build different images with different privacyI
 
 #### Build a specific privacyIDEA version
 ```
-make build PI_VERSION=3.11dev3 PI_VERSION_BUILD=3.11dev3
+make build PI_VERSION=3.11 PI_VERSION_BUILD=3.11
 ```
 
 #### Push to a registry
@@ -147,13 +147,14 @@ make distclean
 
 | target | optional ARGS | description | example
 ---------|----------|---|---------
-| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version, requirements version and image name| ```make build PI_VERSION=3.11dev3 PI_VERSION_BUILD=3.11dev3```|
+| ```build ``` | ```PI_VERSION```<br> ```IMAGE_NAME```|Build an image. Optional: specify the version, requirements version and image name| ```make build PI_VERSION=3.11 PI_VERSION_BUILD=3.11```|
 | ```push``` | ```REGISTRY```|Tag and push the image to the registry. Optional: specify the registry URI. Defaults to *localhost:5000*| ```make push REGISTRY=docker.io/gpappsoft/privacyidea-docker```|
 | ```run``` |  ```PORT``` <br> ```TAG```  |Run a standalone container with gunicorn and sqlite. Optional: specify the prefix tag of the container name and listen port. Defaults to *pi* and port *8080*| ```make run TAG=prod PORT=8888```|
 | ```secret``` | |Generate secrets to use in an environment file | ```make secret```|
 | ```cert``` | |Generate a self-signed certificate for the reverse proxy container in *./templates* and **overwrite** the existing one | ```make cert```|
 | ```stack``` |```TAG``` ```PROFILE```| Run a whole stack with the environment file *environment/application-*```TAG```*.env*. Default is *prod*. Possible ```PROFILE``` values: ``` stack,fullstack,ldap,radius``` | ```make stack```, ```make stack TAG=dev PROFILE=fullstack``` , ```make stack TAG=prod PROFILE=stack,radius```|
 | ```fullstack``` || Make a full stack with docker-compose.yml | ```make fullstack```
+| ```resolver``` || Create resolvers and realm for fullstack | ```make resolver```
 | ```clean``` |```TAG```| Remove the container and network without removing the named volumes. Optional: change prefix tag of the container name. Defaults to *prod* | ```make clean TAG=prod```|
 | ```distclean``` |```TAG```| Remove the container, network **and named volumes**. Optional: change prefix tag of the container name. Defaults to *prod* | ```make distclean TAG=prod```|
 
@@ -271,7 +272,7 @@ You can start the stack in the background with console detached using the **-d**
 
 Full example including build with  ```make```targets:
 ```
-make cert build push stack PI_VERSION=3.11dev3 PI_VERSION_BUILD=3.11dev3 TAG=pidev
+make cert build push stack PI_VERSION=3.11 PI_VERSION_BUILD=3.11 TAG=pidev
 ```
 ---
 Now you can deploy additional containers like OpenLDAP for user realms or Owncloud as a client to test 2FA authentication. 

@@ -1,5 +1,5 @@
-PI_VERSION := "3.11dev3"
-PI_VERSION_BUILD := "3.11dev3"
+PI_VERSION := "3.11"
+PI_VERSION_BUILD := "3.11"
 IMAGE_NAME := privacyidea-docker:${PI_VERSION}
 
 BUILDER := docker build
@@ -49,7 +49,12 @@ fullstack:
 	${CONTAINER_ENGINE} compose --env-file=environment/application-${TAG}.env -p ${TAG} --profile=fullstack up -d
 	@echo 
 	@echo Access to privacyIDEA Web-UI: https://localhost:8443
+	@echo to create resolvers and realm, please run: make resolver
 
+resolver:
+	${CONTAINER_ENGINE} cp templates/resolver.json prod-privacyidea-1:/privacyidea/etc/resolver.json
+	${CONTAINER_ENGINE} exec -ti prod-privacyidea-1 /privacyidea/venv/bin/pi-manage config import -i /privacyidea/etc/resolver.json
+	@echo resolvers and realm created
 run:
 	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
 			-e PI_PASSWORD=admin \
@@ -73,6 +78,6 @@ distclean:
 
 make_distclean:
 	@echo Remove container and volumes
-	@${CONTAINER_ENGINE} rm --force ${TAG}-privacyidea
+	@${CONTAINER_ENGINE} rm --force ${TAG}-privacyidea-1
 	@${CONTAINER_ENGINE} volume rm ${TAG}_mysql --force 
 

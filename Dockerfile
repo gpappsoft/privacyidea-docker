@@ -5,8 +5,8 @@
 FROM cgr.dev/chainguard/wolfi-base AS builder
 
 ARG PYVERSION=3.12
-ARG PI_VERSION=3.11dev3
-ARG PI_REQUIREMENTS=3.11dev3
+ARG PI_VERSION=3.11
+ARG PI_REQUIREMENTS=3.11
 ARG GUNICORN==23.0.0
 ARG PSYCOPG2==2.9.10
 ARG PYKCS11==1.5.14
@@ -25,7 +25,7 @@ USER nonroot
 RUN python -m venv /privacyidea/venv
 RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
 RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} 
-RUN pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple privacyIDEA==${PI_VERSION}
+RUN pip install privacyIDEA==${PI_VERSION}
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-kerberos.txt 
 # Workaroud for https://github.com/privacyidea/privacyidea/issues/4127
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-hsm.txt 
@@ -36,6 +36,7 @@ ADD https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_RE
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
 COPY  entrypoint.py /privacyidea/entrypoint.py
+COPY  templates/healthcheck.py /privacyidea/healthcheck.py
 
 ### final stage
 ###
