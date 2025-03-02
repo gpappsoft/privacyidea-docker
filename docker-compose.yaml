@@ -97,7 +97,8 @@ services:
   freeradius:
     image: gpappsoft/privacyidea-freeradius:latest
     environment:
-      RADIUS_PI_HOST: reverse_proxy
+      RADIUS_PI_HOST: https://reverse_proxy
+      RADIUS_CHECK
     ports:
       - "${RADIUS_PORT:-1812}:1812/tcp"
       - "${RADIUS_PORT:-1812}:1812/udp"
