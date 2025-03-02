@@ -39,7 +39,7 @@ Username / password: admin / admin
 See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-ansible) project.
 
 ## K8s / Helm / Cloud install 
-See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-helm) project.
+See the [privacyidea-helm](https://github.com/gpappsoft/privacyidea-helm) project.
 
 Find helm chart on [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/privacyidea)](https://artifacthub.io/packages/helm/privacyidea/privacyidea)
 
