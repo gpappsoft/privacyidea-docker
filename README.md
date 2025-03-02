@@ -39,9 +39,10 @@ Username / password: admin / admin
 See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-ansible) project.
 
 ## K8s / Helm / Cloud install 
-See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-helm).
+See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-helm) project.
 
-<div class="artifacthub-widget" data-url="https://artifacthub.io/packages/helm/privacyidea/privacyidea" data-theme="light" data-header="true" data-stars="true" data-responsive="true"><blockquote><p lang="en" dir="ltr"><b>privacyidea</b>: A Helm chart for deploying PrivacyIDEA with MariaDB and Redis</p>&mdash; Open in <a href="https://artifacthub.io/packages/helm/privacyidea/privacyidea">Artifact Hub</a></blockquote></div><script async src="https://artifacthub.io/artifacthub-widget.js"></script>
+Find helm chart on [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/privacyidea)](https://artifacthub.io/packages/helm/privacyidea/privacyidea)
+
 
 ---
 
