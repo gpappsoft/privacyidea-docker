@@ -1,4 +1,5 @@
 ![GitHub Latest Release)](https://img.shields.io/github/v/release/gpappsoft/privacyidea-docker?logo=github)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/privacyidea)](https://artifacthub.io/packages/search?repo=privacyidea)
 ![Docker)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)
 ![DockerPulls)](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
 
@@ -11,19 +12,21 @@ Simply deploy and run a privacyIDEA instance in a container environment.
 
 This project is a complete build environment under linux to build and run privacyIDEA in a container environment. It uses the [Wolfi OS](https://github.com/wolfi-dev) image and the official [privacyIDEA-Project](https://pypi.org/project/privacyIDEA/)  from PyPi. The image uses [gunicorn](https://gunicorn.org/) from PyPi to run the app. 
 
-**The main goals of this project are to:**
+**Goals:**
 - Build and run the container image, simple and fast.
 - Deploy different versions and/or stages (e.g. production, staging, devel ...) with the same or different configuration on the same host.
 - Easy deploy a "full-stack" (e.g. privacyIDEA, radius, database and reverse proxy) with docker compose.
 - Keep the container's image simple, slim and secure.
 - To build images with no changes to the original privacyIDEA code and as less as possible additional scripts as possible inside the image to run the container. 
 
-**What this project is not:**
+**Non-goals:**
 - A possible way to ignore the [privacyIDEA Documentation](https://privacyidea.readthedocs.io/en/latest/)
 - A guide on how to use docker
 - A guide how to configure and use privacyIDEA 
 
 ### tl;dr 
+See [requirements](#prerequisites-and-requirements)
+
 Clone repository and start a full privacyIDEA stack*: 
 ```
 git clone https://github.com/gpappsoft/privacyidea-docker.git
@@ -32,7 +35,15 @@ make cert fullstack
 ```
 Username / password: admin / admin
 
-*See Quickstart->Requirements first!
+## Easy install (Ubuntu)
+See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-ansible) project.
+
+## K8s / Helm / Cloud install 
+See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-helm).
+
+<div class="artifacthub-widget" data-url="https://artifacthub.io/packages/helm/privacyidea/privacyidea" data-theme="light" data-header="true" data-stars="true" data-responsive="true"><blockquote><p lang="en" dir="ltr"><b>privacyidea</b>: A Helm chart for deploying PrivacyIDEA with MariaDB and Redis</p>&mdash; Open in <a href="https://artifacthub.io/packages/helm/privacyidea/privacyidea">Artifact Hub</a></blockquote></div><script async src="https://artifacthub.io/artifacthub-widget.js"></script>
+
+---
 
 > [!Important] 
 > The image does **not include** a reverse proxy or a database backend. Running the default image as a standalone container uses gunicorn and a sqlite database. Using sqlite is not suitable for a production environment.
@@ -43,8 +54,6 @@ Username / password: admin / admin
 
 **While decoupling the privacyIDEA image from dependencies like Nginx, Apache or database vendors ect., it is possible to run privacyIDEA with your favorite components.**
 
-## Easy install (ubuntu)
-See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-ansible) project.
 
 
 
