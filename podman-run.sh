@@ -65,7 +65,7 @@ podman run --pod pi -dt --name=privacyidea \
     -e PI_PEPPER=/var/run/PI_PEPPER \
     -e DB_HOST="localhost" \
     -e DB_EXTRA_PARAMS="?charset=utf8" \
-    --restart=always gpappsoft/privacyidea-docker:3.11dev2
+    --restart=always gpappsoft/privacyidea-docker:3.11.1dev1
 
 # start reverse_proxy
 podman run --pod pi -dt --name=reverse_proxy \
