@@ -17,14 +17,14 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH="/privacyidea/venv/bin:$PATH"
 
 WORKDIR /privacyidea
-RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev && \
+RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev gnupg && \
 #RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev build-base krb5-conf krb5-dev swig && \
         chown -R nonroot:nonroot /privacyidea/
 
 USER nonroot
 RUN python -m venv /privacyidea/venv
 RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
-RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} 
+RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} gnupg
 RUN pip install privacyIDEA==${PI_VERSION}
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-kerberos.txt 
 # Workaroud for https://github.com/privacyidea/privacyidea/issues/4127
