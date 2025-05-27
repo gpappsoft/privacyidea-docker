@@ -32,29 +32,35 @@ if not os.path.exists('/privacyidea/etc/persistent/enckey') or os.path.getsize('
         enc_file.chmod(0o400)
 
 # Create audit keys if not exists
+priv_key_path = os.environ.get('PI_AUDIT_KEY_PRIVATE', '/privacyidea/etc/persistent/private.pem')
+pub_key_path = os.environ.get('PI_AUDIT_KEY_PUBLIC', '/privacyidea/etc/persistent/public.pem')
+
 if not os.path.exists('/privacyidea/etc/persistent/private.pem'):
-     
-    priv_key = pathlib.Path(os.environ['PI_AUDIT_KEY_PRIVATE'])
+    priv_key = pathlib.Path(priv_key_path)
+    
     if not priv_key.is_file():
-        new_key = rsa.generate_private_key(public_exponent=65537,
-                                        key_size=2048,
-                                        backend=default_backend())
+        new_key = rsa.generate_private_key(
+            public_exponent=65537,
+            key_size=2048,
+            backend=default_backend()
+        )
         priv_pem = new_key.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.TraditionalOpenSSL,
-            encryption_algorithm=serialization.NoEncryption())
+            encryption_algorithm=serialization.NoEncryption()
+        )
         with open(priv_key, "wb") as f:
             f.write(priv_pem)
 
-        pub_key = pathlib.Path(os.environ['PI_AUDIT_KEY_PUBLIC'])
+        pub_key = pathlib.Path(pub_key_path)
         public_key = new_key.public_key()
         pub_pem = public_key.public_bytes(
             encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo)
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
         with open(pub_key, "wb") as f:
             f.write(pub_pem)
-    
-                 
+                    
 # Bootstrap database
 if os.path.exists('/privacyidea/etc/persistent/enckey') and not os.path.exists('/privacyidea/etc/persistent/dbcreated'):
     with app.app_context():
