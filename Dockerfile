@@ -4,12 +4,13 @@
 ###
 FROM cgr.dev/chainguard/wolfi-base AS builder
 
-ARG PYVERSION=3.12
-ARG PI_VERSION=3.12
-ARG PI_REQUIREMENTS=3.12
+ARG PYVERSION=3.13
+ARG PI_VERSION=3.12.1
+ARG PI_REQUIREMENTS=3.12.1
 ARG GUNICORN==23.0.0
 ARG PSYCOPG2==2.9.10
 ARG PYKCS11==1.5.14
+ARG NODEJS_VERSION=22
 
 ENV LANG=C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -17,15 +18,17 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH="/privacyidea/venv/bin:$PATH"
 
 WORKDIR /privacyidea
-RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev gnupg && \
+RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev gnupg git nodejs-${NODEJS_VERSION} npm  && \
 #RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev build-base krb5-conf krb5-dev swig && \
         chown -R nonroot:nonroot /privacyidea/
 
 USER nonroot
 RUN python -m venv /privacyidea/venv
-RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
+RUN pip install  -r https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
 RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} gnupg
-RUN pip install privacyIDEA==${PI_VERSION}
+# Install privacyIDEA from GitHub repository
+RUN git clone --branch v${PI_VERSION} --depth 1 https://github.com/privacyidea/privacyidea.git /privacyidea/pi_src \
+        && pip install /privacyidea/pi_src
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-kerberos.txt 
 # Workaroud for https://github.com/privacyidea/privacyidea/issues/4127
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-hsm.txt 
@@ -33,16 +36,27 @@ RUN pip install privacyIDEA==${PI_VERSION}
 
 ADD https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/deploy/privacyidea/NetKnights.pem /privacyidea/etc/persistent/
 
+
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
 COPY  entrypoint.py /privacyidea/entrypoint.py
 COPY  templates/healthcheck.py /privacyidea/healthcheck.py
 
+# New WebUI
+WORKDIR /privacyidea/pi_src/privacyidea/static_new
+RUN npm ci
+RUN npm run-script ng build
+RUN rm -rf node_modules
+
+WORKDIR /privacyidea/pi_src
+RUN pip install .
+RUN rm -rf /privacyidea/pi_src
+
 ### final stage
 ###
 FROM cgr.dev/chainguard/wolfi-base
 
-ARG PYVERSION=3.12
+ARG PYVERSION=3.13
 ENV PYTHONUNBUFFERED=1
 ENV PATH="/privacyidea/venv/bin:/privacyidea/bin:$PATH"
 ENV PRIVACYIDEA_CONFIGFILE="/privacyidea/etc/pi.cfg"

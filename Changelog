@@ -1,4 +1,8 @@
-Version 3.12, 2025-07-03
+Version 3.12.1, 2025-07-03
 
-  Release 3.12
-  
+  Release 3.12.1
+
+- Start using privacyidea github source-tree instead of python package index.
+- Added new webUI preview parameters. See environment/application-prod.env file for more information.
+- Updated resolver.json 
+- Updated to new version.

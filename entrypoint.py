@@ -13,7 +13,7 @@ from cryptography.hazmat.primitives import serialization
 
 app = create_app(config_name='production',config_file='/privacyidea/etc/pi.cfg')
 
-os.chdir('/privacyidea/venv/lib/python3.12/site-packages/privacyidea')
+os.chdir('/privacyidea/')
 
 # Update database schema, if set
 PI_UPDATE = os.environ.get('PI_UPDATE', False)

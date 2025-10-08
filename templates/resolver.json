@@ -1,1 +1,467 @@
-{'config': {'__timestamp__': {'Value': '1704461342', 'Type': '', 'Description': 'config timestamp. last changed.'}}, 'resolver': {'users': {'type': 'ldapresolver', 'resolvername': 'users', 'censor_keys': ['BINDPW'], 'data': {'SIZELIMIT': '500', 'TIMEOUT': '5', 'UIDTYPE': 'entryUUID', 'AUTHTYPE': 'Simple', 'SCOPE': 'SUBTREE', 'CACHE_TIMEOUT': '120', 'NOSCHEMAS': 'False', 'TLS_VERIFY': 'True', 'TLS_VERSION': '2', 'START_TLS': 'False', 'SERVERPOOL_ROUNDS': '2', 'SERVERPOOL_STRATEGY': 'ROUND_ROBIN', 'SERVERPOOL_SKIP': '30', 'LDAPURI': 'ldap://openldap:389', 'LDAPBASE': 'ou=users,dc=example,dc=org', 'BINDDN': 'cn=admin,dc=example,dc=org', 'BINDPW': 'openldap', 'LOGINNAMEATTRIBUTE': 'uid', 'LDAPSEARCHFILTER': '(uid=*)(objectClass=inetOrgPerson)(employeeType=user)', 'USERINFO': '{ "phone" : "telephoneNumber", "mobile" : "mobile", "email" : "mail", "surname" : "sn", "givenname" : "givenName" }', 'NOREFERRALS': 'True', 'EDITABLE': 'False'}}, 'helpdesk': {'type': 'ldapresolver', 'resolvername': 'helpdesk', 'censor_keys': ['BINDPW'], 'data': {'AUTHTYPE': 'Simple', 'BINDDN': 'cn=admin,dc=example,dc=org', 'BINDPW': 'openldap', 'CACHE_TIMEOUT': '120', 'EDITABLE': 'False', 'LDAPBASE': 'ou=users,dc=example,dc=org', 'LDAPSEARCHFILTER': '(uid=*)(objectClass=inetOrgPerson)(employeeType=helpdesk)', 'LDAPURI': 'ldap://openldap:389', 'LOGINNAMEATTRIBUTE': 'uid', 'NOREFERRALS': 'True', 'NOSCHEMAS': 'False', 'SCOPE': 'SUBTREE', 'SERVERPOOL_ROUNDS': '2', 'SERVERPOOL_SKIP': '30', 'SERVERPOOL_STRATEGY': 'ROUND_ROBIN', 'SIZELIMIT': '500', 'START_TLS': 'False', 'TIMEOUT': '5', 'TLS_VERIFY': 'True', 'TLS_VERSION': '2', 'UIDTYPE': 'entryUUID', 'USERINFO': '{ "phone" : "telephoneNumber", "mobile" : "mobile", "email" : "mail", "surname" : "sn", "givenname" : "givenName" }', 'SERVERPOOL_PERSISTENT': 'False'}}, 'admin': {'type': 'ldapresolver', 'resolvername': 'admin', 'censor_keys': ['BINDPW'], 'data': {'AUTHTYPE': 'Simple', 'BINDDN': 'cn=admin,dc=example,dc=org', 'BINDPW': 'openldap', 'CACHE_TIMEOUT': '120', 'EDITABLE': 'False', 'LDAPBASE': 'ou=users,dc=example,dc=org', 'LDAPSEARCHFILTER': '(uid=*)(objectClass=inetOrgPerson)(employeeType=admin)', 'LDAPURI': 'ldap://openldap:389', 'LOGINNAMEATTRIBUTE': 'uid', 'NOREFERRALS': 'True', 'NOSCHEMAS': 'False', 'SCOPE': 'SUBTREE', 'SERVERPOOL_PERSISTENT': 'False', 'SERVERPOOL_ROUNDS': '2', 'SERVERPOOL_SKIP': '30', 'SERVERPOOL_STRATEGY': 'ROUND_ROBIN', 'SIZELIMIT': '500', 'START_TLS': 'False', 'TIMEOUT': '5', 'TLS_VERIFY': 'True', 'TLS_VERSION': '2', 'UIDTYPE': 'entryUUID', 'USERINFO': '{ "phone" : "telephoneNumber", "mobile" : "mobile", "email" : "mail", "surname" : "sn", "givenname" : "givenName" }'}}}, 'realm': {'exampleorg': {'id': 2, 'option': '', 'default': True, 'resolver': [{'priority': None, 'name': 'users', 'type': 'ldapresolver'}]}}, 'smtpserver': {}, 'radiusserver': {}, 'policy': [], 'event': [], 'caconnector': [], 'machineresolver': {}, 'smsgateway': {}, 'periodictask': [], 'privacyideaserver': {}}
+{
+  "config": {
+    "AutoResync": {
+      "Value": "False",
+      "Type": "",
+      "Description": ""
+    },
+    "IncFailCountOnFalsePin": {
+      "Value": "True",
+      "Type": "",
+      "Description": ""
+    },
+    "no_auth_counter": {
+      "Value": "False",
+      "Type": "",
+      "Description": ""
+    },
+    "OverrideAuthorizationClient": {
+      "Value": "127.0.0.1",
+      "Type": "",
+      "Description": ""
+    },
+    "PrependPin": {
+      "Value": "True",
+      "Type": "public",
+      "Description": ""
+    },
+    "ReturnSamlAttributes": {
+      "Value": "True",
+      "Type": "",
+      "Description": ""
+    },
+    "ReturnSamlAttributesOnFail": {
+      "Value": "False",
+      "Type": "",
+      "Description": ""
+    },
+    "splitAtSign": {
+      "Value": "True",
+      "Type": "",
+      "Description": ""
+    },
+    "UiLoginDisplayHelpButton": {
+      "Value": "False",
+      "Type": "",
+      "Description": ""
+    },
+    "UiLoginDisplayRealmBox": {
+      "Value": "False",
+      "Type": "",
+      "Description": ""
+    },
+    "__timestamp__": {
+      "Value": "1759915065",
+      "Type": "",
+      "Description": "config timestamp. last changed."
+    }
+  },
+  "machineresolver": {},
+  "resolver": {
+    "users": {
+      "type": "ldapresolver",
+      "resolvername": "users",
+      "censor_keys": [
+        "BINDPW"
+      ],
+      "data": {
+        "SIZELIMIT": "500",
+        "TIMEOUT": "5",
+        "UIDTYPE": "entryUUID",
+        "AUTHTYPE": "Simple",
+        "SCOPE": "SUBTREE",
+        "CACHE_TIMEOUT": "120",
+        "NOSCHEMAS": "False",
+        "TLS_VERIFY": "True",
+        "TLS_VERSION": "2",
+        "START_TLS": "False",
+        "SERVERPOOL_ROUNDS": "2",
+        "SERVERPOOL_STRATEGY": "ROUND_ROBIN",
+        "SERVERPOOL_SKIP": "30",
+        "LDAPURI": "ldap://openldap:389",
+        "LDAPBASE": "ou=users,dc=example,dc=org",
+        "BINDDN": "cn=admin,dc=example,dc=org",
+        "BINDPW": "openldap",
+        "LOGINNAMEATTRIBUTE": "uid",
+        "LDAPSEARCHFILTER": "(uid=*)(objectClass=inetOrgPerson)(employeeType=user)",
+        "USERINFO": "{ \"phone\" : \"telephoneNumber\", \"mobile\" : \"mobile\", \"email\" : \"mail\", \"surname\" : \"sn\", \"givenname\" : \"givenName\" }",
+        "NOREFERRALS": "True",
+        "EDITABLE": "False"
+      }
+    },
+    "helpdesk": {
+      "type": "ldapresolver",
+      "resolvername": "helpdesk",
+      "censor_keys": [
+        "BINDPW"
+      ],
+      "data": {
+        "AUTHTYPE": "Simple",
+        "BINDDN": "cn=admin,dc=example,dc=org",
+        "BINDPW": "openldap",
+        "CACHE_TIMEOUT": "120",
+        "EDITABLE": "False",
+        "LDAPBASE": "ou=users,dc=example,dc=org",
+        "LDAPSEARCHFILTER": "(uid=*)(objectClass=inetOrgPerson)(employeeType=helpdesk)",
+        "LDAPURI": "ldap://openldap:389",
+        "LOGINNAMEATTRIBUTE": "uid",
+        "NOREFERRALS": "True",
+        "NOSCHEMAS": "False",
+        "SCOPE": "SUBTREE",
+        "SERVERPOOL_ROUNDS": "2",
+        "SERVERPOOL_SKIP": "30",
+        "SERVERPOOL_STRATEGY": "ROUND_ROBIN",
+        "SIZELIMIT": "500",
+        "START_TLS": "False",
+        "TIMEOUT": "5",
+        "TLS_VERIFY": "True",
+        "TLS_VERSION": "2",
+        "UIDTYPE": "entryUUID",
+        "USERINFO": "{ \"phone\" : \"telephoneNumber\", \"mobile\" : \"mobile\", \"email\" : \"mail\", \"surname\" : \"sn\", \"givenname\" : \"givenName\" }",
+        "SERVERPOOL_PERSISTENT": "False"
+      }
+    },
+    "admin": {
+      "type": "ldapresolver",
+      "resolvername": "admin",
+      "censor_keys": [
+        "BINDPW"
+      ],
+      "data": {
+        "AUTHTYPE": "Simple",
+        "BINDDN": "cn=admin,dc=example,dc=org",
+        "BINDPW": "openldap",
+        "CACHE_TIMEOUT": "120",
+        "EDITABLE": "False",
+        "LDAPBASE": "ou=users,dc=example,dc=org",
+        "LDAPSEARCHFILTER": "(uid=*)(objectClass=inetOrgPerson)(employeeType=admin)",
+        "LDAPURI": "ldap://openldap:389",
+        "LOGINNAMEATTRIBUTE": "uid",
+        "NOREFERRALS": "True",
+        "NOSCHEMAS": "False",
+        "SCOPE": "SUBTREE",
+        "SERVERPOOL_PERSISTENT": "False",
+        "SERVERPOOL_ROUNDS": "2",
+        "SERVERPOOL_SKIP": "30",
+        "SERVERPOOL_STRATEGY": "ROUND_ROBIN",
+        "SIZELIMIT": "500",
+        "START_TLS": "False",
+        "TIMEOUT": "5",
+        "TLS_VERIFY": "True",
+        "TLS_VERSION": "2",
+        "UIDTYPE": "entryUUID",
+        "USERINFO": "{ \"phone\" : \"telephoneNumber\", \"mobile\" : \"mobile\", \"email\" : \"mail\", \"surname\" : \"sn\", \"givenname\" : \"givenName\" }"
+      }
+    }
+  },
+  "realm": {
+    "exampleorg": {
+      "id": 1,
+      "default": true,
+      "resolver": [
+        {
+          "priority": null,
+          "name": "users",
+          "type": "ldapresolver",
+          "node": ""
+        }
+      ]
+    },
+    "admin": {
+      "id": 2,
+      "default": false,
+      "resolver": [
+        {
+          "priority": null,
+          "name": "admin",
+          "type": "ldapresolver",
+          "node": ""
+        }
+      ]
+    },
+    "helpdesk": {
+      "id": 3,
+      "default": false,
+      "resolver": [
+        {
+          "priority": null,
+          "name": "helpdesk",
+          "type": "ldapresolver",
+          "node": ""
+        }
+      ]
+    }
+  },
+  "smtpserver": {},
+  "radiusserver": {},
+  "policy": [
+    {
+      "name": "superuser",
+      "user_case_insensitive": false,
+      "active": true,
+      "scope": "admin",
+      "realm": [],
+      "adminrealm": [
+        "admin"
+      ],
+      "adminuser": [],
+      "resolver": [],
+      "pinode": [],
+      "check_all_resolvers": false,
+      "user": [],
+      "client": [],
+      "time": "",
+      "conditions": [],
+      "priority": 1,
+      "description": null,
+      "user_agents": [],
+      "action": {
+        "adduser": true,
+        "assign": true,
+        "auditlog": true,
+        "auditlog_download": true,
+        "caconnectordelete": true,
+        "caconnectorread": true,
+        "caconnectorwrite": true,
+        "clienttype": true,
+        "configdelete": true,
+        "configread": true,
+        "configwrite": true,
+        "container_add_token": true,
+        "container_assign_user": true,
+        "container_create": true,
+        "container_delete": true,
+        "container_description": true,
+        "container_info": true,
+        "container_list": true,
+        "container_realms": true,
+        "container_register": true,
+        "container_remove_token": true,
+        "container_rollover": true,
+        "container_state": true,
+        "container_template_create": true,
+        "container_template_delete": true,
+        "container_template_list": true,
+        "container_unassign_user": true,
+        "container_unregister": true,
+        "copytokenpin": true,
+        "copytokenuser": true,
+        "daypassword_force_server_generate": true,
+        "delete": true,
+        "deleteuser": true,
+        "disable": true,
+        "enable": true,
+        "enroll4EYES": true,
+        "enrollAPPLSPEC": true,
+        "enrollCERTIFICATE": true,
+        "enrollDAPLUG": true,
+        "enrollDAYPASSWORD": true,
+        "enrollEMAIL": true,
+        "enrollHOTP": true,
+        "enrollINDEXEDSECRET": true,
+        "enrollMOTP": true,
+        "enrollOCRA": true,
+        "enrollPAPER": true,
+        "enrollPASSKEY": true,
+        "enrollPUSH": true,
+        "enrollPW": true,
+        "enrollQUESTION": true,
+        "enrollRADIUS": true,
+        "enrollREGISTRATION": true,
+        "enrollREMOTE": true,
+        "enrollSMS": true,
+        "enrollSPASS": true,
+        "enrollSSHKEY": true,
+        "enrollTAN": true,
+        "enrollTIQR": true,
+        "enrollTOTP": true,
+        "enrollVASCO": true,
+        "enrollWEBAUTHN": true,
+        "enrollYUBICO": true,
+        "enrollYUBIKEY": true,
+        "enrollpin": true,
+        "eventhandling_read": true,
+        "eventhandling_write": true,
+        "fetch_authentication_items": true,
+        "getchallenges": true,
+        "getrandom": true,
+        "getserial": true,
+        "importtokens": true,
+        "losttoken": true,
+        "machinelist": true,
+        "manage_machine_tokens": true,
+        "managesubscription": true,
+        "mresolverdelete": true,
+        "mresolverread": true,
+        "mresolverwrite": true,
+        "periodictask_read": true,
+        "periodictask_write": true,
+        "policydelete": true,
+        "policyread": true,
+        "policywrite": true,
+        "privacyideaserver_read": true,
+        "privacyideaserver_write": true,
+        "radiusserver_read": true,
+        "radiusserver_write": true,
+        "reset": true,
+        "resolverdelete": true,
+        "resolverread": true,
+        "resolverwrite": true,
+        "resync": true,
+        "revoke": true,
+        "serviceid_add": true,
+        "serviceid_delete": true,
+        "serviceid_list": true,
+        "set": true,
+        "set_hsm_password": true,
+        "setdescription": true,
+        "setpin": true,
+        "setrandompin": true,
+        "settokeninfo": true,
+        "smsgateway_read": true,
+        "smsgateway_write": true,
+        "smtpserver_read": true,
+        "smtpserver_write": true,
+        "statistics_delete": true,
+        "statistics_read": true,
+        "system_documentation": true,
+        "tokengroup_add": true,
+        "tokengroup_delete": true,
+        "tokengroup_list": true,
+        "tokengroups": true,
+        "tokenlist": true,
+        "tokenrealms": true,
+        "triggerchallenge": true,
+        "unassign": true,
+        "updateuser": true,
+        "userlist": true
+      }
+    },
+    {
+      "name": "helpdesk",
+      "user_case_insensitive": false,
+      "active": true,
+      "scope": "admin",
+      "realm": [
+        "exampleorg"
+      ],
+      "adminrealm": [
+        "helpdesk"
+      ],
+      "adminuser": [],
+      "resolver": [],
+      "pinode": [],
+      "check_all_resolvers": false,
+      "user": [],
+      "client": [],
+      "time": "",
+      "conditions": [],
+      "priority": 1,
+      "description": null,
+      "user_agents": [],
+      "action": {
+        "assign": true,
+        "auditlog": true,
+        "copytokenpin": true,
+        "copytokenuser": true,
+        "delete": true,
+        "disable": true,
+        "enable": true,
+        "enroll4EYES": true,
+        "enrollCERTIFICATE": true,
+        "enrollDAPLUG": true,
+        "enrollEMAIL": true,
+        "enrollHOTP": true,
+        "enrollMOTP": true,
+        "enrollPAPER": true,
+        "enrollPW": true,
+        "enrollQUESTION": true,
+        "enrollRADIUS": true,
+        "enrollREGISTRATION": true,
+        "enrollREMOTE": true,
+        "enrollSMS": true,
+        "enrollSPASS": true,
+        "enrollSSHKEY": true,
+        "enrollTIQR": true,
+        "enrollTOTP": true,
+        "enrollYUBICO": true,
+        "enrollYUBIKEY": true,
+        "getchallenges": true,
+        "getrandom": true,
+        "getserial": true,
+        "losttoken": true,
+        "machinelist": true,
+        "reset": true,
+        "resync": true,
+        "set": true,
+        "setpin": true,
+        "tokenrealms": true,
+        "unassign": true,
+        "userlist": true,
+        "resolverread": true
+      }
+    },
+    {
+      "name": "ui_helper",
+      "user_case_insensitive": false,
+      "active": true,
+      "scope": "webui",
+      "realm": [],
+      "adminrealm": [],
+      "adminuser": [],
+      "resolver": [],
+      "pinode": [],
+      "check_all_resolvers": false,
+      "user": [],
+      "client": [],
+      "time": "",
+      "conditions": [],
+      "priority": 1,
+      "description": null,
+      "user_agents": [],
+      "action": {
+        "hide_welcome_info": true,
+        "logout_time": "3600",
+        "admin_dashboard": true,
+        "default_tokentype": "totp",
+        "tokenwizard": true
+      }
+    },
+    {
+      "name": "selfservice",
+      "user_case_insensitive": false,
+      "active": true,
+      "scope": "user",
+      "realm": [],
+      "adminrealm": [],
+      "adminuser": [],
+      "resolver": [],
+      "pinode": [],
+      "check_all_resolvers": false,
+      "user": [],
+      "client": [],
+      "time": "",
+      "conditions": [],
+      "priority": 1,
+      "description": null,
+      "user_agents": [],
+      "action": {
+        "assign": true,
+        "auditlog": true,
+        "enrollTOTP": true,
+        "reset": true,
+        "resync": true,
+        "totp_force_server_generate": true,
+        "totp_hashlib": "sha256",
+        "totp_otplen": "6",
+        "totp_timestep": "30"
+      }
+    }
+  ],
+  "caconnector": [],
+  "smsgateway": {},
+  "event": [],
+  "periodictask": [],
+  "privacyideaserver": {},
+  "privacyIDEA_version": "3.12.1"
+}

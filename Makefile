@@ -1,5 +1,5 @@
-PI_VERSION := "3.12"
-PI_VERSION_BUILD := "3.12"
+PI_VERSION := "3.12.1"
+PI_VERSION_BUILD := "3.12.1"
 IMAGE_NAME := privacyidea-docker:${PI_VERSION}
 
 BUILDER := docker build
@@ -54,8 +54,12 @@ fullstack:
 resolver:
 	${CONTAINER_ENGINE} cp templates/resolver.json prod-privacyidea-1:/privacyidea/etc/resolver.json
 	${CONTAINER_ENGINE} exec -ti prod-privacyidea-1 /privacyidea/venv/bin/pi-manage config import -i /privacyidea/etc/resolver.json
-	@echo resolvers and realm created
-	
+	@echo resolvers and realm created.
+	@echo "############################################################################"
+	@echo "admin login with: admin@admin / admin "
+	@echo "helpdesk login with: helpdesk@helpdesk / helpdesk "
+	@echo "user login with: HadiPac / hadi "
+	@echo "############################################################################"
 run:
 	@${CONTAINER_ENGINE} run -d --name ${TAG}-privacyidea \
 			-e PI_PASSWORD=admin \
