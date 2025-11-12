@@ -122,7 +122,7 @@ services:
     image: osixia/openldap:latest
     environment:
       KEEP_EXISTING_CONFIG: "false"
-      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "false"
       LDAP_SSL_HELPER_PREFIX: "ldap"
       LDAP_LOG_LEVEL: "0"
       LDAP_ORGANISATION: "Example Inc."
