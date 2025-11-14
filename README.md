@@ -86,7 +86,7 @@ Sample images from this project can be found here:
 - Installed a container runtime engine (docker / podman).
 - Installed [BuildKit](https://docs.docker.com/build/buildkit/), [buildx](https://github.com/docker/buildx) and [Compose V2](https://docs.docker.com/compose/install/linux/) (docker-compose-v2) components
 - The repository is tested with versions listed in [COMPAT.md](COMPAT.md)
-- [Podman](https://podman.io) is partially supported. **Please refer to [PODMAN.md](PODMAN.md) for more details.**
+
 
 #### Quick & Dirty
 
