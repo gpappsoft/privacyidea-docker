@@ -1,0 +1,19 @@
+application: privacyidea
+by_address: Examplestreet / Examplecity / DE
+by_email: info@example.org
+by_name: sectest
+by_phone: N/A
+by_url: www.example.org
+date_from: 2026-02-23
+date_till: 2028-02-22
+for_address: Examplestreet 1 / Examplecity / DE
+for_comment: ''
+for_email: acme@example.org
+for_name: ACME Test Ltd.
+for_phone: N/A
+for_url: https://www.example.org
+level: Enterprise
+num_clients: 200
+num_tokens: 200
+num_users: 200
+signature: rsa_sha256_pss:7aa152e9a58152e486b9273ffe4586287e38322d3b88c5f74caf0ace6052ffe286be81143ad4609f0285e393e0f033e6e1b76f536c150165d31dd2e1e4eeb51947b0626769ca792dfd5f2c7d91048e51cd85a3eaf31639e0b7df06f00154cdcba497f463ded0b3c5294e7d037157124fedc873a6031d3331b152e1f9fc0bb5c001c6f4649bfdd894db9bd4698df95e708c76e9b5ed1b76955bd60d17d2a61f6f0410fcf2860fd746e8a4f25ab0ce4154f8bec106069095f937c255ef85fc57660b7cca9fda8b2d1f67dc66c2a191c1f59607f3a4ae817d23aa4521c64707c7d892bcb0cbb323bb3b03caa0d1dd1441c7aa6c1760755ee9310a6b2cffb76f4eeb

@@ -1,0 +1,19 @@
+application: privacyidea-pam
+by_address: Examplestreet / Examplecity / DE
+by_email: info@example.org
+by_name: sectest
+by_phone: N/A
+by_url: www.example.org
+date_from: 2026-02-23
+date_till: 2028-02-22
+for_address: Examplestreet 1 / Examplecity / DE
+for_comment: ''
+for_email: acme@example.org
+for_name: ACME Test Ltd.
+for_phone: N/A
+for_url: https://www.example.org
+level: Enterprise
+num_clients: 200
+num_tokens: 200
+num_users: 200
+signature: rsa_sha256_pss:cacd59aa6417c5e4a26422ff5fb9d204bfdccac05c7f2db3ad6d3a6336c6315d7fc4af86b43936107332bb8db6d817f5216bae0cca61807f0114a807b51d98eda44abb8aa969a78212f3344d799a6a2cb07f013e2bbea4c1322aba81810f338f9ab39cea4e209bfdc99ea767263d46b67679326e1e553c44d325db87f6f0586f07bcf2133350bf90ece34c364cfadae7d16d93eba761edde0ff77c2d2d67f5b6503559ac4be0fa86a367b4d1d64c8567e021acd1e5972eb3bc7b85a5e9e20d9c8a4d1ac0fda3aade2d40416d621a876d973e11bf23b8292195716cd9312ac332b72d548ed30e82d52d137d0db5b2ceaa9474eb042f78a691c70328171dc8944c

@@ -1,0 +1,19 @@
+application: privacyidea-nextcloud
+by_address: Examplestreet / Examplecity / DE
+by_email: info@example.org
+by_name: sectest
+by_phone: N/A
+by_url: www.example.org
+date_from: 2026-02-23
+date_till: 2028-02-22
+for_address: Examplestreet 1 / Examplecity / DE
+for_comment: ''
+for_email: acme@example.org
+for_name: ACME Test Ltd.
+for_phone: N/A
+for_url: https://www.example.org
+level: Enterprise
+num_clients: 200
+num_tokens: 200
+num_users: 200
+signature: rsa_sha256_pss:374d304b23fbb594e4aa670abbfa7b016bea2ee72674e359efbd17aa325efcf368301f597a245c680acabb76f2b4aef54c8b0d118dd4353cbb044669afb78a99506b5f74c5e13da00c9f07298062ea58748b037bb69fa281bc93b114a450043e74b602adf05e868230f04bd1085d9897cd46c92192ec163d5d9f5fb32bcf22fa73ae5389286092b26cf12e4df573bd40636239b737fa0ccc3cef9f18e15e5f313ae4f27fd72579863463b6faea0c7b4eab4faf2da9e60b6e14d97101d9b11ca66dcbc3eeb11f53a7dcf2d8e575133df36fb60c8f8f181250dc5a834f45a48e6585bffc07a5f1025a5ecebced0ba99682496805c0f9f04e425d45219856fa1330

@@ -1,0 +1,19 @@
+application: privacyidea-shibboleth
+by_address: Examplestreet / Examplecity / DE
+by_email: info@example.org
+by_name: sectest
+by_phone: N/A
+by_url: www.example.org
+date_from: 2026-02-23
+date_till: 2028-02-22
+for_address: Examplestreet 1 / Examplecity / DE
+for_comment: ''
+for_email: acme@example.org
+for_name: ACME Test Ltd.
+for_phone: N/A
+for_url: https://www.example.org
+level: Enterprise
+num_clients: 200
+num_tokens: 200
+num_users: 200
+signature: rsa_sha256_pss:c935b2542fa4245f2eac66802c58966a9670c993daf21ef4757800bc5484c76db2d1e0e9c7b1db6dcc3f88fd6fb8b26ed1ad2b9ca4784cd9ddb3e0b1bd7938cbaf5d5b87ded0cb19b71728407ccfe0ae13192106d7b8a4d9a999945f14f1762d67c6605ce537e14a76d6dfc5f7a9f20b9a3fa86e2d0902f74f670c86b26cdbc5fbc4cc8c0a10f9b9cb707219e36aa58d319ebf6418e39fd17ed35ae72e1e3077d1fec785f763a550f7573cfa36e347c56017e95c0e5a33cc017777da4949ca5248ce30dfd05933e742f6da34addd4aa5bc31ff209fa450bcb288df6bb456b029f58e0f510424974abc969c004e7613945a354e4e204f1e5c17f4c7ac493f5e63

@@ -1,0 +1,19 @@
+application: privacyidea-ldap-proxy
+by_address: Examplestreet / Examplecity / DE
+by_email: info@example.org
+by_name: sectest
+by_phone: N/A
+by_url: www.example.org
+date_from: 2026-02-23
+date_till: 2028-02-22
+for_address: Examplestreet 1 / Examplecity / DE
+for_comment: ''
+for_email: acme@example.org
+for_name: ACME Test Ltd.
+for_phone: N/A
+for_url: https://www.example.org
+level: Enterprise
+num_clients: 200
+num_tokens: 200
+num_users: 200
+signature: rsa_sha256_pss:a5e33188fd38b3d5a0a992274e76760cd845ae91c9a6a2a6b0a2a48c295d59c9eb4342378dc66142ae7a3467446f5d266760ae062497f8cd3ef58e00023bbc7045eae4c94f3667ff908beec9bf04737c0905c4876b559ba0813d990d58bfb0197809d058c917a2870e87819e2a41e69558d42fa5bf5ff4f7a24b939d0ff2eb9a770bbe2e362173ad818a46089047c43c832f023f2eeea99ddbc8a2e84d27ebba4e0b612550828576f251eaa7c7fc60f219d11d0a59bac53f5882cc43a828d4d29aff2f41253fc5b7c74905c48a8feef3b2f6729bf6168c320a35a8697083835d904d22f66c8114e405ec0de7eb1b95f3060156d31e06205c8568438fc51b21d1

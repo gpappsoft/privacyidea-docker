@@ -34,13 +34,11 @@ RUN git clone --branch v${PI_VERSION} --depth 1 https://github.com/privacyidea/p
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-hsm.txt 
 #RUN pip install pykcs11==${PYKCS11}
 
-ADD https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/deploy/privacyidea/NetKnights.pem /privacyidea/etc/persistent/
-
-
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
 COPY  entrypoint.py /privacyidea/entrypoint.py
 COPY  templates/healthcheck.py /privacyidea/healthcheck.py
+COPY  templates/sectest.pem /privacyidea/etc/persistent/sectest.pem
 
 # New WebUI
 WORKDIR /privacyidea/pi_src/privacyidea/static_new
