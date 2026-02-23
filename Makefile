@@ -76,13 +76,13 @@ run:
 	@echo Username/Password: admin / admin
 
 clean:
-	@${CONTAINER_ENGINE} rm --force ${TAG}-privacyidea
+	@${CONTAINER_ENGINE} rm --force ${TAG}-privacyidea-1
 
 distclean:
 	@echo -n "Warning! This will remove all related volumes: Are you sure? [y/N] " && read ans && if [ $${ans:-'N'} = 'y' ]; then make make_distclean; fi
 
 make_distclean:
 	@echo Remove container and volumes
-	@${CONTAINER_ENGINE} rm --force ${TAG}-privacyidea-1
-	@${CONTAINER_ENGINE} volume rm ${TAG}_mysql --force 
+	@${CONTAINER_ENGINE} rm --force ${TAG}-openldap-1 ${TAG}-db-1  ${TAG}-privacyidea-1 ${TAG}-freeradius-1 ${TAG}-reverse_proxy-1 
+	@${CONTAINER_ENGINE} volume rm prod_mysql prod_pidata
 
