@@ -24,11 +24,14 @@ RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev gnupg git nodejs-
 
 USER nonroot
 RUN python -m venv /privacyidea/venv
-RUN pip install  -r https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
+RUN pip install  -r https://raw.githubusercontent.com/gpappsoft/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
 RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} gnupg
-# Install privacyIDEA from GitHub repository
-RUN git clone --branch v${PI_VERSION} --depth 1 https://github.com/privacyidea/privacyidea.git /privacyidea/pi_src \
+
+# Install privacyIDEA from forked GitHub repository
+RUN git clone --branch v${PI_VERSION} --depth 1 https://github.com/gpappsoft/privacyidea.git /privacyidea/pi_src \
         && pip install /privacyidea/pi_src
+
+# Enable if HSM or Kerberos needed
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-kerberos.txt 
 # Workaroud for https://github.com/privacyidea/privacyidea/issues/4127
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-hsm.txt 
