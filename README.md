@@ -12,6 +12,20 @@ Simply deploy and run a privacyIDEA instance in a container environment.
 
 This project is a complete build environment under linux to build and run privacyIDEA in a container environment. It uses the [Wolfi OS](https://github.com/wolfi-dev) image and the official [privacyIDEA-Project](https://pypi.org/project/privacyIDEA/)  from PyPi. The image uses [gunicorn](https://gunicorn.org/) from PyPi to run the app. 
 
+> [!Important] 
+> To enhance version control of this project, a fork from the original privacyidea repository will be used starting at **03/13/2026** to build the images. There are no changes compared to the original repository.
+>
+> Furthermore, the vendor certificate will be transferred from NetKnights.pem to sec.pem, and the most recent release (3.12.2) will be regenerated. This encompasses the present images.
+>
+> **This will not break anything, as long as you do not use subscription files from other vendors.**
+>
+> You can either make your own certificates and subscriptions for testing, use the provided files/subscriptions from this project or rebuild the project with other certificates (e.g.NetKnights.pem).
+> 
+> **If you require individual subscriptions, additional professional assistance or managed privacyidea services, please send your request to [info@moenig.it](mailto:info@moenig.it) for further details.**
+>
+> Please refer to the DISCLAIMER as well.
+
+
 **Goals:**
 - Build and run the container image, simple and fast.
 - Deploy different versions and/or stages (e.g. production, staging, devel ...) with the same or different configuration on the same host.
@@ -436,3 +450,4 @@ This project is my private project doing in my free time. This project is not fr
    ``` docker  run -d -p 5000:5000 --name registry registry:2.7 ``` 
    
    
+
