@@ -5,38 +5,25 @@
 
 # privacyIDEA-docker
 
-Simply deploy and run a privacyIDEA instance in a container environment. 
+Simply deploy and run an MFA instance in a container environment powered and based on privacyIDEA.
 
 ## Overview 
 [privacyIDEA](https://github.com/privacyidea/privacyidea) is an open solution for strong two-factor authentication like OTP tokens, SMS, smartphones or SSH keys. 
 
-This project is a complete build environment under linux to build and run privacyIDEA in a container environment. It uses the [Wolfi OS](https://github.com/wolfi-dev) image and the official [privacyIDEA-Project](https://pypi.org/project/privacyIDEA/)  from PyPi. The image uses [gunicorn](https://gunicorn.org/) from PyPi to run the app. 
+This project is a complete build environment under linux to build and run an MFA system in a container environment. It uses the [Wolfi OS](https://github.com/wolfi-dev) image and a fork of the [privacyIDEA-Project](https://github.com/privacyidea/privacyidea/). The image uses [gunicorn](https://gunicorn.org/) from PyPi to run the app. 
 
 > [!Important] 
-> To enhance version control of this project, a fork from the original privacyidea repository will be used starting at **03/13/2026** to build the images. There are no changes compared to the original repository.
+> To enhance version control of this project and usage of the **K8s** [mfa-operator](https://github.com/sec73/mfa-operator) project, a fork from the original privacyidea repository will be used starting at **03/13/2026** to build the images.
 >
-> Furthermore, the vendor certificate will be transferred from NetKnights.pem to Acme.pem, and the most recent release (3.12.2) will be regenerated. 
+> Furthermore, the vendor certificate will be transferred from NetKnights.pem to Acme.pem
 >
 > **This encompasses the present images.**
 > **This will not break anything, as long as you do not use subscription files from other vendors.**
 >
 > You can either make your own certificates for testing purpose using the [pi generator](https://subgen.moenig.it) tool, use the provided files/subscriptions from this repository or rebuild the project with other certificates.
 >
-> **If you require additional professional assistance send your request to [info@moenig.it](mailto:info@moenig.it) 
 >
 > Please refer to the DISCLAIMER as well.
-
-**Goals:**
-- Build and run the container image, simple and fast.
-- Deploy different versions and/or stages (e.g. production, staging, devel ...) with the same or different configuration on the same host.
-- Easy deploy a "full-stack" (e.g. privacyIDEA, radius, database and reverse proxy) with docker compose.
-- Keep the container's image simple, slim and secure.
-- To build images with no changes to the original privacyIDEA code and as less as possible additional scripts as possible inside the image to run the container. 
-
-**Non-goals:**
-- A possible way to ignore the [privacyIDEA Documentation](https://privacyidea.readthedocs.io/en/latest/)
-- A guide on how to use docker
-- A guide how to configure and use privacyIDEA 
 
 ### tl;dr 
 See [requirements](#prerequisites-and-requirements)
@@ -52,7 +39,11 @@ Username / password: admin / admin
 ## Easy install (Ubuntu)
 See the [privacyidea-ansible](https://github.com/gpappsoft/privacyidea-ansible) project.
 
-## K8s / Helm / Cloud install 
+## Kubernetes
+
+See the [mfa-operator](https://github.com/sec73/mfa-operator) project for full featured K8s operator.
+
+## Helm
 See the [privacyidea-helm](https://github.com/gpappsoft/privacyidea-helm) project.
 
 Find helm chart on [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/privacyidea)](https://artifacthub.io/packages/helm/privacyidea/privacyidea)
