@@ -1,0 +1,19 @@
+application: privacyidea-adfs
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-03-13
+date_till: 2026-09-13
+for_address: 123 Business Street / Germany
+for_comment: testing purpose only
+for_email: admin@example.org
+for_name: Acme Corp
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:04d47f4568dad16dadfb47ddc53b58a59725a61b51a08e62642feb8b8bea0e110415653fa6b675f6d9d278bbc22f4ded2ee396e57acb32124e10b1397ae2135ab57e45265a74e164d3fc98e2f3818e72704b17f611bd4d58716de4bfa4ee756db2809299e4e0bbdcc414c7ecf2ebb41b3a888711876e5b238284c2001d48b1bb4f435c7e9f85eccff8705275cbb080e6e233259eaa591e19b31c0bec3e0a87684dfbaa0717ceec20c914b88cfb0c5b3ba79dd77c2936639fe639931ad25305586a211225b1a32980cdf44f87f8b5b44a88c27a03dc3dc026f261635ee34ad17ebcfea74b54e6b44634b85235779821efbeb22bb0721f41c54cb5d4a585f056a2

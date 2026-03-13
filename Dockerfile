@@ -23,24 +23,27 @@ RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev gnupg git nodejs-
         chown -R nonroot:nonroot /privacyidea/
 
 USER nonroot
+ENV SETUPTOOLS_SCM_PRETEND_VERSION=${PI_VERSION}
 RUN python -m venv /privacyidea/venv
-RUN pip install  -r https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
+RUN pip install  -r https://raw.githubusercontent.com/gpappsoft/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
 RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} gnupg
-# Install privacyIDEA from GitHub repository
-RUN git clone --branch v${PI_VERSION} --depth 1 https://github.com/privacyidea/privacyidea.git /privacyidea/pi_src \
+
+# Install privacyIDEA from forked GitHub repository
+RUN git clone --branch v${PI_VERSION} --depth 1 https://github.com/gpappsoft/privacyidea.git /privacyidea/pi_src \
         && pip install /privacyidea/pi_src
+
+# Enable if HSM or Kerberos needed
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-kerberos.txt 
 # Workaroud for https://github.com/privacyidea/privacyidea/issues/4127
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-hsm.txt 
 #RUN pip install pykcs11==${PYKCS11}
 
-ADD https://raw.githubusercontent.com/privacyidea/privacyidea/refs/tags/v${PI_REQUIREMENTS}/deploy/privacyidea/NetKnights.pem /privacyidea/etc/persistent/
-
-
+#USER nonroot
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
 COPY  entrypoint.py /privacyidea/entrypoint.py
 COPY  templates/healthcheck.py /privacyidea/healthcheck.py
+COPY  templates/Acme.pem /privacyidea/etc/persistent/Acme.pem
 
 # New WebUI
 WORKDIR /privacyidea/pi_src/privacyidea/static_new

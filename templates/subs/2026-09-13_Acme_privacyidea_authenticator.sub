@@ -1,0 +1,19 @@
+application: privacyidea authenticator
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-03-13
+date_till: 2026-09-13
+for_address: 123 Business Street / Germany
+for_comment: testing purpose only
+for_email: admin@example.org
+for_name: Acme Corp
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:16051cf60e3e4d35547efb183be2923a13a5345d8346e385007ec7df20da16f119f6db7455ed38520537a5f6da1bb4c53278cca95d3b5e534db8cf38412f0a1e6b24305c0c0fceb81b097d19dc6643cff3e1944eab8bf089468b2bcd8ae6111ac3f43e6b4f66359147971f1d487fd755dc7cc7970e28c7eb9f49328e62cf2e8b812b4d813d9deee44a42ff46836b669027073d81bc2b380e0017bfea880b0aad812003f54b69e61aa87b5870de1620f1405082b266a7d7d916101bee80ce974ec18a8ccb6113d8d56d2387465a3e0a048d21f287141837493422f5d63a0f36ec825fac196391efb23ece01a91a35b1533d150d952a4df979e95bdc70869f73da

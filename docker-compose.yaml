@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:latest
+    image: mariadb:10.6
     environment:
       MARIADB_RANDOM_ROOT_PASSWORD: 1
       MARIADB_DATABASE: ${DB_NAME}
@@ -14,6 +14,11 @@ services:
     networks:
       - privacyidea
     restart: always
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 5
+      start_period: 30s
     profiles:
       - fullstack
       - stack
@@ -21,7 +26,10 @@ services:
       - openldap
 
   privacyidea:
-    image: gpappsoft/privacyidea-docker:${PI_VERSION}
+    image: privacyidea-docker:${PI_VERSION}
+    depends_on:
+      db:
+        condition: service_healthy
     deploy:
       restart_policy:
         condition:  unless-stopped

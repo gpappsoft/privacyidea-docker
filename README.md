@@ -15,16 +15,16 @@ This project is a complete build environment under linux to build and run privac
 > [!Important] 
 > To enhance version control of this project, a fork from the original privacyidea repository will be used starting at **03/13/2026** to build the images. There are no changes compared to the original repository.
 >
-> Furthermore, the vendor certificate will be transferred from NetKnights.pem to sec.pem, and the most recent release (3.12.2) will be regenerated. This encompasses the present images.
+> Furthermore, the vendor certificate will be transferred from NetKnights.pem to Acme.pem, and the most recent release (3.12.2) will be regenerated. 
 >
+> **This encompasses the present images.**
 > **This will not break anything, as long as you do not use subscription files from other vendors.**
 >
-> You can either make your own certificates and subscriptions for testing, use the provided files/subscriptions from this project or rebuild the project with other certificates (e.g.NetKnights.pem).
-> 
-> **If you require individual subscriptions, additional professional assistance or managed privacyidea services, please send your request to [info@moenig.it](mailto:info@moenig.it) for further details.**
+> You can either make your own certificates for testing purpose using the [pi generator](https://subgen.moenig.it) tool, use the provided files/subscriptions from this repository or rebuild the project with other certificates.
+>
+> **If you require additional professional assistance send your request to [info@moenig.it](mailto:info@moenig.it) 
 >
 > Please refer to the DISCLAIMER as well.
-
 
 **Goals:**
 - Build and run the container image, simple and fast.
