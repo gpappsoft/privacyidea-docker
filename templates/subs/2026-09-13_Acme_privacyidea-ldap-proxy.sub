@@ -1,0 +1,19 @@
+application: privacyidea-ldap-proxy
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-03-13
+date_till: 2026-09-13
+for_address: 123 Business Street / Germany
+for_comment: testing purpose only
+for_email: admin@example.org
+for_name: Acme Corp
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:18f1f9219a93d949d80960661b9332f45fc13e79a5b1d3d38a37dcdc3a1ccf8a62f4f7194d1b91bc15465d183a1354967a49df21822b259898ff4d87357597d15b7ef2fe4ba953a32185b06780cd74379a815e0cd53268c28ef43fb7a7f4b4ef306927aea99581d20034448f05ab9dbecb50945f4c3a19ea712f8578eb6e382ba2d34924308d9e9685a208deeb42a5846eb24f0de4cffa39e4f304cc0d7e7f1c1ab81f93665fda8df0ad05bd1d74465ceb3f5bd1b95d7280bf737a9cfe940939b9a57baf05e1a0cc505435db6871cf817888b6a0eb1ad8d913de0a80b81e32893c7cb3abd2ff73eb90f16c6dc5d980050c9b1d5e05941338a49462150da4ced1

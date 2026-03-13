@@ -23,6 +23,7 @@ RUN apk add python-${PYVERSION} py${PYVERSION}-pip python3-dev gnupg git nodejs-
         chown -R nonroot:nonroot /privacyidea/
 
 USER nonroot
+ENV SETUPTOOLS_SCM_PRETEND_VERSION=${PI_VERSION}
 RUN python -m venv /privacyidea/venv
 RUN pip install  -r https://raw.githubusercontent.com/gpappsoft/privacyidea/refs/tags/v${PI_REQUIREMENTS}/requirements.txt
 RUN pip install psycopg2-binary==${PSYCOPG2} gunicorn==${GUNICORN} gnupg
@@ -37,11 +38,12 @@ RUN git clone --branch v${PI_VERSION} --depth 1 https://github.com/gpappsoft/pri
 #RUN pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v${PI_REQUIREMENTS}/requirements-hsm.txt 
 #RUN pip install pykcs11==${PYKCS11}
 
+#USER nonroot
 COPY  conf/pi.cfg /privacyidea/etc/
 COPY  conf/logging.cfg /privacyidea/etc/
 COPY  entrypoint.py /privacyidea/entrypoint.py
 COPY  templates/healthcheck.py /privacyidea/healthcheck.py
-COPY  templates/sectest.pem /privacyidea/etc/persistent/sectest.pem
+COPY  templates/Acme.pem /privacyidea/etc/persistent/Acme.pem
 
 # New WebUI
 WORKDIR /privacyidea/pi_src/privacyidea/static_new
