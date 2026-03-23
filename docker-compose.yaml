@@ -26,7 +26,7 @@ services:
       - openldap
 
   privacyidea:
-    image: privacyidea-docker:${PI_VERSION}
+    image: gpappsoft/privacyidea-docker:${PI_VERSION}
     depends_on:
       db:
         condition: service_healthy
