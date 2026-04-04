@@ -1,0 +1,66 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: build-image
+  namespace: privacyidea-ci
+spec:
+  description: Clone privacyidea-docker, build the container image, and push it to GHCR.
+  params:
+    - name: repo-url
+      type: string
+      description: Git repository to clone.
+      default: https://github.com/whoiz/privacyidea-docker.git
+    - name: git-revision
+      type: string
+      description: Branch, tag, or commit to build.
+      default: main
+    - name: image-reference
+      type: string
+      description: Fully qualified image reference including tag.
+      default: ghcr.io/whoiz/privacyidea-docker:latest
+    - name: context
+      type: string
+      description: Build context directory relative to repository root.
+      default: .
+    - name: dockerfile
+      type: string
+      description: Dockerfile path relative to the build context.
+      default: Dockerfile
+    - name: extra-kaniko-args
+      type: string
+      description: Optional extra Kaniko flags.
+      default: ""
+  workspaces:
+    - name: shared-data
+      description: Shared workspace between clone and build tasks.
+  tasks:
+    - name: fetch-source
+      taskRef:
+        name: git-clone-simple
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.git-revision)
+        - name: subdirectory
+          value: source
+      workspaces:
+        - name: output
+          workspace: shared-data
+    - name: build-and-push
+      runAfter:
+        - fetch-source
+      taskRef:
+        name: kaniko-build-push
+      params:
+        - name: image
+          value: $(params.image-reference)
+        - name: context
+          value: source/$(params.context)
+        - name: dockerfile
+          value: $(params.dockerfile)
+        - name: extra_args
+          value: $(params.extra-kaniko-args)
+      workspaces:
+        - name: source
+          workspace: shared-data

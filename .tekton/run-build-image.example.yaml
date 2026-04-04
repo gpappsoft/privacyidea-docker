@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: build-image-
+  namespace: privacyidea-ci
+spec:
+  pipelineRef:
+    name: build-image
+  taskRunTemplate:
+    serviceAccountName: image-builder
+  params:
+    - name: repo-url
+      value: https://github.com/whoiz/privacyidea-docker.git
+    - name: git-revision
+      value: main
+    - name: image-reference
+      value: ghcr.io/whoiz/privacyidea-docker:latest
+  workspaces:
+    - name: shared-data
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi

@@ -1,0 +1,49 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: kaniko-build-push
+  namespace: privacyidea-ci
+spec:
+  description: Build and push a container image with Kaniko.
+  params:
+    - name: image
+      type: string
+      description: Fully qualified image reference, including tag.
+    - name: dockerfile
+      type: string
+      description: Relative path to the Dockerfile inside the workspace.
+      default: Dockerfile
+    - name: context
+      type: string
+      description: Relative build context inside the workspace.
+      default: .
+    - name: extra_args
+      type: string
+      description: Extra arguments forwarded to the Kaniko executor.
+      default: ""
+  results:
+    - name: image-url
+      description: Published image reference.
+    - name: image-digest
+      description: Digest returned by Kaniko after a successful push.
+  workspaces:
+    - name: source
+      description: Workspace containing the repository checkout.
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:v1.23.2-debug
+      env:
+        - name: DOCKER_CONFIG
+          value: /tekton/home/.docker
+      script: |
+        #!/busybox/sh
+        set -eu
+
+        /kaniko/executor \
+          --dockerfile="$(workspaces.source.path)/$(params.context)/$(params.dockerfile)" \
+          --context="$(workspaces.source.path)/$(params.context)" \
+          --destination="$(params.image)" \
+          --digest-file="$(results.image-digest.path)" \
+          $(params.extra_args)
+
+        printf "%s" "$(params.image)" > "$(results.image-url.path)"

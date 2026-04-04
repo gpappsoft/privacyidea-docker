@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: git-clone-simple
+  namespace: privacyidea-ci
+spec:
+  description: Clone a Git repository into a workspace.
+  params:
+    - name: url
+      type: string
+      description: Repository URL to clone.
+    - name: revision
+      type: string
+      description: Branch, tag, or commit to fetch.
+      default: main
+    - name: subdirectory
+      type: string
+      description: Subdirectory inside the workspace where the repo is cloned.
+      default: source
+  workspaces:
+    - name: output
+      description: Workspace containing the cloned repository.
+  steps:
+    - name: clone
+      image: alpine/git:2.45.2
+      script: |
+        #!/bin/sh
+        set -eu
+
+        checkout_dir="$(workspaces.output.path)/$(params.subdirectory)"
+        rm -rf "${checkout_dir}"
+        mkdir -p "${checkout_dir}"
+
+        git init "${checkout_dir}"
+        cd "${checkout_dir}"
+        git remote add origin "$(params.url)"
+        git fetch --depth 1 origin "$(params.revision)"
+        git checkout FETCH_HEAD
