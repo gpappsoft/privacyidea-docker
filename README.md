@@ -12,19 +12,6 @@ Simply deploy and run an MFA instance in a container environment powered and bas
 
 This project is a complete build environment under linux to build and run an MFA system in a container environment. It uses the [Wolfi OS](https://github.com/wolfi-dev) image and a fork of the [privacyIDEA-Project](https://github.com/privacyidea/privacyidea/). The image uses [gunicorn](https://gunicorn.org/) from PyPi to run the app. 
 
-> [!Important] 
-> To enhance version control of this project and usage of the **K8s** [mfa-operator](https://github.com/sec73/mfa-operator) project, a fork from the original privacyidea repository will be used starting at **03/13/2026** to build the images.
->
-> Furthermore, the vendor certificate will be transferred from NetKnights.pem to Acme.pem
->
-> **This encompasses the present images.**
-> **This will not break anything, as long as you do not use subscription files from other vendors.**
->
-> You can either make your own certificates for testing purpose using the [pi generator](https://subgen.moenig.it) tool, use the provided files/subscriptions from this repository or rebuild the project with other certificates.
->
->
-> Please refer to the DISCLAIMER as well.
-
 ### tl;dr 
 See [requirements](#prerequisites-and-requirements)
 
@@ -59,9 +46,6 @@ Find helm chart on [![Artifact Hub](https://img.shields.io/endpoint?url=https://
 > Also check the [Security considerations](#security-considerations) before running the image or stack in a production environment.
 
 **While decoupling the privacyIDEA image from dependencies like Nginx, Apache or database vendors ect., it is possible to run privacyIDEA with your favorite components.**
-
-
-
 
 ## Repository 
 
@@ -353,10 +337,15 @@ Have fun!
 - Openldap admin user: ```cn=admin,dc=example,dc=org``` with password ```openldap```
 - Password for ldap user always givenName in lowercase (e.g. Sandra Bullock = sandra)
 - Additional user ```helpdesk``` with password ```helpdesk``` and ```admin``` with password ```admin``` available in ldap.
+
+#### Certificates
+Use the provided files/subscriptions from this repository (templates/subs) or rebuild the project with other vendor certificates.
+
 ## Security considerations
 
 #### Secrets 
 The current concept of using secrets with environment variables is not recommended in a docker-swarm/k8s/cloud environment. You should use  [secrets](https://docs.docker.com/engine/swarm/secrets/) in such an environment. You can modify and re-write the pi.cfg to read secret files inside the container/pod via python. 
+
 
 ## Frequently Asked Questions
 
@@ -421,16 +410,9 @@ For the example stack, use the db container:
 docker exec -it pi-db-1 mariadb-dump -u pi -psuperSecret pi
 ```
 
-## Roadmap
+# Professional support
 
-#### Customization
-
-Will follow soon
-
-#### Radius
-
-See [docker-freeradius](https://github.com/gpappsoft/privacyidea-freeradius)
-
+Please contact [info@sec73.io](mailto:info@sec73.io) company for professional support.
 
 # Disclaimer
 
