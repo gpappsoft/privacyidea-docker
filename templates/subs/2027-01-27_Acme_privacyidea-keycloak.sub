@@ -1,0 +1,19 @@
+application: privacyidea-keycloak
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-04-27
+date_till: 2027-01-27
+for_address: 123 Main Street / Berlin / Germany
+for_comment: testing purpose only
+for_email: admin@customer.com
+for_name: Acme Corp.
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:8ff5c5f740600e5339a66cfce2e80eb5085677b919493a266b843627c4289b1cf7d960ad74c6737794444ed3799716479b81ef2c07a2ed137fa3a2b15b2796401154e72b68c275fb910213fef7a7da3c54c52f3e5e104c85332ca589045954161f84ed6229ea7cb648287002a9a3f1f77a5bf99991bc6930595c7a392b64cee38d185a47059cd84b64ebd6aaf3ad17e75df96dd403cbb90c907870ecb7facb2e787efdcc718eb9b3759db587254651f8aa2880356a0007e36ecc6cd2ed8c8205b3985ee7c0f8b29c07d9f352b6ad17481e71e7fc7882e769ed0cc8d68d1017ae4cba656b412bb33dc465ae13a9b8f62105d658bb135227a79454a6740f19038d

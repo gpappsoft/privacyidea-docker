@@ -1,0 +1,19 @@
+application: owncloud
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-04-27
+date_till: 2027-01-27
+for_address: 123 Main Street / Berlin / Germany
+for_comment: testing purpose only
+for_email: admin@customer.com
+for_name: Acme Corp.
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:768f3dc20d2fee89553466efced92f27e0115d705073c21f9cbe2bb5cb2173fe4e33044d1c581d235aaf237bef60220c27e90cd714270a7a3c9b94b7ac799cfc82f66b086c149214310cb2260489e710a0c3982e93b09058212b87d51bba62c3bd80151f6089f619388896e5906575bae659d85916c4d9bc29ceef11d623e260328d2a5be4a38dd475a3f7b98a157748d007dc7aae61d7390b2892b3e72d0defd5c669f572d680fc6ec5936450fc947e2b2af0855b846ae2d574d490b83dd4accdfdde0d5dc0d8b033164c0a4b634e78f420cf19013cc32984a27a8011aeca3a840e35f3d436882f07cb2a42fc96f296423f30c64110686e5b78ef71dce0567c
