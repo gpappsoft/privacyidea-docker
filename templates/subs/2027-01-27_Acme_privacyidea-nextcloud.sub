@@ -1,0 +1,19 @@
+application: privacyidea-nextcloud
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-04-27
+date_till: 2027-01-27
+for_address: 123 Main Street / Berlin / Germany
+for_comment: testing purpose only
+for_email: admin@customer.com
+for_name: Acme Corp.
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:7048449814f75707160b27c7a501b4091e4546a9f132e62275d3101af8c6e17af6b38bbbc7cd28a8eaffaa367d3222056fcb956d4dcdcc2b29d3f756bd573b0ad6fdec7431e967c6ad396496e94bc09998953cf72921a97f9f96aab62331609b44254cd94b7c8c8617386fe54ef2b7bf7246ecfa4f6c90fc43d6b1fc5c3b69bd5691c423fdb04e3d823aaab9f55fa443198a27f423e48f6c265a0c58e0d6338c5d05b03f6f416531955fb928db6d7f34409d99a98f1760c5d021b44e867605120d25f47248ef5506cd88a01068f774c72e3ae20e14d5705c245b2aad1675752527f04ad43c04123a01e30cefda51544938472b8d43098845432631d008b6500a

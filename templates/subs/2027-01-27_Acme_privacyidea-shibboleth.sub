@@ -1,0 +1,19 @@
+application: privacyidea-shibboleth
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-04-27
+date_till: 2027-01-27
+for_address: 123 Main Street / Berlin / Germany
+for_comment: testing purpose only
+for_email: admin@customer.com
+for_name: Acme Corp.
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:8d447740c8cd3063214a176f8844c8fc2c2dd9837b5b313df6f600b5f9c4d9062080c4da5d1699be1386419f38842c161e7239b105b1e1fd2b818f9d23bedf4fc9acaaed9c91a97960269a82d5fce8890f187a532d815b34761fa3c75d38cc08e91d005d3715659c31b0f4908f8898d24eb44972ab4c40d8c1432137a333ae4bedb64f51f7194e538d58d3b4f36a6066ddf977b9e3c646e261a36049442de38cbd8ba16f8e6aad71aeb1420b76e84290938e9c7fdd52249af9dcac6661f4bce6aa232aee7b9900fa4ba6e009bc977933e53bff7fa6b835db5ece4bd22a16132ccab6dfbc7ddf76e4eba6882f75849576974ef4c35a3bdeca23f5ab49a1163488

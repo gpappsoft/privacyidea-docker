@@ -1,0 +1,19 @@
+application: simplesamlphp
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-04-27
+date_till: 2027-01-27
+for_address: 123 Main Street / Berlin / Germany
+for_comment: testing purpose only
+for_email: admin@customer.com
+for_name: Acme Corp.
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:167d30202b16f5f65e46114588b33f3e6acd12539fbf76fff2bb1d57072ed2a929382f450e8220364908f2070388a1f67d6e577a7831fe1572443d6028b77e829d65da1ad3bd45309420929102e7f11abd6daffcc1f515df0bfdf2f049f14fe77809d67b2f7eba2a60350eaaffc2160186778afb6eaad920b25d7c3c996c180847f1e39e41764f65b383946211347e0aed7d7eef3f82fe8519098b5cab25d611cc3867970328b17ae8732e29defd78aafe8e4af66326f73f90e761ee28665d1113ad7c774fec21d6435ac0781662d8805b7e15b161071042e2b5f5baf33bd777acbc5aecbe923d8f74c8555eca6b5df207f17f0131298f0228f027ac70310572

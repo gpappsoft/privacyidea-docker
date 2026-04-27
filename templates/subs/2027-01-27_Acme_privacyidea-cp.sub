@@ -1,0 +1,19 @@
+application: privacyidea-cp
+by_address: Acmestreet.1 / Acme / DE
+by_email: subscriptions@acme.ltd
+by_name: Acme Ltd.
+by_phone: ''
+by_url: https://www.example.org
+date_from: 2026-04-27
+date_till: 2027-01-27
+for_address: 123 Main Street / Berlin / Germany
+for_comment: testing purpose only
+for_email: admin@customer.com
+for_name: Acme Corp.
+for_phone: N/A
+for_url: ''
+level: Gold
+num_clients: 100
+num_tokens: 100
+num_users: 100
+signature: rsa_sha256_pss:25bf626de1649f6744f16c42e89b114bfa2366eacdf281d33b253913f517bf6a233fda9938532b1f3a1fba2586eef0d1d51d0756895d9f32ac1bb9c0f966e6f1553f9e92dffc7ef60ffcc99c03def6fd1ce7c7eb36d7034a16ab4c8182dc826b10071ad94e2db2c3516bf2138f06b0b3e0e603d1a52fe15e01fd589555a7ba2800fa3517c320ed86e1be3adcd227e34036cd9eb83085dc56f11ec964e1ccebddb9ae0ff979c9bba16351ecb2cfd66d9c1c81f9ab27e256bf51acad5200e0a4a2c0dfcaf6fa745f90bc6493b949203870fb528c1dafac3b0fb7f330f599b3ea7d03cabcf73b737a604c819cc30977c11de65dfa5076d58f05ddc497eb368b17ce
