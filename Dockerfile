@@ -4,7 +4,7 @@
 ###
 FROM cgr.dev/chainguard/wolfi-base AS builder
 
-ARG PYVERSION=3.13.1dev0
+ARG PYVERSION=3.13
 ARG PI_VERSION=3.13.1dev0
 ARG PI_REQUIREMENTS=3.13.1dev0
 ARG GUNICORN==23.0.0
@@ -59,7 +59,7 @@ RUN rm -rf /privacyidea/pi_src
 ###
 FROM cgr.dev/chainguard/wolfi-base
 
-ARG PYVERSION=3.13.1dev0
+ARG PYVERSION=3.13
 ENV PYTHONUNBUFFERED=1
 ENV PATH="/privacyidea/venv/bin:/privacyidea/bin:$PATH"
 ENV PRIVACYIDEA_CONFIGFILE="/privacyidea/etc/pi.cfg"
