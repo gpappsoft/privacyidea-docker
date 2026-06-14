@@ -3,8 +3,6 @@
 ![Docker)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)
 ![DockerPulls)](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
 
-> 💬 **Feedback wanted!** I'm collecting input on the reverse proxy choice (nginx vs. Caddy) and aligning this project with the [mfa-operator](https://github.com/sec73/mfa-operator). If you use this image, please share your thoughts in [this discussion](https://github.com/gpappsoft/privacyidea-docker/discussions/24) — even a quick 👍/👎 helps.
-> 
 # privacyIDEA-docker
 
 Simply deploy and run an MFA instance in a container environment powered and based on privacyIDEA.
