@@ -1,5 +1,5 @@
-PI_VERSION := "3.13.3dev0"
-PI_VERSION_BUILD := "3.13.3dev0"
+PI_VERSION := "3.13.3"
+PI_VERSION_BUILD := "3.13.3"
 IMAGE_NAME := privacyidea-docker:${PI_VERSION}
 
 BUILDER := docker build
