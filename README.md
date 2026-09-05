@@ -3,6 +3,12 @@
 ![Docker)](https://github.com/gpappsoft/privacyidea-docker/actions/workflows/docker-publish.yml/badge.svg)
 ![DockerPulls)](https://img.shields.io/docker/pulls/gpappsoft/privacyidea-docker)
 
+## ⚠️ Archived
+
+This project is no longer actively maintained and is kept read-only for reference. Please use the official Docker build from the privacyIDEA project going forward: https://github.com/privacyidea/privacyidea
+
+Thanks to everyone who used this project and provided feedback!
+
 # privacyIDEA-docker
 
 Simply deploy and run an MFA instance in a container environment powered and based on privacyIDEA.
